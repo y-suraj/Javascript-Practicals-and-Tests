@@ -34,7 +34,7 @@ console.log("These two strings are the same:", strr1 === strr2); // true
 let sym1 = Symbol("JavaScript is fun!");
 let sym2 = Symbol("JavaScript is fun!");
 console.log("These two Symbols are the same:", sym1 === sym2); // false
-// In the first half, JS concludes that the strings are the same. They have the same value, and the same type. However, in the second part, each symbol is unique. Therefore, although they contain the same string, they are nor the same, and output false when compared.
+// In the first half, JS concludes that the strings are the same. They have the same value, and the same type. However, in the second part, each symbol is unique. Therefore, although they contain the same string, they are not the same, and output false when compared.
 
 // Undefined
 let unassigned;
@@ -77,5 +77,69 @@ console.log("sym", typeof sym); // symbol
 console.log("undef", typeof undef); // undefined
 console.log("unknown", typeof unknown); // object
 
+/*
+    Output:
+    str_ string
+    nr number
+    bigNr_ bigint
+    bool boolean
+    sym symbol
+    undef undefined
+    unknown object
+*/
+
 // In the output typeof null returns object, while in fact, null truly is a primitive and not an object. This is a bug that has been there since forever and now cannot be removed due to backward compatibility problems.
+
+
+// Converting data types
+let nr1 = 2;
+let nr2 = "2";
+console.log(nr1 * nr2); // 4    (converts strings to numbers)
+console.log(nr1 + nr2); // 22   (converts numbers to strings and then concatenates)
+
+/*
+Conversion methods: String(), Number(), Boolean()
+
+String() converts a variable to type string. It pretty much takes any value, including undefined and null, and puts quotes around it.
+
+Number() converts variable to a number. If that cannot be done logically, it will change the value into NaN (not a number).
+
+Boolean() converts a variable to a Boolean. This will be true for everyting except for null, undefined, 0 (number), and empty string, and NaN.
+*/
+
+// Example 1
+let nrToStr = 6;
+nrToStr = String(nrToStr);
+console.log(nrToStr, typeof nrToStr); // 6 string
+
+let strToNr = "12";
+strToNr = Number(strToNr);
+console.log(strToNr, typeof strToNr); // 12 number
+
+let strToBool = "any string will return true";
+strToBool = Boolean(strToBool);
+console.log(strToBool, typeof strToBool); // ture boolean
+
+// Example 2
+let nullToNr = null;
+nullToNr = Number(nullToNr);
+console.log("null", nullToNr, typeof nullToNr); // null 0 number
+
+let strToNr1 = "";
+strToNr1 = Number(strToNr1);
+console.log("empty string", strToNr1, typeof strToNr1); // empty string 0 number 
+
+// Example 3
+let strToNr2 = "hello";
+strToNr2 = Number(strToNr2);
+console.log(strToNr2, typeof strToNr2); // NaN number
+
+// Example 4
+let strToBool2 = "false";
+strToBool2 = Boolean(strToBool2);
+console.log(strToBool2, typeof strToBool2); // true boolean
+
+let strToBool3 = "";
+strToBool3 = Boolean(strToBool3);
+console.log(strToBool3, typeof strToBool3); // false boolean
 ```
