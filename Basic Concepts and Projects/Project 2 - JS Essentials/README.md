@@ -1,6 +1,7 @@
 # JS Essentials
+
+### **String**
 ```js
-// String
 let language = "Javascript";
 let message = `Let's learn ${language}`;
 console.log(message); // Let's learn Javascript
@@ -15,28 +16,36 @@ let str3 = "New \nline.";
 let str4 = "A backslash: \\!";
 console.log(str3);
 console.log(str4);
-
-// BigInt
+```
+### **BigInt**
+```js
 let a = 10;
-// The limits of the number data type are between 2^53-1 and -(2^53-1)
+```
+The limits of the number data type are between 2^53-1 and -(2^53-1) for larger numbers use `BigInt` data type. It can be recognized by the postfix ***`n`***
 
-// for larger numbers use BigInt data type. It can be recognized by the postfix n
+```js
 let bigNr = 90071992547409921n;
 console.log(bigNr);
+```
 
-// Note: We cannot mix BigInt with the Number data type to perform operations. This is something to keep in mind for later when actually working with BigInt—you can only operate on BigInt with other BigInts.
+> **Note**: We cannot mix BigInt with the Number data type to perform operations. This is something to keep in mind for later when actually working with BigInt—you can only operate on BigInt with other BigInts.
 
-// Symbol
+### **Symbol**
+```js
 let strr1 = "JavaScript is fun!";
 let strr2 = "JavaScript is fun!";
 console.log("These two strings are the same:", strr1 === strr2); // true
-// Symbol can be used when it is important that variables are not equal, even though their value and type are the same.
+```
+Symbol can be used when it is important that variables are not equal, even though their value and type are the same.
+```js
 let sym1 = Symbol("JavaScript is fun!");
 let sym2 = Symbol("JavaScript is fun!");
 console.log("These two Symbols are the same:", sym1 === sym2); // false
-// In the first half, JS concludes that the strings are the same. They have the same value, and the same type. However, in the second part, each symbol is unique. Therefore, although they contain the same string, they are not the same, and output false when compared.
+```
+In the first half, JS concludes that the strings are the same. They have the same value, and the same type. However, in the second part, each symbol is unique. Therefore, although they contain the same string, they are not the same, and output false when compared.
 
-// Undefined
+### **Undefined**
+```js
 let unassigned;
 console.log(unassigned); // undefined
 
@@ -44,23 +53,26 @@ let dontDoThis = undefined; // AVOID declaring a variable as undefined!
 
 // null
 let empty = null;
-// null is a special value for saying that a variable is empty or has an unknown value
-
+```
+`null` is a special value for saying that a variable is empty or has an unknown value
+```js
 let lastName;
 console.log("Same undefined: ", lastName === dontDoThis); // true
 
 let betterOption = null;
 console.log("Same null: ", lastName === betterOption); // false
+```
 
-// Working out the type of a variable
+### **Working out the type of a variable**
+```js
 testVar = 1;
 varTypeTest1 = typeof testVar;
 varTypeTest2 = typeof(testVar);
 console.log(varTypeTest1); // number
 console.log(varTypeTest2); // number
-
-// Brackets aren't required because technically, typeof is an operator, not a method, unlike console.log
-
+```
+> Brackets aren't required because technically, `typeof` is an operator, not a method, unlike `console.log`
+```js
 let str_ = "hello";
 let nr = 7;
 let bigNr_ = 12345678901234n;
@@ -76,37 +88,36 @@ console.log("bool", typeof bool); // boolean
 console.log("sym", typeof sym); // symbol
 console.log("undef", typeof undef); // undefined
 console.log("unknown", typeof unknown); // object
+```
+Output:
+```
+str_ string
+nr number
+bigNr_ bigint
+bool boolean
+sym symbol
+undef undefined
+unknown object
+```
+In the output `typeof null` returns `object`, while in fact, `null` truly is a primitive and not an object. This is a bug that has been there since forever and now cannot be removed due to backward compatibility problems.
 
-/*
-    Output:
-    str_ string
-    nr number
-    bigNr_ bigint
-    bool boolean
-    sym symbol
-    undef undefined
-    unknown object
-*/
-
-// In the output typeof null returns object, while in fact, null truly is a primitive and not an object. This is a bug that has been there since forever and now cannot be removed due to backward compatibility problems.
-
-
-// Converting data types
+### **Converting data types**
+```js
 let nr1 = 2;
 let nr2 = "2";
 console.log(nr1 * nr2); // 4    (converts strings to numbers)
 console.log(nr1 + nr2); // 22   (converts numbers to strings and then concatenates)
+```
 
-/*
-Conversion methods: String(), Number(), Boolean()
+Conversion methods: `String()`,` Number()`, `Boolean()`
 
-String() converts a variable to type string. It pretty much takes any value, including undefined and null, and puts quotes around it.
+`String()` converts a variable to type string. It pretty much takes any value, including `undefined` and `null`, and puts quotes around it.
 
-Number() converts variable to a number. If that cannot be done logically, it will change the value into NaN (not a number).
+`Number()` converts variable to a number. If that cannot be done logically, it will change the value into `NaN` (not a number).
 
-Boolean() converts a variable to a Boolean. This will be true for everyting except for null, undefined, 0 (number), and empty string, and NaN.
-*/
+`Boolean()` converts a variable to a Boolean. This will be `true` for everyting except for `null`, `undefined`, `0` (number), and empty string (`""`), and `NaN`.
 
+```js
 // Example 1
 let nrToStr = 6;
 nrToStr = String(nrToStr);
