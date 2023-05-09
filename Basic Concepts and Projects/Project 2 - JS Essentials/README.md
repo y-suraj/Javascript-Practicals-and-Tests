@@ -36,7 +36,7 @@ let strr1 = "JavaScript is fun!";
 let strr2 = "JavaScript is fun!";
 console.log("These two strings are the same:", strr1 === strr2); // true
 ```
-Symbol can be used when it is important that variables are not equal, even though their value and type are the same.
+`Symbol` can be used when it is important that variables are not equal, even though their value and type are the same.
 ```js
 let sym1 = Symbol("JavaScript is fun!");
 let sym2 = Symbol("JavaScript is fun!");
