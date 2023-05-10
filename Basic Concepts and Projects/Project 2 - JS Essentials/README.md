@@ -154,3 +154,53 @@ let strToBool3 = "";
 strToBool3 = Boolean(strToBool3);
 console.log(strToBool3, typeof strToBool3); // false boolean
 ```
+
+### **Arithmatic operators**
+#### **Addition**
+```js
+let name = "Hello, my name is John, ";
+let age = "I am 22 years old and ";
+let canCode = "I can code Javascript: ";
+let boolCode = true;
+let finalStr = name + age + canCode + boolCode;
+console.log(finalStr);
+```
+Output: `Hello, my name is John, I am 22 years old and I can code Javascript: true`
+#### **Subtraction**
+```js
+let nrr1 = 20;
+let nrr2 = 4;
+let str1 = "Hi";
+let nrr3 = 3;
+let result1 = nrr1 - nrr2;
+let result2 = str1 - nrr3;
+console.log(result1, result2);
+```
+Output : `16 NaN`
+#### **Exponentiation**
+```js
+nr1 = 2;
+nr2 = 3;
+result1 = nr1 ** nr2;
+console.log(result1);
+```
+Output: `8`
+> We can also find the root of a number by using fractional exponents: for example, the square root of a value is the same as raising it to the power of 0.5.
+```js
+nr1 = 36;
+nr2 = 0.5;
+result1 = nr1 ** nr2;
+console.log(result1);
+```
+Output: `6`
+
+### Practical exercise 
+Write some code to calculate the hypotenuse of a triangle using the Pythagorean theorem when given the values of the other two sides.
+```js
+let s1 = window.prompt("Side 1: ");
+let s2 = window.prompt("Side 2: ");
+s1 = Number(s1);
+s2 = Number(s2);
+let hypot = (s1*s1 + s2*s2) ** 0.5;
+console.log(`Hypotenuse = ${hypot}`);
+```
