@@ -182,3 +182,111 @@ names.reverse();
 console.log(names); 
 // [ "John", "James", "Bert", "Alicia" ]
 ```
+
+## Multidimentional arrays
+```js
+let someValues1 = [1, 2, 3];
+let someValues2 = [4, 5, 6];
+let someValues3 = [7, 8, 9];
+
+let arrOfArrays = [someValues1, someValues2, someValues3];
+console.log(arrOfArrays);
+```
+
+We can write it like this: 
+```js
+let arrOfArrays2 = [[1, 2, 3], [4, 5, 6], [7, 8, 9]];
+```
+
+```js
+arrOfArraysOfArrays = [arrOfArrays, arrOfArrays, arrOfArrays];
+console.log(arrOfArraysOfArrays);
+```
+Output:
+```
+[
+    [ [ 1, 2, 3 ], [ 4, 5, 6 ], [ 7, 8, 9 ] ],
+    [ [ 1, 2, 3 ], [ 4, 5, 6 ], [ 7, 8, 9 ] ],
+    [ [ 1, 2, 3 ], [ 4, 5, 6 ], [ 7, 8, 9 ] ]
+]
+```
+
+## Objects in JS
+> Arrays are objects with indexed properties
+```js
+let arr6 = [0, 1, 2];
+console.log(typeof arr6); // Object
+```
+
+```js
+let dog = {
+    dogName: "JS",
+    weight: 2.4,
+    color: "brown",
+    breed: "chihuahua",
+    age: 3,
+    burglarBiter: true
+}
+```
+
+Accessing properties:
+```js
+let dogColor1 = dog["color"];
+// or
+let dogColor2 = dog.color;
+```
+### Updating Objects
+```js
+dog["color"] = "blue";
+dog.weight = 2.3;
+console.log(dog);
+```
+Output:
+```
+{ dogName: "JS", weight: 2.3, color: "blue", breed: "chihuahua", age: 3, burglarBiter: true }
+```
+
+Changing the data type of properties
+```js
+dog["age"] = "three";
+
+let variable = "age";
+console.log(dog[variable]); // three
+
+variable = "breed";
+console.log(dog[variable]); // chihuahua
+
+dog[variable] = "dachshund";
+console.log(dog["breed"]); // dachshund
+```
+
+## Objects in arrays in objects
+```js
+let company = {
+    companyName: "Healthy Candy",
+    // array in object
+    activities: ["food manufacturing", "improving kids' health", "manufacturing toys"],
+    // objects in array
+    address: [{
+        street: "2nd street",
+        number: "123",
+        zipcode: "33116",
+        city: "Miami",
+        state: "Florida"
+    },
+    {
+        street: "1st West avenue",
+        number: "5",
+        zipcode: "75002",
+        city: "Addison", 
+        state: "Texas"
+    }],
+    yearOfEstablishment: 2023
+};
+```
+
+To access street name of Healthy Candy's second address, we can use the following code:
+```js
+let streetName = company.address[1].street;
+console.log(streetName); // 1st West avenue
+```

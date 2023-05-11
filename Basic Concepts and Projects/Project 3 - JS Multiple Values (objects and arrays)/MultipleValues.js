@@ -115,7 +115,7 @@ console.log(findValue, findValue2); // 6 undefined
 
 let findIndex = arr5.indexOf(6);
 let findIndex2 = arr5.indexOf(10);
-console.log(findIndex,findIndex2); // 1 -1
+console.log(findIndex, findIndex2); // 1 -1
 
 // If you want to find the next occurrence of the specified number, you can add a second argument to `indexOf()`, specifying from which position it should start searching:
 let findIndex3 = arr5.indexOf(6, 2);
@@ -139,3 +139,82 @@ console.log(ages); // [ 18, 33, 40, 56, 72 ]
 // Reverse the elements of an array by calling `reverse()` on it
 names.reverse();
 console.log(names); // [ "John", "James", "Bert", "Alicia" ]
+
+// Multidimentional arrays
+let someValues1 = [1, 2, 3];
+let someValues2 = [4, 5, 6];
+let someValues3 = [7, 8, 9];
+
+let arrOfArrays = [someValues1, someValues2, someValues3];
+console.log(arrOfArrays);
+
+// We can write it like this: 
+let arrOfArrays2 = [[1, 2, 3], [4, 5, 6], [7, 8, 9]];
+
+arrOfArraysOfArrays = [arrOfArrays, arrOfArrays, arrOfArrays];
+console.log(arrOfArraysOfArrays);
+
+// Objects in JS
+
+let arr6 = [0, 1, 2];
+console.log(typeof arr6); // Object
+// Arrays are objects with indexed properties
+
+let dog = {
+    dogName: "JS",
+    weight: 2.4,
+    color: "brown",
+    breed: "chihuahua",
+    age: 3,
+    burglarBiter: true
+}
+
+// accessing properties
+let dogColor1 = dog["color"];
+// or
+let dogColor2 = dog.color;
+
+// Updating Objects
+dog["color"] = "blue";
+dog.weight = 2.3;
+console.log(dog);
+// { dogName: "JS", weight: 2.3, color: "blue", breed: "chihuahua", age: 3, burglarBiter: true }
+
+// changing the data type of properties
+dog["age"] = "three";
+
+let variable = "age";
+console.log(dog[variable]); // three
+
+variable = "breed";
+console.log(dog[variable]); // chihuahua
+
+dog[variable] = "dachshund";
+console.log(dog["breed"]); // dachshund
+
+// Objects in arrays in objects
+let company = {
+    companyName: "Healthy Candy",
+    // array in object
+    activities: ["food manufacturing", "improving kids' health", "manufacturing toys"],
+    // objects in array
+    address: [{
+        street: "2nd street",
+        number: "123",
+        zipcode: "33116",
+        city: "Miami",
+        state: "Florida"
+    },
+    {
+        street: "1st West avenue",
+        number: "5",
+        zipcode: "75002",
+        city: "Addison", 
+        state: "Texas"
+    }],
+    yearOfEstablishment: 2023
+};
+
+// To access street name of Healthy Candy's second address, we can use the following code:
+let streetName = company.address[1].street;
+console.log(streetName); // 1st West avenue
