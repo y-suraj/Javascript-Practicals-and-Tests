@@ -1,6 +1,6 @@
 # Chapter projects
-1. Manipulate your array using various methods, such as pop(), push(), shift(), and unshift(), and transform it into the following:
-["FIRST", "Svekis", "MIDDLE", "hello World", "LAST"]
+1. Manipulate your array using various methods, such as `pop()`, `push()`, `shift()`, and `unshift()`, and transform it into the following:
+`["FIRST", "Svekis", "MIDDLE", "hello World", "LAST"]`
 
 ```js
 const theList = ['Laurence', 'Svekis', true, 35, null, undefined, {test: 'one', score: 55}, ['one', 'two']];
