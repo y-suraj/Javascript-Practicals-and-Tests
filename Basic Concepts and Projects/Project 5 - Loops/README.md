@@ -128,7 +128,7 @@ for (let i = 0; i < noOfCells + 1; i++) {
 console.table(grid);
 ```
 Console:
-![grid table view](https://github.com/y-suraj/Javascript-Practicals-and-Tests/blob/main/Basic%20Concepts%20and%20Projects/Project%205%20-%20Loops/Untitled2.png)
+![grid table view](./assets/Untitled2.png)
 ## for of loop
 It cannot be used to change the value associated with the index as we can do with the regular loop, but for processing values it is a very nice and readable loop.
 Syntax:
