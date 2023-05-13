@@ -104,7 +104,7 @@ for (let i = 0; i < rows; i++) {
 console.table(myTable);
 ```
 Console:
-![myTable table view](https://github.com/y-suraj/Javascript-Practicals-and-Tests/blob/main/Basic%20Concepts%20and%20Projects/Project%205%20-%20Loops/Untitled.png)
+![myTable table view](/Untitled.png)
 ## Loops and arrays
 ### Practical exercise 5
 Explore how to create a table grid that contains nested arrays as rows within a table. The rows will each contain the number of cells needed for the number of columns set in the variables. This grid table will dynamically adjust depending on the values for the variables.
