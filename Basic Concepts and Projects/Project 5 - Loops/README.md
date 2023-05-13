@@ -251,9 +251,9 @@ c 3
 ### Looping over objects by converting to an array
 
 You can use any loop on objects, as soon as you convert the object to an array. This can be done in three ways:
-    - Convert the keys of the object to an array
-    - Convert the values of the object to an array
-    - Convert the key-value entries to an array (containing arrays with two elements: object key and object value)
+- Convert the keys of the object to an array
+- Convert the values of the object to an array
+- Convert the key-value entries to an array (containing arrays with two elements: object key and object value)
 
 ```js
 let arrKeys = Object.keys(car);
