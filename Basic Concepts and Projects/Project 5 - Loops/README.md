@@ -158,7 +158,7 @@ James
 > There are some limitations here; we cannot modify the array, but we could write all the elements to a database or a file, or send it somewhere else. The advantage of this is that we cannot accidentally get stuck in an infinite loop or skip values.
 
 ### Practical exercise 6
-This exercise will construct an array as it loops through the incrementing values of x. Once the array is done, this exercise also will demonstrate several ways to output array contents.
+This exercise will construct an array as it loops through the incrementing values of `i`. Once the array is done, this exercise also will demonstrate several ways to output array contents.
 ```js
 const arr = [];
 for (let i = 0; i < 10; i++) {
