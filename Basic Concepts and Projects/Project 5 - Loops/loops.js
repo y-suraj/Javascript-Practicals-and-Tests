@@ -297,3 +297,98 @@ year : 1999
 color : black
 */
 
+// `break` and `continue`
+// Practice exercise 
+//  This exercise will demonstrate how to create a string with all the digits as it loops through them. We can also set a value to skip by adding a condition that will use continue, skipping the matching condition. A second option is to do the same exercise and use the break keyword
+
+let str = "";
+let skipNum = 3;
+
+for (let i = 0; i <= 10; i++) {
+    if (i === skipNum) {
+        continue;
+    }
+    str += i;
+}
+console.log(str); // 01245678910
+
+str = "";
+
+for (let i = 0; i <= 10; i++) {
+    if (i === skipNum) {
+        break;
+    }
+    str += i;
+}
+console.log(str); // 123
+
+/// `break`, `continue`, and nested loops
+let groups = [
+    ["Martin", "Daniel", "Keith"],
+    ["Margot", "Marina", "Ali"],
+    ["Helen", "Jonah", "Sambikos"],
+];
+
+for (let i = 0; i < groups.length; i++) {
+    let matches = 0;
+    for (let j = 0; j < groups[i].length; j++) {
+        if (groups[i][j].startsWith("M")) {
+            matches++;
+        } else {
+            continue;
+        }
+        if (matches === 2) {
+            console.log("Found a group with two names starting with an M:");
+            console.log(groups[i]);
+            break;
+        }
+    }
+}
+// [ "Margot", "Marina", "Ali" ]
+
+for (let group of groups) {
+    for (let member of group) {
+        if (member.startsWith("M")) {
+            console.log("found one starting with M: ", member);
+            break;
+        }
+    }
+}
+// found one starting with M: Martin
+// found one starting with M: Margot
+
+/// `break` and `continue` and labeled blocks
+outer:
+for (let group of groups) {
+    inner:
+    for (let member of group) {
+        if (member.startsWith("M")) {
+            console.log("found one starting with M: ", member);
+            break outer;
+        }
+    }
+}
+// found one starting with M: Martin
+// We are giving our block a label by putting a word and a colon in front of a code block. These words can be pretty much anything (in our case, "outer" and "inner"), but not JavaScript's own reserved words, such as `for`, `if`, `break`, `else`, and others.
+
+// It will only log one, because it is breaking out of the outer loop and all the loops end as soon as they find one. In a similar fashion you can continue the outer loop as well.
+
+// Whenever you want to be done as soon as you find one hit, this is the option to use. So, for example, if you want check for errors and quit if there aren't any, this would be the way to go.
+
+// Chapter project
+// Math multiplication table
+// In this project, you will create a math multiplication table using loops.
+let multiplicationTable = [];
+let vals = 10;
+for (let i = 1; i <= vals; i++) {
+    tempTb = [];
+    for (let j = 1; j <= vals; j++) {
+        tempTb.push(i * j);
+    }
+    multiplicationTable.push(tempTb);
+}
+console.table(multiplicationTable);
+// Console:
+
+// ![mutiplicationTable](./assets/Untitled3.png)
+
