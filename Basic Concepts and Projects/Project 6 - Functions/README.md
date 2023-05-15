@@ -284,7 +284,7 @@ let result2 = addNums(13, 16);
 console.log(result2); // 29
 ```
 
-// If it's a multiline function, you will have to use the keyword `return`:
+If it's a multiline function, you will have to use the keyword `return`:
 ```js
 let addTwoNumzz = (x, y) => {
     console.log("Adding...");
