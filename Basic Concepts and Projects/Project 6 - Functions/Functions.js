@@ -114,3 +114,139 @@ addTwoNumbers(1, 2, 3, 4); // 3
 // It is just adding `1` and `2` and ignoring the last two arguments (`3` and `4`).
 
 // Special functions and operators
+// Arrow functions
+// Template:
+// (param1, param2) => body of the function;
+// Or for no parameters:
+// () => body of the function;
+// Or for one parameter (no parentheses are needed here):
+// param => body of the function;
+// Or for a multiline function with two parameters:
+// (param1, param2) => {
+//     // line 1;
+//     // any number of lines;
+// }
+
+// Arrow functions are useful whenever you want to write an implementation on the spot, such as inside another function as an argument. This is because they are a shorthand notation for writing functions. They are most often used for functions that consist of only one statement. Let's start with a simple function that we will rewrite to an arrow function:
+function doingStuff(x) {
+    console.log(x);
+}
+// We can write it like this:
+let doingArrowStuff = x => console.log(x);
+// And invoke it like this:
+doingArrowStuff("Great!"); // Great!
+// If there is more than one argument, use parenthesis:
+let addTwoNumberss = (x, y) => console.log(x + y);
+addTwoNumberss(5, 4); // 9
+
+// If there are no arguments, you must use the parenthesis, like this:
+let sayHi = () => console.log("hi");
+sayHi(); // hi
+
+// We can conbine the arrow function with certain buile-in methods. For example, we can use the `foreach()` method on an array. This method executes a certain function for every element in the array.
+const arr1 = ["squirrel", "alpaca", "bud"];
+arr1.forEach(e => console.log(e));
+// Output:
+/*
+squirrel
+alpaca
+bud
+*/
+
+// For every element in the array, it takes the element as input and executing the arrow function for it. In this case, the function is to log the element. So the output is every single element in the array.
+
+// Using arrow functions combined with built-in functions is very powerful. **We can do something for every element in the array, without counting or writing a complicated loop**. We'll see more examples of great use cases for arrow functions later on.
+
+/// Spread operator
+// It consists of three dots used before a referenced expression or string, and it spreads out the arguments or elements of an array.
+
+let spread = ["so", "much", "fun"];
+let message = ["Javascript", "is", ...spread, "and", "very", "powerful"];
+console.log(message);
+// [ "Javascript", "is", "so", "much", "fun", "and", "very", "powerful" ]
+
+// As you can see, the elements of the spread operator become individual elements in the array. The spread operator spreads the array to individual elements in the new array. It can also be used to send multiple arguments to a function, like this:
+function addTwoNumz(x, y) {
+    console.log(x + y);
+}
+let arr2 = [5, 9];
+addTwoNumz(...arr2); // 14
+
+// This operator avoids having to copy a long array or string into a function, whichsaves time and reduces code complexity. You can call a function with multiple spread operators. It will use all the elements of the arrays as input. Here's an example:
+function addFourNums(x, y, z, a) {
+    console.log(x + y + z + a);
+}
+let arr3 = [5, 10];
+let arr4 = [6, 9];
+addFourNums(...arr3, ...arr4); // 30
+// This calls the function like this:
+addFourNums(5, 10, 6, 9);
+
+/// Rest parameter
+// It has the same symbol as the spread operator, but it is used inside the function parameter list. 
+function someFunction(para1, para2) {
+    console.log(para1, para2);
+}
+someFunction("hi", "there!", "How are you?");
+// hi there!
+
+// If we use the rest parameter, **it allows us to send in any number of arguments and translate them into a parameter array**.
+function restFunction(para1, ...para2) {
+    console.log(para1, para2);
+}
+restFunction("hi", "there!", "How are you?");
+// hi [ "there!", "How are you?" ]
+
+// As you can see, the second parameter has changed into an array, containing our second and third arguments. This can be useful whenever you are not sure what number of arguments you will get. Using the rest parameter allows you to process this variable number of arguments, for example, using a loop.
+
+// Returning function values
+let result = addTwoNumberss(4, 7);
+console.log(result);
+/*
+11
+undefined
+*/
+
+// The value `9` is written to the console because `addTwoNumbers()` contains a `console.log()` statement. The console.log(result) line outputs undefined, because nothing is inserted into the function to store the result, meaning our function `addTwoNumbers()` does not send anything back. Since JavaScript does not like to cause trouble and crash, it will assign `undefined`.
+
+// Returning a value:
+function addTwoNumberz(x, y) {
+    return x + y;
+}
+result = addTwoNumberz(7, 6);
+console.log(result); // 13
+
+let resultsArr = [];
+for (let i = 0; i < 10; i++) {
+    let result1 = addTwoNumberz(i, 2 * i);
+    resultsArr.push(result1);
+}
+console.log(resultsArr);
+// [ 0, 3, 6, 9, 12, 15, 18, 21, 24, 27 ]
+
+// Returning with arrow functions
+// If we have a one-line arrow function, we can return without using the keyword `return`.
+let addNums = (x, y) => x + y;
+let result2 = addNums(13, 16);
+console.log(result2); // 29
+
+// If it's a multiline function, you will have to use the keyword `return`
+let addTwoNumzz = (x, y) => {
+    console.log("Adding...");
+    return x + y;
+}
+
+/// Practice exercise 4
+// Modify the calculator that you made in Practice exercise 2 to return added values instead of printing them. Then, call the function 10 or more times in a loop, and store the results in an array. Once the loop finishes, output the final array into the console.
+let resArr = [];
+let addVals = (x, y) => (x + y);
+for (let i = 0; i < 10; i++) {
+    let val_1 = i * 5;
+    let val_2 = i * i;
+    let response = addVals(val_1, val_2);
+    resArr.push(response);
+}
+console.log(resArr);
+// [ 0, 6, 14, 24, 36, 50, 66, 84, 104, 126 ]
+
+// Variable scope in functions
