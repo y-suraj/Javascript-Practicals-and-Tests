@@ -308,3 +308,110 @@ console.log(resArr);
 ```
 
 ## Variable scope in functions
+### Local variables in functions
+```js
+function testAvailability(x) {
+    console.log("Available here: ", x);
+}
+testAvailability("Hi!");
+console.log("Not available here: ", x);
+```
+```
+Available here: Hi!
+Uncaught ReferenceError: x is not defined
+```
+
+```js
+function testAvailability2() {
+    let y = "Local variable!";
+    console.log("Available here: ", y);
+}
+testAvailability2();
+```
+```
+console.log("Not available here: ", y);
+Available here:  Local variable!
+Uncaught ReferenceError: y is not defined
+```
+
+Variables defined inside the function are not available outside the function either.
+
+If you need their values outside a function, you can return the values. The key word here is *values*! You cannot return the variable itself. Instead, a value can be caught and stored in a different variable, like this:
+```js
+function testAvailability3() {
+    let y = "I'll return";
+    console.log("Available here:", y);
+    return y;
+}
+let z1 = testAvailability3(); 
+// Available here:  I'll return
+console.log("Outside the function:", z1);
+// Outside the function: I'll return
+console.log("Not available here:", y);
+// Uncaught ReferenceError: y is not defined
+```
+
+#### `let` versus `var` variables
+```js
+function doingStuf() {
+    if (true) {
+        var x = "local"; // var
+    }
+    console.log(x);
+}
+doingStuf(); // local
+```
+
+If we use `var`, the variable becomes function-scoped and **is available anywhere in the function block (even before defining with the value `undefined`)**. Thus, after the `if` block has ended, `x` can still be accessed.
+```js
+function doingStuf2() {
+    if (true) {
+        let x = "local";
+    }
+    console.log(x);
+}
+doingStuf2();
+// Uncaught ReferenceError: x is not defined
+```
+
+A final difference between let and var relates to the order of declaration in a script.
+Try using the value of x before having defined it with let:
+```js
+function doingStuf3() {
+    if (true) {
+        console.log(x);
+        let x = "local";
+    }
+}
+doingStuf3();
+// Uncaught ReferenceError: can't access lexical declaration 'x' before initialization
+```
+
+variables declared with `let` cannot be accessed before being defined, even within the same block.
+```js
+function doingStuf4() {
+    if (true) {
+        console.log(x);
+        var x = "local";
+    }
+}
+doingStuf4();
+// undefined
+```
+
+#### `const` scope
+Constants are block-scoped, just like `let`. This is why the scope rules here are similar to those for `let`.
+```js
+function doingStuf5() {
+    if (true) {
+        const X = "local";
+    }
+    console.log(X);
+}
+doingStuf5();
+// Uncaught ReferenceError: X is not defined
+```
+
+Using a `const` variable before having defined it will also give a `ReferenceError`, just as it does for a `let` variable.
+
+### Global variables
