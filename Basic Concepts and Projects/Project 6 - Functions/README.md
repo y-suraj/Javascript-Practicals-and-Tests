@@ -327,9 +327,9 @@ function testAvailability2() {
     console.log("Available here: ", y);
 }
 testAvailability2();
-```
-```
 console.log("Not available here: ", y);
+```
+```
 Available here:  Local variable!
 Uncaught ReferenceError: y is not defined
 ```
@@ -366,7 +366,7 @@ If we use `var`, the variable becomes function-scoped and **is available anywher
 ```js
 function doingStuf2() {
     if (true) {
-        let x = "local";
+        let x = "local"; // let
     }
     console.log(x);
 }
@@ -404,7 +404,7 @@ Constants are block-scoped, just like `let`. This is why the scope rules here ar
 ```js
 function doingStuf5() {
     if (true) {
-        const X = "local";
+        const X = "local"; // const
     }
     console.log(X);
 }
@@ -415,3 +415,70 @@ doingStuf5();
 Using a `const` variable before having defined it will also give a `ReferenceError`, just as it does for a `let` variable.
 
 ### Global variables
+If you have the same parameter name as a global variable, the valud of the parameter will be used:
+```js
+let x1 = "global";
+function doingGlobalStuff(x) {
+    console.log(x);
+}
+doingGlobalStuff("para"); // para
+```
+```js
+function fun1() {
+    x = "Guess my scope...";
+    console.log("Inside the function:", x);
+}
+fun1();
+// Inside the function: Guess my scope...
+console.log("Outside the function:", x);
+// Outside the function: Guess my scope...
+```
+The declaration of `x` within the function gets global scope and can still be accessed outside of the function.
+
+If you need a global variable, declare it at the top of your file.
+
+### Immediately invoked function expression
+The **immediately invoked function expression (IIFE)** is a way of expressing a function so that it gets invoked immediately. It is anonymous, it doesn't have a name, and it is self-executing.
+
+This can be useful when you want to initialize something using this function. It is also used in many design patterns, for example, to create private and public variables and functions.
+
+This has to do with where functions and variables are accessible from. If you have an IIFE in the top-level scope, whatever is in there is not accessible from outside even though it is top level.
+```js
+(function () {
+    console.log("IIFE!");
+})();
+// IIFE!
+```
+The function itself is surrounded by parentheses, which makes it create a function instance. Without these parentheses around it, it would throw an error because our function does not have a name (this is worked around by assigning the function to a variable, though, where the output can be returned to the variable).
+
+`();` executes the unnamed function—this must be done immediately following a function declaration. If your function were to require a parameter, you would pass it in within these final brackets.
+
+You could also combine IIFE with other function patterns. For example, you could use an arrow function here to make the function even more concise:
+```js
+(() => {
+    console.log("run right away");
+})();
+// run right away
+```
+
+#### Practice exercise 5
+Use IIFE to create a few immediately invoked functions and observe how the scope is affected.
+```js
+let var1 = "1000";
+
+(function() {
+    var1 = 999;
+    console.log(var1); // 999
+})();
+
+let result_1 = (() => {
+    var1 = 5001;
+    return var1;
+})();
+console.log(result_1); // 5001
+console.log(var1); // 5001
+
+((para01) => {
+    console.log(`My name is ${para01}.`)
+})("suraj"); // My name is suraj.
+```
