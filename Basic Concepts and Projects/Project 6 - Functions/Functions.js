@@ -388,7 +388,7 @@ console.log("Outside the function:", x);
 // Use IIFE to create a few immediately invoked functions and observe how the scope is affected.
 let var1 = "1000";
 
-(function() {
+(function () {
     var1 = 999;
     console.log(var1); // 999
 })();
@@ -402,13 +402,13 @@ console.log(var1); // 5001
 
 ((para01) => {
     console.log(`My name is ${para01}.`)
-})("suraj"); // My name is suraj.
+})("John"); // My name is John.
 
 // Recursive functions
 /// Practice exercise 6
 // Calculating factorial of a number
 function factorial(numF) {
-    if(numF === 0) {
+    if (numF === 0) {
         return 1;
     } else {
         return numF * factorial(numF - 1);
@@ -422,7 +422,7 @@ console.log(factorial(8)); // 40320
 let start = 10;
 function fun2(countVal) {
     console.log(countVal);
-    if(countVal < 1){
+    if (countVal < 1) {
         return;
     }
     return fun2(countVal - 1);
@@ -431,8 +431,8 @@ fun2(start);
 // 10 9 8 7 6 5 4 3 2 1 0
 
 function fun3(countVal) {
-    console.log(countVal); 
-    if(countVal > 0) {
+    console.log(countVal);
+    if (countVal > 0) {
         countVal--;
         return fun3(countVal);
     }
@@ -458,7 +458,7 @@ function doFlexibleStuff(executeStuff) {
     executeStuff();
     console.log("Inside doFlexibleStuffFunction.");
 }
-let anotherFunctionVar = function() {
+let anotherFunctionVar = function () {
     console.log("Another anonymous function implementation.");
 }
 doFlexibleStuff(anotherFunctionVar);
