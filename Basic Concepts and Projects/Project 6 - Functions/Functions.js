@@ -405,3 +405,99 @@ console.log(var1); // 5001
 })("suraj"); // My name is suraj.
 
 // Recursive functions
+/// Practice exercise 6
+// Calculating factorial of a number
+function factorial(numF) {
+    if(numF === 0) {
+        return 1;
+    } else {
+        return numF * factorial(numF - 1);
+    }
+}
+console.log(factorial(5)); // 120
+console.log(factorial(8)); // 40320
+
+// Nested functions
+// Practice exercise 7
+let start = 10;
+function fun2(countVal) {
+    console.log(countVal);
+    if(countVal < 1){
+        return;
+    }
+    return fun2(countVal - 1);
+}
+fun2(start);
+// 10 9 8 7 6 5 4 3 2 1 0
+
+function fun3(countVal) {
+    console.log(countVal); 
+    if(countVal > 0) {
+        countVal--;
+        return fun3(countVal);
+    }
+    return;
+}
+fun3(start);
+// 10 9 8 7 6 5 4 3 2 1 0
+
+// Anonymous functions
+// Practice exercise 8
+let anFunVar = function (para1) {
+    console.log(`The argument is ${para1}`);
+};
+anFunVar(101);
+// The argument is 101
+function fun4(para1) {
+    console.log(para1);
+}
+fun4(201); // 201
+
+// Function callbacks
+function doFlexibleStuff(executeStuff) {
+    executeStuff();
+    console.log("Inside doFlexibleStuffFunction.");
+}
+let anotherFunctionVar = function() {
+    console.log("Another anonymous function implementation.");
+}
+doFlexibleStuff(anotherFunctionVar);
+// Another anonymous function implementation.
+// Inside doFlexibleStuffFunction.
+
+// Built-in functions: `setTimeout()` and `setInterval()`
+
+let youGotThis = function () {
+    console.log("You're doing really well, keep going!");
+};
+setTimeout(youGotThis, 1000);
+// It is going to wait for `1000`ms (one cecond) and then print:
+// You're doing really well, keep going!
+
+// If you need more encouragement, you can use the `setInterval()` function instead. It works very similarly, but instead of executing the specified function once, *it will keep on executing it with the specified interval*:
+// setInterval(youGotThis, 1000);
+
+// In this case, it will print our encouraging message every second until you kill the program.
+
+// This concept of the function executing the function after having been called itself is very useful for managing asynchronous program execution.
+
+// Chapter projects
+// Set timeout order
+const firstFun = () => { console.log("One"); };
+const secFun = () => console.log("Two");
+const thirFun = () => {
+    console.log("Three");
+    firstFun();
+    secFun();
+};
+const fourthFun = () => {
+    console.log("Four");
+    setTimeout(firstFun, 0);
+    thirFun();
+};
+fourthFun();
+// Four
+// Three
+// One
+// Two
+// One
