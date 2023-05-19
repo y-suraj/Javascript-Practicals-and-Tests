@@ -548,8 +548,10 @@ let anotherFunctionVar = function() {
     console.log("Another anonymous function implementation.");
 }
 doFlexibleStuff(anotherFunctionVar);
-// Another anonymous function implementation.
-// Inside doFlexibleStuffFunction.
+```
+```
+Another anonymous function implementation.
+Inside doFlexibleStuffFunction.
 ```
 
 - Built-in functions: `setTimeout()` and `setInterval()`
