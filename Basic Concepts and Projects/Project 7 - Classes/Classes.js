@@ -221,3 +221,15 @@ console.log(pp3.firstName);
 
 pp3.firstName = "Adnane";
 
+// We could do a validation as in the constructor before, like this:
+// set firstName(firstName) {
+//     if (firstName.startsWith("M")) {
+//         this.#firstName = firstName;
+//     } else {
+//         this.#firstName = "M" + firstName;
+//     }
+// }
+
+// This will check whether `firstName` starts with an `M`, and if it does it will update the value to whatever the `firstName` parameter is. It it doesn't, it will concatenate an `M` in front of the parameter.
+
+// > Please note that we do not access `firstName` as if it was a function. If you put two parentheses `()` after it, you would actually get an error telling you that it is not a function.
