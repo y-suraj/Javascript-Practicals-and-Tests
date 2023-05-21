@@ -233,3 +233,180 @@ pp3.firstName = "Adnane";
 // This will check whether `firstName` starts with an `M`, and if it does it will update the value to whatever the `firstName` parameter is. It it doesn't, it will concatenate an `M` in front of the parameter.
 
 // > Please note that we do not access `firstName` as if it was a function. If you put two parentheses `()` after it, you would actually get an error telling you that it is not a function.
+
+// Inheritance
+// Inheritance is one of the key concepts of OOP. It is the concept that classes can have child classes that inherit the properties and methods from the parent class. 
+
+class Vehicle {
+    constructor(color, currentSpeed, maxSpeed) {
+        this.color = color;
+        this.currentSpeed = currentSpeed;
+        this.maxSpeed = maxSpeed;
+    }
+
+    move() {
+        console.log("moving at", this.currentSpeed);
+    }
+
+    accelerate(amount) {
+        this.currentSpeed += amount;
+    }
+}
+
+// Here we have two methods in our `Vehicle` class: move and `accelerate`. And this could be a `Motorcycle` class inheriting from this class using the `extends` keyword:
+
+class Motorcycle extends Vehicle {
+    constructor(color, currentSpeed, maxSpeed, fuel) {
+        super(color, currentSpeed, maxSpeed);
+        this.fuel = fuel;
+    }
+    doWheelie() {
+        console.log("Driving on one wheel!");
+    }
+}
+
+// With the `extends` keyword we specify that a certain class is the child of another class. In this case, `Motorcycle` is a child class of `Vehicle`. This means that we'll have access to properties and methods from `Vehicle` in our `Motorcycle` class. We have added a special `doWheelie()` method. This is not something that makes sense to add to the `Vehicle` class, because this is an action that is specific to certain vehicles.
+
+// The `super` word in the constructor is calling the constructor from the parent, the `Vehicle` constructor in this case. This makes sure that the fields from the parent are set as well and that the methods are available without having to do anything else: they are automatically inherited. **Calling `super()` is not optional, you must do it when you are in a class that is inheriting from another class, else you will get a `ReferenceError`**.
+
+// Because we have access to the fields of `Vehicle` in `Motorcycle`, this will work:
+
+let motor = new Motorcycle("Black", 0, 250, "gasoline");
+console.log(motor.color);
+// Black
+motor.accelerate(50);
+motor.move(); // moving at 50
+
+// We cannot access any Motorcycle specific properties or methods in our Vehicle class. This is because not all vehicles are motorcycles, so we cannot be sure that we would have the properties or methods from a child.
+
+// Right now, we don't use any getters and setters here, but we clearly could. If there are getters and setters in the parent class, they are inherited by the child class as well. This way we could influence which properties could be fetched and changed (and how) outside our class. This is generally a good practice.
+
+// Prototypes
+// A prototype is the mechanism in JavaScript that makes it possible to have objects.
+// When nothing is specified when creating a class, the objects inherit from the `Object.prototype` prototype. 
+
+// There is a `prototype` property available on all classes, and it is always named "prototype." We can access it like this:
+// ClassName.prototype
+
+class PersonProto {
+    constructor(firstname, lastname) {
+        this.firstname = firstname;
+        this.lastname = lastname;
+    }
+
+    greet() {
+        console.log("Hi there!");
+    }
+}
+
+
+// And here is how to add a function to this class using `prototype`:
+
+PersonProto.prototype.introduce = function () {
+    console.log("Hi, I'm", this.firstname);
+}
+
+// `prototype` is a property holding all the properties and methods of an object. So, adding a function to `prototype` is adding a function to the class. You can use `prototype` to add properties or methods to an object, like we did in the above example in our code with the `introduce` function. You can also do this for properties:
+
+PersonProto.prototype.favoriteColor = "green";
+
+// And then you can call them from instances of `Person`:
+let pProp = new PersonProto("Mike", "Sage");
+console.log(pProp.favoriteColor); // green
+pProp.introduce(); // Hi, I'm Mike
+
+// And it will be as if you had defined the class with a favorite color holding a **default** value, and a function, `introduce`. They have been added to the class and are available for all instances and future instances.
+
+// So the methods and properties defined via `prototype` are really as if they were defined in the class. This means that overwriting them for a certain instance doesn't overwrite them for all instances. For example, if we were to have a second Person object, this person could overwrite the `favoriteColor` value and this wouldn't change the value for our object with `firstname` as `Mike`.
+
+// This is something you should not be using when you have control over the class code and you want to change it permanently. In that case, just change the class.
+
+// However, you can expand existing objects like this and even expand existing objects conditionally. It is also important to know that the JavaScript built-in objects have prototypes and inherit from `Object.prototype`. However, be sure not to modify this prototype since it will affect how our JavaScript works.
+
+// Practice exercise 3
+// Create a class that contains properties for different animal species and the sound that each species makes, and create two (or more) animals:
+class Animal {
+    constructor(species, noOfLegs, sound) {
+        this.species = species;
+        this.noOfLegs = noOfLegs;
+        this.sound = sound;
+    }
+
+    printSpecies() {
+        console.log("Species:", this.species);
+    }
+    speak() {
+        console.log("Sound:", this.sound);
+    }
+}
+
+Animal.prototype.eat = function () {
+    return this.species + " is eating";
+}
+
+let cat = new Animal("Cat", 4, "meow");
+let duck = new Animal("Duck", 2, "quack");
+cat.speak(); // Sound: meow
+console.log(duck.eat()); // Duck is eating
+console.log(duck);
+// Object { species: "Duck", noOfLegs: 2, sound: "quack" }
+
+// Chapter projects
+// Employee tracking app
+// Create a class to track the employees of a company:
+// 1. Use first names, last names, and the number of years worked as values in the constructor.
+class Employee {
+    constructor(firstname, lastname, noOfYears) {
+        this.firstname = firstname;
+        this.lastname = lastname;
+        this.noOfYears = noOfYears;
+    }
+}
+
+// 2. Create two or more people with values for their first names, last names, and the number of years they've worked at the company. Add the people into an array.
+const emp1 = new Employee("John", "Doe", 3);
+const emp2 = new Employee("Neo", "Anderson", 5);
+const empArr = [emp1, emp2];
+
+// Set up a prototype to return the details of the person's first and last names and how long they've worked at the company.
+Employee.prototype.empDetails = function () {
+    return this.firstname + " " + this.lastname + " is working here for " + this.noOfYears + " years.";
+}
+
+// Iterate the contents of the array to output the results into the console, adding some text to make the output a full sentence.
+empArr.forEach((emp) => {
+    console.log(emp.empDetails());
+});
+// John Doe is working here for 3 years.
+// Neo Anderson is working here for 5 years.
+
+// Menu items price calculator
+// Create a class which will allow you to work out the combined price of a number of items, and interact with it to work out the total cost of different orders.
+
+// 1. Create a class that contains the prices of two menu items as private field declarations.
+class Menu {
+    #priceItem1 = 10;
+    #priceItem2 = 20;
+
+    // 2. Use the constructor in the class to get the argument values (how many of each item are being bought).
+    constructor(noOfItems1, noOfItems2) {
+        this.noOfItems1 = noOfItems1;
+        this.noOfItems2 = noOfItems2;
+    }
+
+    // 3. Create a method to calculate and return the total cost depending on how many of each item the user selects.
+    calTotal() {
+        return (this.#priceItem1 * this.noOfItems1) + (this.#priceItem2 * this.noOfItems2);
+    }
+
+    // Use a getter property to grab the value output by the calculation method.
+    get total() {
+        return this.calTotal();
+    }
+}
+
+// Create two or three objects with different combinations of menu selections, and output the total cost in the console.
+const menu1 = new Menu(5, 2);
+const menu2 = new Menu(10, 12);
+console.log(menu1.total); // 90
+console.log(menu2.total); // 340
