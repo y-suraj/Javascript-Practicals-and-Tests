@@ -196,14 +196,20 @@ Printing stuff: true on array position: 4
 ```
 
 As you can see, it called the **`printStuff()` function for every element in the array**. 
+
 And we can also use the **index, it is the second parameter**.
+
 We don't need to control the flow of the loop here and we cannot get stuck at a certain point.
+
 We just need to specify what function needs to be executed for every element. And the element will be input fro this function.
+
 This is used a lot, especially for a more funcitonal programming style in which many methods get chained, for example, to process data.
 
 ### Filtering an array
 We can use the built-in `filter()` method on an array to alter which values are in the array. 
+
 The filter method takes a function as an argument, and this function should return a Boolean. 
+
 If the Boolean has the value `true`, the element will end up in the filtered array. If the Boolean has the value `false`, the element will be left out. You can see how it works here:
 ```js
 let arr1 = ["squirrel", 5, "Jed", new Date(), true];
@@ -229,8 +235,11 @@ This will log `false`, since not all elements are of type `string` in the array.
 
 ### Replacing part of an array with another part of the array
 The `copyWithin()` method can be used to replace a part of the array with another part of the array. In the first example we specify 3 arguments. 
+
 The **first one is the target position, to which the values get copied**. 
+
 The **second one is the start of what to copy to the target position** and the **last one is the end of the sequence that will be copied to the target position; this last index is not included**. 
+
 Here we are only going to override position 0 with whatever is in position 3:
 ```js
 arr = ["grapefruit", 5, "hello", 5.7, true];
@@ -249,6 +258,7 @@ It is important to keep in mind that this function changes the *content* of the 
 
 ### Mapping the values of an array
 With the `map()` method you can change all the values in an array. This method will return a new array with all the new values.
+
 You'll have to say how to create these new values. This can be done with the arrow function. It is going to execute the arrow function for every element in the array, so for example:
 ```js
 arr = [1, 2, 3, 4];
