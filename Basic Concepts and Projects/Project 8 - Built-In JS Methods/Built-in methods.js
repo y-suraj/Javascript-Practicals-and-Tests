@@ -101,3 +101,185 @@ console.log(encoded_uriP1);
 // http://www.basescripts.com?=Hello%20World
 
 //// Parsing numbers
+///// Making integers with `parseInt()`
+// With the global method `parseInt()` a string will be changed to an integer.
+
+let str_int = "6";
+let int_int = parseInt(str_int);
+console.log("Type of", int_int, "is", typeof int_int);
+// Type of 6 is number
+
+let str_float = "7.6";
+let int_float = parseInt(str_float);
+console.log("Type of", int_float, "is", typeof int_float);
+// Type of 7 is number
+
+let str_bin = "010b101";
+let int_bin = parseInt(str_bin);
+console.log("Type of", int_bin, "is", typeof int_bin);
+// Type of 10 is number
+
+let str_nan = "Hello!";
+let int_nan = parseInt(str_nan);
+console.log("Type of", int_nan, "is", typeof int_nan);
+// Type of NaN is number
+
+///// Making floats with `parseFloat()`
+
+let str_float1 = "7.6";
+let float_float = parseFloat(str_float1);
+console.log("Type of", float_float, "is", typeof float_float);
+// Type of 7.6 is number
+
+let str_version_nr = "2.3.4";
+let float_version_nr = parseFloat(str_version_nr);
+console.log("Type of", float_version_nr, "is", typeof float_version_nr);
+// Type of 2.3 is number
+
+let str_int1 = "6";
+let float_int = parseFloat(str_int1);
+console.log("Type of", float_int, "is", typeof float_int);
+// Type of 6 is number
+
+let str_binary = "012b101";
+let float_binary = parseFloat(str_binary);
+console.log("Type of", float_binary, "is", typeof float_binary);
+// Type of 12 is number
+
+let str_nan1 = "hello!";
+let float_nan1 = parseFloat(str_nan1);
+console.log("Type of", float_nan1, "is", typeof float_nan1);
+// Type of NaN is number
+
+//// Array methods
+///// Performing a certain action for every item
+// `forEach()` method takes the function that needs to be executed for every element as input.
+
+let arr = ["grapefruit", 5, "hello", 5.7, true];
+
+function printStuff(element, index) {
+    console.log("Printing stuff:", element, "on array position:", index);
+}
+arr.forEach(printStuff);
+
+// Console:
+// Printing stuff: grapefruit on array position: 0
+// Printing stuff: 5 on array position: 1
+// Printing stuff: hello on array position: 2
+// Printing stuff: 5.7 on array position: 3
+// Printing stuff: true on array position: 4
+
+// As you can see, it called the **`printStuff()` function for every element in the array**. 
+// And we can also use the **index, it is the second parameter**.
+// We don't need to control the flow of the loop here and we cannot get stuck at a certain point.
+// We just need to specify what function needs to be executed for every element. And the element will be input fro this function.
+// This is used a lot, especially for a more funcitonal programming style in which many methods get chained, for example, to process data.
+
+///// Filtering an array
+// We can use the built-in `filter()` method on an array to alter which values are in the array. 
+// The filter method takes a function as an argument, and this function should return a Boolean. 
+// If the Boolean has the value `true`, the element will end up in the filtered array. If the Boolean has the value `false`, the element will be left out. You can see how it works here:
+
+let arr1 = ["squirrel", 5, "Jed", new Date(), true];
+
+function checkString(element, index) {
+    return typeof element === "string";
+}
+
+let filterArr = arr1.filter(checkString);
+console.log(filterArr);
+// [ "squirrel", "Jed" ]
+
+// It is important to realize that the original array has not changed, the `filter()` method returns a new array with the elements that made it through the filter. We capture it here in the variable `filterArr`.
+
+///// Checking a condition for all elements
+// You can use the `every()` method to see whether something is true for all elements in the array. If that is the case, the `every()` method will return `true`, else it will return `false`. We are using the `checkString()` function and array from the previous example here:
+
+console.log(arr1.every(checkString));
+// false
+
+// This will log `false`, since not all elements are of type `string` in the array.
+
+///// Replacing part of an array with another part of the array
+// The `copyWithin()` method can be used to replace a part of the array with another part of the array. In the first example we specify 3 arguments. 
+// The **first one is the target position, to which the values get copied**. 
+// The **second one is the start of what to copy to the target position** and the **last one is the end of the sequence that will be copied to the target position; this last index is not included**. 
+// Here we are only going to override position 0 with whatever is in position 3:
+
+arr = ["grapefruit", 5, "hello", 5.7, true];
+arr.copyWithin(0, 3, 4);
+console.log(arr)
+// [ 5.7, 5, "hello", 5.7, true ]
+
+// If we specify a range with length 2, the first two elements after the starting position get overridden:
+arr = ["grapefruit", 5, "hello", 5.7, true];
+arr.copyWithin(0, 3, 5);
+console.log(arr);
+// [ 5.7, true, "hello", 5.7, true ]
+
+// It is important to keep in mind that this function changes the *content* of the original array, but will never change the *length* of the original array.
+
+///// Mapping the values of an array
+// With the `map()` method you can change all the values in an array. This method will return a new array with all the new values.
+// You'll have to say how to create these new values. This can be done with the arrow function. It is going to execute the arrow function for every element in the array, so for example:
+
+arr = [1, 2, 3, 4];
+mapped_arr = arr.map(x => x + 1);
+console.log(mapped_arr);
+// [ 2, 3, 4, 5 ]
+
+///// Finding the last occurance in an array
+// We can find the first occurrences with `indexOf()`.
+// To find the last occurance, we can use the `lastIndexOf()` method on an array, just as we did for `string`.
+
+let bb = ["so", "bye", "bye", "love"];
+console.log(bb.lastIndexOf("bye"));
+// 2
+
+console.log(bb.lastIndexOf("hi"));
+// -1
+
+///// Practice exercise 2
+// Remove duplicates from the array using `filter()` and `indexOf()`. The starting array is: ["Laurence", "Mike", "Larry", "Kim", "Joanne", "Laurence", "Mike", "Laurence", "Mike", "Laurence", "Mike"]
+
+// Using the array filter() method, this will create a new array using the elements that pass the test condition implemented by the function. The final result will be: [ 'Laurence', 'Mike', 'Larry', 'Kim', 'Joanne' ]
+
+const names = ["Laurence", "Mike", "Larry", "Kim", "Joanne", "Laurence", "Mike", "Laurence", "Mike", "Laurence", "Mike"];
+
+const res = names.filter((val, id, array) => {
+    console.log(val, id, array.indexOf(val));
+    return array.indexOf(val) === id;
+});
+console.log(res);
+
+// Console:
+
+// Laurence 0 0 
+// Mike 1 1 
+// Larry 2 2 
+// Kim 3 3 
+// Joanne 4 4 
+// Laurence 5 0 
+// Mike 6 1 
+// Laurence 7 0 
+// Mike 8 1 
+// Laurence 9 0 
+// Mike 10 1 
+//  [ "Laurence", "Mike", "Larry", "Kim", "Joanne" ]
+
+///// Practice exercise 3
+// Using the array `map()` method, update an array's contents. Take the following steps:
+
+const arrNum = [1, 2, 3, 4, 5, 6];
+
+const resNum = arrNum.map(function(el){
+    return el*2;
+});
+console.log(resNum);
+// [ 2, 4, 6, 8, 10, 12 ]
+
+const resNum2 = arrNum.map((el)=>el*2);
+console.log(resNum2);
+// [ 2, 4, 6, 8, 10, 12 ]
+
+//// String methods
