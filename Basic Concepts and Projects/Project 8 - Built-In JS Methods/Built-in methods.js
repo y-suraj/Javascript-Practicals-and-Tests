@@ -272,14 +272,221 @@ console.log(res);
 
 const arrNum = [1, 2, 3, 4, 5, 6];
 
-const resNum = arrNum.map(function(el){
-    return el*2;
+const resNum = arrNum.map(function (el) {
+    return el * 2;
 });
 console.log(resNum);
 // [ 2, 4, 6, 8, 10, 12 ]
 
-const resNum2 = arrNum.map((el)=>el*2);
+const resNum2 = arrNum.map((el) => el * 2);
 console.log(resNum2);
 // [ 2, 4, 6, 8, 10, 12 ]
 
 //// String methods
+
+///// Combining strings - `concat()`
+
+let s1 = "Hello ";
+let s2 = "JS";
+let result_c = s1.concat(s2);
+console.log(result_c);
+// Hello JS
+
+///// Converting a string to an array - `split()`
+// With the `split()` method we can convert a string to an array. 
+// Again, we will have to capture the result; it is not changing the original string.
+
+let arr_res = result_c.split(" ");
+console.log(arr_res);
+// [ "Hello", "JS" ]
+
+// As you can see, it creates an array of all the elements separated by a space. We can split by any character, for example a comma:
+
+let favFruits = "strawberry,watermelon,grapefruit";
+let arr_fruits = favFruits.split(",");
+console.log(arr_fruits);
+// [ "strawberry", "watermelon", "grapefruit" ]
+
+// You can split on anything, and the string you are splitting on is left out of the result.
+
+///// Converting an array to a string - `join()`
+
+let letters = ["a", "b", "c"];
+let x1 = letters.join();
+console.log(x1);
+// a,b,c
+
+// The type of `x` is string. If you want something else other than a comma, you can specify that, like this:
+
+x1 = letters.join('-');
+console.log(x1);
+// a-b-c
+
+// This can be nicely combined with the `split()` method that we covered in the previous section, which does the reverse and converts a string into an array.
+
+///// Working with index and positions - `indexOF()`, `search()`, `lastIndexOf()`, `charAt()`
+
+// When you need to search for a certain word through the user input of a log file and create a substring starting at that index. Here is an example of how to find the index of a string. The `indexOf()` method returns the index, a single number, of the first character of the substring:
+
+let poem = "Roses are red, violets are blue, if I can do JS, then you can too!";
+let index_re = poem.indexOf("re");
+console.log(index_re); // 7
+
+// This is logging `7` to the console, because the first occurrence of `re` is in `are`, and the re begins at index `7`. When it can't find an index, it will return `-1`, like this example:
+let indexNotFound = poem.indexOf("python");
+console.log(indexNotFound); // -1
+
+// It is logging `-1` to indicate that the string we are searching for doesn't occur in the target string. Often you will write an `if` check to see whether it's `-1` before dealing with the result. For example:
+
+if (poem.indexOf("python") != -1) {
+    // do stuff
+}
+
+// An alternative way of searching for a particular substring within a string is to use the `search()` method:
+
+let searchStr = "When I see my fellow, I say Hello";
+let pos = searchStr.search("lo");
+console.log(pos); // 17
+
+// This will log `17`, because that is the index of `lo` in `fellow`. Much like `indexOf()`, if it cannot find it, it will return `-1`.
+
+// `search()` will accept a regex format as input, whereas `indexOf()` just takes a string. **`indexOf()` is faster than the `search()` method, so if you just need to look for a string, use `indexOf()`. If you need to look for a string pattern, you'll have to use the `search()` method**.
+
+// **`lastIndexOf()`** method returns the index where the argument string occurs last. If it cannot find it, it returns `-1`. Here is an example:
+
+let lastIndex_re = poem.lastIndexOf("re");
+console.log(lastIndex_re); // 24
+
+// To know what character is at a certain index position, **`charAt(index)`** method comes in handy, where the **specified index position is taken as an argument**:
+
+let pos1 = poem.charAt(11);
+console.log(pos1); // e
+
+//  If you are asking for the position of an index that is out of the range of the string, it will return an empty string, as is happening in this example:
+
+let pos2 = poem.charAt(1000);
+console.log(pos2);
+// <empty string>
+
+// This will log an empty line to the screen, and if you ask for the type of `pos2`, it will return `string`.
+
+///// Creating substrings - `slice()`
+
+let str1 = "Creating a substring";
+let substr1 = str1.slice(4);
+let substr2 = str1.slice(2, 8);
+console.log("1:", substr1);
+console.log("2:", substr2);
+// 1: ting a substring
+// 2: eating
+
+///// Replacing parts of the string - `replace()`
+
+// If you need to replace a part of the string, you can use the replace(old, new) method. It takes two arguments, one string to look for in the string and one new value to replace the old value with. 
+
+let hi = "Hi there";
+let new_hi = hi.replace("there", "Pascal");
+console.log(new_hi);
+// Hi Pascal
+
+// If the string you are targeting doesn't appear in the original string, the replacement doesn't take place and the original string will be returned:
+
+let new_hi2 = hi.replace("not there", "never there");
+console.log(new_hi2);
+// Hi there
+
+// It is only changing the first occurrence by default. So this example will only replace the first `hello` in the new string:
+
+let s3 = "hello hello";
+let new_s3 = s3.replace("hello", "oh");
+console.log(new_s3);
+//  oh hello
+
+// If we wanted to replace all the occurences, we could use the `replaceAll()` method.
+
+s3 = "hello hello";
+new_s3 = s3.replaceAll("hello", "hi");
+console.log(new_s3);
+// hi hi
+
+///// Uppercase and lowercase - `toUpperCase()`, `toLowerCase()`
+// We can change the letters of a string with the `toUpperCase()` and `toLowerCase()` built-in methods on string. Again, this is not changing the original string, so we'll have to capture the result:
+
+let low_bye = "bye!";
+let up_bye = low_bye.toUpperCase();
+console.log(up_bye);
+// BYE!
+
+// It converts all the letters to uppercase. We can do the opposite with `toLowerCase()`:
+
+let caps = "HI HOW ARE YOU?";
+let fixed_caps = caps.toLowerCase();
+console.log(fixed_caps);
+// hi how are you?
+
+// Capitalizing the first letter letter of the sentence:
+let first_cap = fixed_caps.charAt(0).toUpperCase().concat(fixed_caps.slice(1));
+console.log(first_cap);
+
+// We are chaining the methods here; we first grab the first character of `fixed_caps` with `charAt(0)` and then make it uppercase by calling `toUpperCase()` on it. We then need the rest of the string and we get it by concatenating `slice(1)`.
+
+///// The start and end of a string - `startsWith()`, `endsWith()`
+
+let encouragement = "You are doing great, keep up the good work!";
+let bool_start = encouragement.startsWith("You");
+console.log(bool_start);
+// true
+
+// It is case sensitive
+let bool_start2 = encouragement.startsWith("you");
+console.log(bool_start2);
+// false
+
+// If you don't care about uppercase or lowercase, you can use the previously discussed toLowerCase() method here, so that it will not take uppercase or lowercase into account:
+let bool_start3 = encouragement.toLowerCase().startsWith("you");
+console.log(bool_start3);
+// true
+
+// We are now converting the string to lowercase first, so we know we are only working with lowercase characters here. However, an important side note here is that this will affect performance for huge strings.
+
+let bool_end = encouragement.endsWith("Something else");
+console.log(bool_end);
+// false
+
+///// Practice exercise 4
+// Using string manipulation, create a function that will return a string with the first letter of all the words capitalized and the rest of the letters in lowercase. You should transform the sentence `thIs will be capiTalized for each word` into `This Will Be Capitalized For Each Word`:
+
+const given_str = "thIs will be capiTalized for each word";
+
+function convert_str(str_arg) {
+    let resStr = str_arg.toLowerCase();
+    const arStr = [];
+    let words_ = resStr.split(" ");
+
+    words_.forEach(word => {
+        let temp = word.slice(0, 1).toUpperCase() + word.slice(1);
+        arStr.push(temp);
+    });
+    return arStr.join(" ");
+}
+console.log(convert_str(given_str));
+// This Will Be Capitalized For Each Word
+
+///// Practice exercise 5
+// Using the `replace()` string method, complete this vowel replacer exercise by replacing the vowels in a string with numbers. You can start with this string:
+// ```I love JavaScript```
+// And turn it into something like the following:
+// ```2 l3v1 j0v0scr2pt```
+let given_str2 = "thIs will be capiTalized for each word";
+
+given_str2 = given_str2.toLocaleLowerCase();
+console.log(given_str2);
+
+const vowels = ['a', 'e', 'i', 'o', 'u'];
+
+vowels.forEach((el, id) => given_str2 = given_str2.replaceAll(el, id));
+
+console.log(given_str2);
+// th2s w2ll b1 c0p2t0l2z1d f3r 10ch w3rd
+
+//// Number methods
