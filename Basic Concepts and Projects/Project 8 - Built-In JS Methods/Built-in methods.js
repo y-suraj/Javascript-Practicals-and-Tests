@@ -490,3 +490,181 @@ console.log(given_str2);
 // th2s w2ll b1 c0p2t0l2z1d f3r 10ch w3rd
 
 //// Number methods
+
+///// Checking if something is (not) a number - `isNaN()`
+// `isNaN()` is a global function.
+let num1 = 30;
+console.log(isNaN(x)); // false
+
+// Often you will want to do the opposite, you can negate the function with an ! in front of it
+console.log(!isNaN(x)); // true
+
+let str2 = "hi";
+console.log(isNaN(str2)); // true
+
+let str3 = "5";
+console.log(isNaN(str3)); // false
+
+///// Checking if something is finite - `isFinite()`
+// `isFinite()` is a global function
+// It checks whether something is finite. It returns `false` for `NaN`, `Infinity`, and `undefined`, and `true` for all other values:
+
+let x2 = 3;
+let str4 = "finite";
+console.log(isFinite(x)); // true
+console.log(isFinite(str4)); // false
+console.log(isFinite(Infinity)); // false
+console.log(isFinite(10 / 0)); // false
+
+///// Checking if something is an integer - `isInteger()`
+// `isInteger()` is not a global method. We will have to refer to the `Number` object to use it. 
+
+// It returns `true` if the value is an integer and `false` when it's not:
+
+let x3 = 3;
+let str5 = "integer";
+console.log(Number.isInteger(x)); // true
+console.log(Number.isInteger(str5)); // false
+console.log(Number.isInteger(Infinity)); // false
+console.log(Number.isInteger(2.4)); // false
+
+///// Specifying a number of decimals - `toFixed()`
+// We can tell JS how many decimals to use with the `toFixed()` method.
+
+// This is different from the rounding methods in `Math`, since we can **specify the number of decimals** here. It doesn't change the original value, so we'll have to store the result:
+
+let x4 = 1.23456;
+let newX = x4.toFixed(3);
+console.log(x4, newX);
+// 1.23456 1.235
+
+///// Specifying precision - `toPrecision()`
+// This is different from the rounding methods in the `Math` class, since we can **specify the total number of numbers to look at**.  This comes down to JS looking at the total number of numbers. It is also counting the ones before the dot: 
+let x5 = 1.23456;
+let newX5 = x5.toPrecision(4);
+console.log(x5, newX5);
+// 1.23456 1.235
+
+//// Math methods
+///// Finding the highest and lowest number - `Math.max()`, `Math.min()`
+// There is a built-in method `max()` to find the highest number among the arguments.
+let highest = Math.max(51, 98, 1694, 161, 3, 894);
+console.log(highest);
+// 1694
+
+// Similarly, we can find the lowest number:
+let lowest = Math.min(51, 98, 1694, 161, 3, 894);
+console.log(lowest);
+// 3
+
+let highestOfWords = Math.max("hi", 3, "bye");
+console.log(highestOfWords);
+// NaN
+
+///// Square root and raising to the power of - `Math.sqrt()`, `Math.pow()`
+
+let res1 = Math.sqrt(64);
+console.log(res1); // 8
+
+let res2 = Math.pow(5, 4);
+console.log(res2); // 625
+
+///// Turning decimals into integers - `Math.round()`, `Math.ceil()`, `Math.floor()`
+
+// **Rounding a number - `round()`**
+let x6 = 6.78;
+let y6 = 5.34;
+console.log("X:", x6, "becomes", Math.round(x6));
+console.log("Y:", y6, "becomes", Math.round(y6));
+// X: 6.78 becomes 7
+// Y: 5.34 becomes 5
+
+// **Round up - `ceil()`**
+console.log("X:", x6, "becomes", Math.ceil(x6));
+console.log("Y:", y6, "becomes", Math.ceil(y6));
+// X: 6.78 becomes 7
+// Y: 5.34 becomes 6
+
+// Careful with negative numbers here, because -5 is higher than -6. This is how it works, as you can see in this example:
+
+let negativeX = -x6;
+let negativeY = -y6;
+console.log("negativeX:", negativeX, "becomes", Math.ceil(negativeX));
+console.log("negativeY:", negativeY, "becomes", Math.ceil(negativeY));
+// negativeX: -6.78 becomes -6
+// negativeY: -5.34 becomes -5
+
+// **Round down - `floor()`**
+console.log("X:", x6, "becomes", Math.floor(x6));
+console.log("Y:", y6, "becomes", Math.floor(y6));
+// X: 6.78 becomes 6
+// Y: 5.34 becomes 5
+
+console.log("negativeX:", negativeX, "becomes", Math.floor(negativeX));
+console.log("negativeY:", negativeY, "becomes", Math.floor(negativeY));
+// negativeX: -6.78 becomes -7
+// negativeY: -5.34 becomes -6
+
+// **trunc()**
+// This gives the exact same result as `floor()` for positive numbers, but it gets to these results differently. **It is *not rounding down*, it is simply only returning the integer part**:
+
+console.log("X:", x6, "becomes", Math.trunc(x6));
+console.log("Y:", y6, "becomes", Math.trunc(y6));
+// X: 6.78 becomes 6
+// Y: 5.34 becomes 5
+
+// When we use negative numbers for `trunc()` we can see the difference:
+console.log("negativeX:", negativeX, "becomes", Math.trunc(negativeX));
+console.log("negativeY:", negativeY, "becomes", Math.trunc(negativeY));
+// negativeX: -6.78 becomes -6
+// negativeY: -5.34 becomes -5
+
+// So whenever you need to round down, you'll have to use `floor()`, if you need the integer part of the number, you'll need `trunc()`.
+
+///// Exponent and logarithm
+// The exponent is the number to which a base is being raised. 
+
+// We use `e` (Euler's number) a lot in mathematics, this is what the `exp()` method in JS does. It returns the number to which `e` must be raised to get the input. 
+
+// We can use the `exp()` built-in method of Math to calculate the exponent, and the `log()` method to calculate the natural logarithm. You can see an example here:
+
+let x7 = 2;
+let exp = Math.exp(x7);
+console.log("Exp:", exp);
+// Exp: 7.38905609893065
+
+let log = Math.log(exp);
+console.log("Log:", log);
+// Log: 2
+
+///// Practice exercise 6
+console.log(Math.PI);
+// 3.141592653589793
+
+let pNum = 5.7;
+console.log("Ceil:", Math.ceil(pNum), ", Floor:", Math.floor(pNum), ", Round:", Math.round(pNum));
+// Ceil: 6 , Floor: 5 , Round: 6
+
+console.log("Random value:", Math.random());
+// Random value: 0.6167229694588592
+
+// Generate a random number between 0 to 10
+console.log("A number between 0 to 10:", Math.floor(Math.random() * 11));
+// A number between 0 to 10: 1
+
+// Generate a random number between 1 to 10
+console.log("A number between 1 to 10:", Math.floor(Math.random() * 10) + 1);
+// A number between 1 to 10: 3
+
+// Generate a random number between 1 to 100
+console.log("A number between 1 to 100:", Math.floor(Math.random() * 100) + 1);
+// A number between 1 to 100: 98
+
+// Create a function to generate a random number using the parameters of `min` and `max`. Run that function 100 times, returning into the console a random number from 1 to 100 each time.
+function ranNum(min, max) {
+    return Math.floor(Math.random() * (max - min + 1)) + min;
+}
+for (let x = 0; x < 100; x++) {
+    console.log(ranNum(1, 100));
+}
+// prints random numbers 100 times each
