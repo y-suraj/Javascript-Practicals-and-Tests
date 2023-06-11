@@ -661,13 +661,13 @@ console.log("A number between 1 to 100:", Math.floor(Math.random() * 100) + 1);
 // A number between 1 to 100: 98
 
 // Create a function to generate a random number using the parameters of `min` and `max`. Run that function 100 times, returning into the console a random number from 1 to 100 each time.
-function ranNum(min, max) {
+function getRandomNumber(min, max) {
     return Math.floor(Math.random() * (max - min + 1)) + min;
     // here `min` represents the minimum value of the desired range.
     // and `max` represents the maximum value of the desired range.
 }
 for (let x = 0; x < 100; x++) {
-    console.log(ranNum(1, 100));
+    console.log(getRandomNumber(1, 100));
 }
 // prints random numbers 100 times each
 
@@ -675,4 +675,51 @@ for (let x = 0; x < 100; x++) {
 
 // In order to work with dates in JS we use the built-in `Date` object.
 
-///// Creating dates
+///// Creating dates - `Date()` (construtor), `Date.now()`, 
+// There are different ways to create a date. One way to create dates is by using the different constructors.
+
+let currentDateTime = new Date();
+console.log(currentDateTime);
+
+// Console:
+// Date Sun Jun 11 2023 14:26:17 GMT+0530 (India Standard Time)
+
+// But, this way we are not using the built-int method, but the constructor.
+
+// There is a built-in method, `now()`, that returns current date and time, similar to what the no argument constructor does:
+
+// This will log the current time, represented in seconds since January 1st 1970. This is an arbitrary date representing the Unix epoch.
+
+let now2 = Date.now();
+console.log(now2);
+// 1686473894224
+
+// We can add 1,000 milliseconds to the Unix epoch time:
+
+let milliDate = new Date(1000);
+console.log(milliDate);
+// Console:
+// Date Thu Jan 01 1970 05:30:01 GMT+0530 (India Standard Time)
+
+// JS can also convert many string formats to a date. Always mind the order in which days and months of dates are presented in the date format and the interpreter of JS. This can vary depending on the region:
+
+let strDate = new Date("Sun Jun 11 2023 14:35:00 GMT+0530");
+console.log(strDate);
+// Date Sun Jun 11 2023 14:35:00 GMT+0530 (India Standard Time)
+
+// You can also specify a certain date using the constructor:
+
+let specificDate = new Date(2023, 5, 11, 14, 40, 00, 100);
+console.log(specificDate);
+// Date Sun Jun 11 2023 14:40:00 GMT+0530 (India Standard Time)
+
+// Please mind this very important detail here, the second parameter is the month. `0` is for January and `11` is for December.
+
+///// Methods to get and set the elements of a date
+// **get methods - `getDay()`, `getDate()`, `getMonth()`, `getFullYear()`, `getSeconds()`, `getMilliseconds()`, `getTime()`
+
+// **set methods - `setFullYear()`, `setMonth()`, `setDate()`, `setHours()`, `setTime()`**
+
+// Get certain parts of dates. This can be done with one of the `get` methods.
+
+let d = new Date();

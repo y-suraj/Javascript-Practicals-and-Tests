@@ -748,13 +748,13 @@ console.log("A number between 1 to 100:", Math.floor(Math.random() * 100) + 1);
 
 Create a function to generate a random number using the parameters of `min` and `max`. Run that function 100 times, returning into the console a random number from 1 to 100 each time.
 ```js
-function ranNum(min, max) {
+function getRandomNumber(min, max) {
     return Math.floor(Math.random() * (max - min + 1)) + min;
     // here `min` represents the minimum value of the desired range.
     // and `max` represents the maximum value of the desired range.
 }
 for (let x = 0; x < 100; x++) {
-    console.log(ranNum(1, 100));
+    console.log(getRandomNumber(1, 100));
 }
 // prints random numbers 100 times each
 ```
