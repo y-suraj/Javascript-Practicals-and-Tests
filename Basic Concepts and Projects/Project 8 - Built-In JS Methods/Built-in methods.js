@@ -668,3 +668,9 @@ for (let x = 0; x < 100; x++) {
     console.log(ranNum(1, 100));
 }
 // prints random numbers 100 times each
+
+//// Date methods
+
+// In order to work with dates in JS we use the built-in `Date` object.
+
+///// Creating dates
