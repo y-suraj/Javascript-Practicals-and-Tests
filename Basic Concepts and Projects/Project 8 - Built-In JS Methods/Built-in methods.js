@@ -723,3 +723,89 @@ console.log(specificDate);
 // Get certain parts of dates. This can be done with one of the `get` methods.
 
 let d = new Date();
+
+console.log("Day of week:", d.getDay());
+// Day of week: 1
+
+console.log("Day of month:", d.getDate());
+// Day of month: 12
+
+console.log("Month:", d.getMonth());
+// Month: 5
+
+console.log("Year:", d.getFullYear());
+// Year: 2023
+
+console.log("Seconds:", d.getSeconds());
+// Seconds: 22
+
+console.log("Milliseconds:", d.getMilliseconds());
+// Milliseconds: 207
+
+console.log("Time:", d.getTime());
+// Time: 1686579442207
+
+// You can **change the date with a `set` method**. Important to not here is that **the original date object gets changed with these set methods**:
+
+d.setFullYear(2010);
+console.log(d);
+// Date Sat Jun 12 2010 19:49:59 GMT+0530 (India Standard Time)
+
+d.setMonth(9);
+console.log(d);
+// Date Tue Oct 12 2010 19:51:11 GMT+0530 (India Standard Time)
+
+d.setDate(10);
+console.log(d);
+// Date Sun Oct 10 2010 19:51:55 GMT+0530 (India Standard Time)
+
+d.setHours(10);
+console.log(d);
+// Date Sun Oct 10 2010 10:52:37 GMT+0530 (India Standard Time)
+
+// If you call `setHours()` with a number higher than 24, it will roll over to the next date (1 per 24 hours) and after using the modulo operator, whatever is left over from hours `% 24` will be the hours. The same process applies for minutes, seconds, and milliseconds.
+
+// The `setTime()` actually overrides the complete date with the inserted epoch time:
+
+d.setTime(1686579757493);
+console.log(d);
+// Date Mon Jun 12 2023 19:52:37 GMT+0530 (India Standard Time)
+
+///// Parsing dates
+// With the built-in `parse()` method we can parse epoch dates from strings. It accepts many formats, but again you will have to be careful with the order of days and months:
+
+let d1 = Date.parse("June 12, 2023");
+console.log(d1);
+// 1686508200000
+
+let d2 = Date.parse("6/12/2023");
+console.log(d2);
+// 1686508200000
+
+// The input for the parse is ISO formats of dates. Quite a few formats can be parsed to string, but you'll have to be careful. The result might depend on the exact implementation. Make sure that you know what the format of the incoming string is, so that you don't confuse months and days, and make sure that you know the behavior of the implementations. This can only be done reliably if you know what the string format is. So for example when you need to convert data coming from your own database or website's date picker.
+
+///// Converting a date to a string
+
+console.log(d.toDateString());
+// Mon Jun 12 2023
+
+console.log(d.toLocaleDateString());
+// 12/6/2023
+
+///// Practice exercise 7
+// Output the date with the full month name into the console. When converting to or from arrays, remember that they are zero-based:
+
+let dateOb = new Date(2023, 6, 1);
+console.log(dateOb);
+const months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+
+let day = dateOb.getDate();
+let year = dateOb.getFullYear();
+let month = dateOb.getMonth();
+
+let dateVar = `${months[month-1]} ${day} ${year}`;
+console.log(dateVar);
+
+// Console:
+// Date Sat Jul 01 2023 00:00:00 GMT+0530 (India Standard Time)
+// June 1 2023
