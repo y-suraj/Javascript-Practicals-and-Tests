@@ -954,10 +954,10 @@ let targetDate = "Jul 1 2023";
 
 function countdown() {
     const milliSec = Date.parse(targetDate) - new Date();
-    const noOfDays = Math.floor(milliSec/(1000*60*60*24));
-    const noOfHrs = Math.floor((milliSec/(1000*60*60))%24);
-    const noOfMins = Math.floor((milliSec/1000/600)%60);
-    const noOfSec = Math.floor((milliSec/1000)%60);
+    const noOfDays = Math.floor(milliSec / (1000 * 60 * 60 * 24));
+    const noOfHrs = Math.floor((milliSec / (1000 * 60 * 60)) % 24);
+    const noOfMins = Math.floor((milliSec / 1000 / 600) % 60);
+    const noOfSec = Math.floor((milliSec / 1000) % 60);
     return {
         noOfDays,
         noOfHrs,
@@ -969,8 +969,8 @@ function countdown() {
 function update() {
     const temp = countdown();
     let output = "";
-    
-    for(const property in temp) {
+
+    for (const property in temp) {
         output += (`${property}: ${temp[property]} `);
     }
     console.log(output);
