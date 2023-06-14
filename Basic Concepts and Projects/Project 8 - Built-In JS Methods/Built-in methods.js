@@ -803,9 +803,64 @@ let day = dateOb.getDate();
 let year = dateOb.getFullYear();
 let month = dateOb.getMonth();
 
-let dateVar = `${months[month-1]} ${day} ${year}`;
+let dateVar = `${months[month - 1]} ${day} ${year}`;
 console.log(dateVar);
 
 // Console:
 // Date Sat Jul 01 2023 00:00:00 GMT+0530 (India Standard Time)
 // June 1 2023
+
+//// Chapter projects
+///// Word scrambler
+// Create a function that returns a value of a word and scrambles the letter order with `Math.random()`:
+
+let wordVal = "javascript";
+
+function wordScramble(str) {
+    let len = str.length;
+    let tempStr = "";
+
+    for (let i = 0; i < len; i++) {
+        console.log(str.length);
+        let id = Math.floor(Math.random() * str.length);
+
+        tempStr += str[id];
+        console.log(tempStr);
+
+        str = str.substr(0, id) + str.substr(id + 1);
+        console.log(str);
+    }
+    return tempStr;
+}
+console.log(wordScramble(wordVal));
+
+///// Countdown timer
+// Create code for a countdown timer that can be executed in the console window, and will show the total milliseconds, days, hours, minutes, and seconds remaining until a target date is reached:
+
+let targetDate = "Jul 1 2023";
+
+function countdown() {
+    const milliSec = Date.parse(targetDate) - new Date();
+    const noOfDays = Math.floor(milliSec/(1000*60*60*24));
+    const noOfHrs = Math.floor((milliSec/(1000*60*60))%24);
+    const noOfMins = Math.floor((milliSec/1000/600)%60);
+    const noOfSec = Math.floor((milliSec/1000)%60);
+    return {
+        noOfDays,
+        noOfHrs,
+        noOfMins,
+        noOfSec
+    }
+}
+
+function update() {
+    const temp = countdown();
+    let output = "";
+    
+    for(const property in temp) {
+        output += (`${property}: ${temp[property]} `);
+    }
+    console.log(output);
+    setTimeout(update, 1000);
+}
+update();
