@@ -761,3 +761,223 @@ for (let x = 0; x < 100; x++) {
 
 ## Date methods
 
+In order to work with dates in JS we use the built-in `Date` object.
+
+### Creating dates - `Date()` (construtor), `Date.now()`, 
+There are different ways to create a date. One way to create dates is by using the different constructors.
+```js
+let currentDateTime = new Date();
+console.log(currentDateTime);
+```
+Console:
+```
+Date Sun Jun 11 2023 14:26:17 GMT+0530 (India Standard Time)
+```
+
+But, this way we are not using the built-int method, but the constructor.
+
+There is a built-in method, `now()`, that returns current date and time, similar to what the no argument constructor does:
+
+This will log the current time, represented in seconds since January 1st 1970. This is an arbitrary date representing the Unix epoch.
+```js
+let now2 = Date.now();
+console.log(now2);
+// 1686473894224
+```
+
+We can add 1,000 milliseconds to the Unix epoch time:
+
+```js
+let milliDate = new Date(1000);
+console.log(milliDate);
+```
+
+Console:
+```
+Date Thu Jan 01 1970 05:30:01 GMT+0530 (India Standard Time)
+```
+
+JS can also convert many string formats to a date. Always mind the order in which days and months of dates are presented in the date format and the interpreter of JS. This can vary depending on the region:
+```js
+let strDate = new Date("Sun Jun 11 2023 14:35:00 GMT+0530");
+console.log(strDate);
+```
+Console:
+```
+Date Sun Jun 11 2023 14:35:00 GMT+0530 (India Standard Time)
+```
+You can also specify a certain date using the constructor:
+```js
+let specificDate = new Date(2023, 5, 11, 14, 40, 00, 100);
+console.log(specificDate);
+```
+Console:
+```
+Date Sun Jun 11 2023 14:40:00 GMT+0530 (India Standard Time)
+```
+
+Please mind this very important detail here, the second parameter is the month. `0` is for January and `11` is for December.
+
+### Methods to get and set the elements of a date
+**get methods - `getDay()`, `getDate()`, `getMonth()`, `getFullYear()`, `getSeconds()`, `getMilliseconds()`, `getTime()`**
+
+**set methods - `setFullYear()`, `setMonth()`, `setDate()`, `setHours()`, `setTime()`**
+
+Get certain parts of dates. This can be done with one of the `get` methods.
+```js
+let d = new Date();
+
+console.log("Day of week:", d.getDay());
+// Day of week: 1
+
+console.log("Day of month:", d.getDate());
+// Day of month: 12
+
+console.log("Month:", d.getMonth());
+// Month: 5
+
+console.log("Year:", d.getFullYear());
+// Year: 2023
+
+console.log("Seconds:", d.getSeconds());
+// Seconds: 22
+
+console.log("Milliseconds:", d.getMilliseconds());
+// Milliseconds: 207
+
+console.log("Time:", d.getTime());
+// Time: 1686579442207
+```
+
+You can **change the date with a `set` method**. Important to not here is that **the original date object gets changed with these set methods**:
+```js
+d.setFullYear(2010);
+console.log(d);
+// Date Sat Jun 12 2010 19:49:59 GMT+0530 (India Standard Time)
+
+d.setMonth(9);
+console.log(d);
+// Date Tue Oct 12 2010 19:51:11 GMT+0530 (India Standard Time)
+
+d.setDate(10);
+console.log(d);
+// Date Sun Oct 10 2010 19:51:55 GMT+0530 (India Standard Time)
+
+d.setHours(10);
+console.log(d);
+// Date Sun Oct 10 2010 10:52:37 GMT+0530 (India Standard Time)
+```
+If you call `setHours()` with a number higher than 24, it will roll over to the next date (1 per 24 hours) and after using the modulo operator, whatever is left over from hours `% 24` will be the hours. The same process applies for minutes, seconds, and milliseconds.
+
+The `setTime()` actually overrides the complete date with the inserted epoch time:
+```js
+d.setTime(1686579757493);
+console.log(d);
+// Date Mon Jun 12 2023 19:52:37 GMT+0530 (India Standard Time)
+```
+### Parsing dates
+With the built-in `parse()` method we can parse epoch dates from strings. It accepts many formats, but again you will have to be careful with the order of days and months:
+```js
+let d1 = Date.parse("June 12, 2023");
+console.log(d1);
+// 1686508200000
+
+let d2 = Date.parse("6/12/2023");
+console.log(d2);
+// 1686508200000
+```
+
+The input for the parse is ISO formats of dates. Quite a few formats can be parsed to string, but you'll have to be careful. The result might depend on the exact implementation. Make sure that you know what the format of the incoming string is, so that you don't confuse months and days, and make sure that you know the behavior of the implementations. This can only be done reliably if you know what the string format is. So for example when you need to convert data coming from your own database or website's date picker.
+
+### Converting a date to a string
+```js
+console.log(d.toDateString());
+// Mon Jun 12 2023
+
+console.log(d.toLocaleDateString());
+// 12/6/2023
+```
+
+### Practice exercise 7
+Output the date with the full month name into the console. When converting to or from arrays, remember that they are zero-based:
+```js
+let dateOb = new Date(2023, 6, 1);
+console.log(dateOb);
+const months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+
+let day = dateOb.getDate();
+let year = dateOb.getFullYear();
+let month = dateOb.getMonth();
+
+let dateVar = `${months[month - 1]} ${day} ${year}`;
+console.log(dateVar);
+```
+
+Console:
+```
+Date Sat Jul 01 2023 00:00:00 GMT+0530 (India Standard Time)
+June 1 2023
+```
+
+## Chapter projects
+### Word scrambler
+Create a function that returns a value of a word and scrambles the letter order with `Math.random()`:
+```js
+let wordVal = "javascript";
+
+function wordScramble(str) {
+    let len = str.length;
+    let tempStr = "";
+
+    for (let i = 0; i < len; i++) {
+        console.log(str.length);
+        let id = Math.floor(Math.random() * str.length);
+
+        tempStr += str[id];
+        console.log(tempStr);
+
+        str = str.substr(0, id) + str.substr(id + 1);
+        console.log(str);
+    }
+    return tempStr;
+}
+console.log(wordScramble(wordVal));
+```
+Console:
+
+![word scrambler output](./assets/word%20scramble.png)
+
+### Countdown timer
+Create code for a countdown timer that can be executed in the console window, and will show the total milliseconds, days, hours, minutes, and seconds remaining until a target date is reached:
+```js
+let targetDate = "Jul 1 2023";
+
+function countdown() {
+    const milliSec = Date.parse(targetDate) - new Date();
+    const noOfDays = Math.floor(milliSec/(1000*60*60*24));
+    const noOfHrs = Math.floor((milliSec/(1000*60*60))%24);
+    const noOfMins = Math.floor((milliSec/1000/600)%60);
+    const noOfSec = Math.floor((milliSec/1000)%60);
+    return {
+        noOfDays,
+        noOfHrs,
+        noOfMins,
+        noOfSec
+    }
+}
+
+function update() {
+    const temp = countdown();
+    let output = "";
+    
+    for(const property in temp) {
+        output += (`${property}: ${temp[property]} `);
+    }
+    console.log(output);
+    setTimeout(update, 1000);
+}
+update();
+```
+Console: 
+
+![countdown output](./assets/countdown.png)
