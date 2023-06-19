@@ -1,4 +1,6 @@
 # Document Object Modeling
+- Browser Object Modeling - Link: [w3shoools](https://www.w3schools.com/js/js_window.asp)
+- Document Object Modeling - Link: [w3shoools](https://www.w3schools.com/js/js_htmldom.asp)
 
 ## Practice exercise
 ```html
