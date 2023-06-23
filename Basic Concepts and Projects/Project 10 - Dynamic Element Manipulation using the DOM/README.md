@@ -156,6 +156,7 @@ Code:
             tr.append(td1);
             tr.append(td2);
             tr.append(td3);
+            // You can also write `tr.append(td1, td2, td3);` as an alternative to above three lines.
 
             // Add an event listener that will increase the vote counter for that row when the user clicks.
             tr.onclick = function() {
