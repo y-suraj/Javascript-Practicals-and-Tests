@@ -156,7 +156,6 @@ Code:
             tr.append(td1);
             tr.append(td2);
             tr.append(td3);
-            // You can also write `tr.append(td1, td2, td3);` as an alternative to above three lines.
 
             // Add an event listener that will increase the vote counter for that row when the user clicks.
             tr.onclick = function() {
@@ -173,5 +172,133 @@ Code:
     </script>
 </body>
 
+</html>
+```
+
+### Hangman game
+Create a Hangman game using arrays and page elements.
+![Hangman game](./assets/Hangman%20game.png)
+```html
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hangman game</title>
+</head>
+<style>
+    .gameArea {
+        text-align: center;
+        font-size: 2em;
+    }
+
+    .box,
+    .boxD {
+        display: inline-block;
+        padding: 5px;
+    }
+
+    .boxE {
+        display: inline-block;
+        width: 40px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        font-size: 1.5em;
+    }
+</style>
+</head>
+
+<body>
+    <div class="gameArea">
+        <div class="score"> </div>
+        <div class="puzzle"></div>
+        <div class="letters"></div>
+        <button>Start Game</button>
+    </div>
+
+    <script>
+        const myWords = ["Apple", "Banana", "Monkey", "Python", "learn Cpp", "Elephant", "Knowledge"];
+
+        const game = { cur: "", solution: "", puzz: [], total: 0 };
+
+        const score = document.querySelector(".score");
+        const puzzle = document.querySelector(".puzzle");
+        const letters = document.querySelector(".letters");
+        const btn = document.querySelector("button");
+        btn.addEventListener("click", startGame);
+
+        function startGame() {
+            if (myWords.length > 0) {
+                btn.style.display = "none";
+                game.puzz = [];
+                game.total = 0;
+                game.cur = myWords.shift();
+                game.solution = game.cur.split("");
+                builder();
+            } else {
+                score.textContent = "No More Words."
+            }
+        }
+
+        function generateElements(type, parentEl, output, newClassEl) {
+            const temp = document.createElement(type);
+            temp.classList.add("boxE");
+            parentEl.append(temp);
+            temp.textContent = output;
+            return temp;
+        }
+
+        function updateScore() {
+            score.textContent = `Total Letters Left: ${game.total}`;
+            if (game.total <= 0) {
+                console.log("game over");
+                score.textContent = "Game over";
+                btn.style.display = "block";
+            }
+        }
+
+        function builder() {
+            puzzle.innerHtml = "";
+            letters.innerHtml = "";
+            game.solution.forEach((letter) => {
+                let div = generateElements("div", puzzle, "-", "boxE");
+                if (letter == " ") {
+                    div.style.borderColor = "white";
+                    div.textContent = " ";
+                } else {
+                    game.total++;
+                }
+                game.puzz.push(div);
+                updateScore();
+            })
+            for (let i = 0; i < 26; i++) {
+                let temp = String.fromCharCode(65 + i);
+                let div = generateElements("div", letters, temp, "box");
+                let checker = function (e) {
+                    div.style.backgroundColor = "#ddd";
+                    div.classList.remove("box");
+                    div.classList.add("boxD");
+                    div.removeEventListener("click", checker);
+                    checkLetter(temp);
+                }
+                div.addEventListener("click", checker);
+            }
+        }
+
+        function checkLetter(letter) {
+            console.log(letter);
+            game.solution.forEach((ele, index) => {
+                if (ele.toUpperCase() == letter) {
+                    game.puzz[index].textContent = letter;
+                    game.total--;
+                    updateScore();
+                };
+            });
+        }
+
+    </script>
+</body>
 </html>
 ```
