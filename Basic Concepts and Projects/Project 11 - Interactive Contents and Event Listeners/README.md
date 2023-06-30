@@ -51,3 +51,27 @@ Create several divs with color names in `textContent`. Add JavaScript to add `cl
     </script>
 </body>
 ```
+
+## Practice exercise 3
+Using a basic HTML file, the below exercise will demonstrate the order of loading for the window object and the document object using DOMContentLoaded, which is an event that fires once the document object content is loaded in the browser. The window object will load afterward, even if the window.onload statement comes first.
+
+```html
+<body>
+    <script>
+        document.addEventListener("DOMContentLoaded", (e) => {
+            message("Document ready", e);
+        });
+        window.onload = (e) => {
+            message("Window Ready", e);
+        }
+        function message(messageStr, event) {
+            console.log(event);
+            console.log(messageStr);
+        }
+    </script>
+</body>
+```
+Console:
+
+![practice exercise 3](./assets/pe3.png)
+
