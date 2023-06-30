@@ -24,3 +24,30 @@ Regular mode and dark mode.
     </script>
 </body>
 ```
+
+## Practice exercise 2
+Create several divs with color names in `textContent`. Add JavaScript to add `click` event listeners to each element, and as each element is clicked, update the background color of the body to match the color name in the div.
+
+```html
+<body>
+    <div id="text">Red</div>
+    <div id="text">Orange</div>
+    <div id="text">Yellow</div>
+    <div id="text">Green</div>
+    <div id="text">Blue</div>
+    <div id="text">Violet</div>
+    <script>
+        let texts = document.querySelectorAll("#text");
+
+        texts.forEach((el) => {
+            el.style.color = el.innerText;
+        });
+
+        texts.forEach((el) => {
+            el.addEventListener("click", () => {
+                document.body.style.backgroundColor = el.textContent;
+            })
+        })
+    </script>
+</body>
+```
