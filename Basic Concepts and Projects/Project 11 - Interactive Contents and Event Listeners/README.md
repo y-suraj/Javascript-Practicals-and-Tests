@@ -75,3 +75,27 @@ Console:
 
 ![practice exercise 3](./assets/pe3.png)
 
+## Practice exercise 11.4
+Our aim is to change the background color of the element on the page as the various mouse events occur. On `mousedown` over the element, the element will turn green. When the mouse is over the element, it will turn red. As the mouse moves out of the element boundaries, the color will turn yellow. When the mouse is clicked, the color will go green, and when the mouse is released, it will change to blue. The actions also be logged in the console.
+
+```html
+<body>
+    <div class="block" style="width: 100px; height: 100px; background-color: pink;"></div>
+    <script>
+        const block = document.querySelector(".block");
+
+        block.textContent = "hello world";
+
+        block.addEventListener("mousedown", function (e) { changeColor("green", e); } );
+        block.addEventListener("mouseover", function (e) { changeColor("red", e); } );
+        block.addEventListener("mouseout", function (e) { changeColor("yellow", e); } );
+        block.addEventListener("mouseup", function (e) { changeColor("blue", e); } );
+
+        function changeColor(color, event) {
+            console.log(event.type);
+            block.style.backgroundColor = color;
+        }
+    </script>
+</body>
+```
+
