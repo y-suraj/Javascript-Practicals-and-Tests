@@ -75,7 +75,7 @@ Console:
 
 ![practice exercise 3](./assets/pe3.png)
 
-## Practice exercise 11.4
+## Practice exercise 4
 Our aim is to change the background color of the element on the page as the various mouse events occur. On `mousedown` over the element, the element will turn green. When the mouse is over the element, it will turn red. As the mouse moves out of the element boundaries, the color will turn yellow. When the mouse is clicked, the color will go green, and when the mouse is released, it will change to blue. The actions also be logged in the console.
 
 ```html
@@ -94,6 +94,49 @@ Our aim is to change the background color of the element on the page as the vari
         function changeColor(color, event) {
             console.log(event.type);
             block.style.backgroundColor = color;
+        }
+    </script>
+</body>
+```
+
+## Practice exercise 5
+Change the text in a div element on the page. This exercise will demonstrate how you can get the value from an input field and place it within a page element. It also covers tracking button clicks and details about the event target.
+
+```html
+<body>
+    <div class="output"></div>
+    <input type="text" name="message" placeholder="Your Message">
+    <button class="btn1">Button 1</button>
+    <button class="btn2">Button 2</button>
+    <div>
+        <button class="btn3">Log</button>
+    </div>
+    <script>
+        const output = document.querySelector(".output");
+        const myInput = document.querySelector("input[name='message']");
+        const button1 = document.querySelector(".btn1");
+        const button2 = document.querySelector(".btn2");
+        const button3 = document.querySelector(".btn3");
+        const log = [];
+
+        button1.addEventListener("click", tracker);
+        button2.addEventListener("click", tracker);
+        button3.addEventListener("click", (e) => {
+            console.log(log);
+        });
+
+        function tracker(e) {
+            output.textContent = myInput.value;
+            const ev = e.target;
+            console.dir(ev);
+            const temp = {
+                message: myInput.value,
+                type: ev.type,
+                class: ev.className,
+                tag: ev.tagName
+            };
+            log.push(temp);
+            myInput.value = "";
         }
     </script>
 </body>
