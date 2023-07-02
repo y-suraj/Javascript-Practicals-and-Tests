@@ -142,3 +142,50 @@ Change the text in a div element on the page. This exercise will demonstrate how
 </body>
 ```
 
+## Practice exercise 6
+This example will demonstrate event capturing and the delegation of page elements. By adding event listeners to the parent and children within the main element, this example will order the console messages according to the event capture properties.
+All of the div elements with a class of box will have the same event object. We can add the event target, textcontent, as well into the console so that we can tell which element was clicked.
+
+```html
+<body>
+    <style>
+        .box {
+            width: 200px;
+            height: 100px;
+            border: 1px solid black
+        }
+    </style>
+    <div class="container">
+        <div class="box" id="box0">Box #1</div>
+        <div class="box" id="box1">Box #2</div>
+        <div class="box" id="box2">Box #3</div>
+        <div class="box" id="box3">Box #4</div>
+    </div>
+    <script>
+        const boxes = document.querySelectorAll(".box");
+        const container = document.querySelector(".container");
+
+        container.addEventListener("click", (e) => {
+            console.log("4");
+        }, false);
+        container.addEventListener("click", (e) => {
+            console.log("1");
+        }, true);
+
+        boxes.forEach(element => {
+            element.addEventListener("click", (e) => {
+                console.log("3");
+                console.log(e.target.textContent);
+            }, false);
+            element.addEventListener("click", (e) => {
+                console.log("2");
+                console.log(e.target.textContent);
+            }, true);
+        });
+    </script>
+</body>
+```
+
+Output:
+![practice exercise 6](./assets/pe6.png)
+
