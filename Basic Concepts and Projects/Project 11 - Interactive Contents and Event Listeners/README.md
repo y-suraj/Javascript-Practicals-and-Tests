@@ -189,3 +189,54 @@ All of the div elements with a class of box will have the same event object. We 
 Output:
 ![practice exercise 6](./assets/pe6.png)
 
+## Practice exercise 7
+With two input fields on the page, JavaScript will listen for changes to the content in the input field. Once the input field is not in focus, if the value has been changed, the change event will be invoked. blur and focus are also added to the input fields and will get logged to the console as those events occur. Both input elements will have the same event listeners, and as you change the content of the input fields and remove focus, the output text content will update using the values of the input field that triggered the event.
+
+```html
+<body>
+    <div class="output1">
+    </div>
+    <input type="text" placeholder="First Name" name="first"><br>
+    <input type="text" placeholder="Last Name" name="last"><br>
+    <script>
+        const output = document.querySelector(".output1");
+        const input1 = document.querySelector("input[name='first']");
+        const input2 = document.querySelector("input[name='last']");
+
+        input1.addEventListener("change", () => {
+            track();
+            evType();
+        });
+        input1.addEventListener("blur", evType);
+        input1.addEventListener("focus", evType);
+
+        input2.addEventListener("change", () => {
+            track();
+            evType();
+        });
+        input2.addEventListener("blur", evType);
+        input2.addEventListener("focus", evType);
+
+        function track() {
+            let p = event.target;
+            if (p.name == "first") {
+                message("First name changed to " + p.value);
+            } else {
+                message("Last name changed to " + p.value);
+            }
+        }
+
+        function evType() {
+            console.log(event.type);
+        }
+
+        function message(str) {
+            output.textContent = str;
+        }
+    </script>
+</body>
+```
+
+Output:
+![practice exercise 7](./assets/pe7.png)
+
