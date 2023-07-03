@@ -240,3 +240,33 @@ With two input fields on the page, JavaScript will listen for changes to the con
 Output:
 ![practice exercise 7](./assets/pe7.png)
 
+## Practice exercise 8
+By recognizing key presses and detecting the values of characters as key presses occur with the element in focus, we can also detect if content is pasted into an input field.
+
+```html
+<body>
+    <input type="text" name="firstip">
+    <input type="text" name="secondip">
+    <div class="output"></div>
+    <script>
+        const output = document.querySelector(".output");
+        const eles = document.querySelectorAll("input");
+
+        eles.forEach(element => {
+            element.addEventListener("keydown", () => {
+                if (!isNaN(event.key))
+                    output.textContent += event.key;
+            });
+            element.addEventListener("keyup", (e) => {
+                // here `e` is `event`
+                console.log(e.key);
+            });
+            element.addEventListener("paste", (e) => {
+                console.log('pasted');
+            })
+        });
+    </script>
+</body>
+```
+
+![practice exercise 8](./assets/pe8.png)
