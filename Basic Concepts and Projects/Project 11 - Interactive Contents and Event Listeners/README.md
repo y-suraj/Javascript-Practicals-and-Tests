@@ -263,10 +263,75 @@ By recognizing key presses and detecting the values of characters as key presses
             });
             element.addEventListener("paste", (e) => {
                 console.log('pasted');
-            })
+            });
         });
     </script>
 </body>
 ```
 
+Output
 ![practice exercise 8](./assets/pe8.png)
+
+## Practice exercise 9
+This will be an "I'm not a robot" check. Drag and drop can be used to ensure that it's a live user that is acting on a page rather than a robot. This exercise will demonstrate how to create a visual dragging effect on an active element, in which the user clicks the mouse down to create a drag action, and once the mouse button is released, the drop event occurs. The successful actions are logged to the console.
+
+The preceding HTML creates styles for an element that will be used for dropping, and sets a width, height, and border. It creates another class called `red` and adds a red background to the active element so that it shows as active, along with two div elements that will have classes of the `box` element for dropoff. Finally, we create a `div` nested in one of the boxes that has an `id` of `dragme` and an attribute of `draggable` set to `true`, with some instructive text added to aid the user. 
+
+```html
+<body>
+    <!-- CSS -->
+    <style>
+        .box {
+            height: 100px;
+            width: 100px;
+            border: 1px solid black;
+            background-color: white;
+        }
+
+        .red {
+            background-color: red;
+        }
+    </style>
+    <!-- HTML -->
+    <div class="box">1
+        <div id="dragme" draggable="true">Drag me!</div>
+    </div>
+    <div class="box">2</div>
+    <!-- Javascript -->
+    <script>
+        const dragEle = document.getElementById("dragme");
+
+        dragEle.addEventListener("dragtart", () => {
+            dragEle.style.opacity = 0.5;
+        });
+        dragEle.addEventListener("dragend", () => {
+            dragEle.style.opacity = "";
+        });
+
+        const boxes = document.querySelectorAll(".box");
+
+        boxes.forEach(box => {
+            box.addEventListener("dragenter", (ev) => {
+                ev.target.classList.add('red');
+            });
+            box.addEventListener("dragover", (ev) => {
+                ev.preventDefault();
+            });
+            box.addEventListener("dragleave", (ev) => {
+                console.log("leave");
+                ev.target.classList.remove('red');
+            });
+            box.addEventListener("drop", () => {
+                event.preventDefault();
+                console.log("dropped");
+                if (!isNaN(event.target.innerText) == true) {
+                    event.target.appendChild(dragEle);
+                }
+            });
+        });
+    </script>
+</body>
+```
+
+Output:
+![practice exercise 9](./assets/pe9.png)
