@@ -386,5 +386,47 @@ This will be about creating a form validator. In this exercise, you will be chec
 </body>
 ```
 
+Output: 
 ![practice exercise 10](./assets/pe10.png)
+
+## Practice exercise 11 
+This exercise will demonstrate creating the events for a simple interactive element on the page. The purple square will move every time it's clicked; once it reaches the boundaries of the page, it will change direction from left to right and right to left, depending on what side it hits.
+
+```html
+<style>
+    div {
+        background-color: purple;
+        width: 100px;
+        height: 100px;
+        position: absolute;
+    }
+</style>
+
+<body>
+    <div id="block"></div>
+    <!-- JS -->
+    <script>
+        const block = document.querySelector("#block");
+        let mover = { speed: 10, dir: 1, pos: 0 };
+        block.addEventListener("click", moveBlock);
+
+        function moveBlock() {
+            let intervalCounter = 30;
+            setInterval(function () {
+                if (intervalCounter < 1) {
+                    clearInterval();
+                } else {
+                    if (mover.pos > 800 || mover.pos < 0) {
+                        mover.dir *= -1;
+                    }
+                    intervalCounter--;
+                    mover.pos += intervalCounter * mover.dir;
+                    block.style.left = mover.pos + "px";
+                    console.log(mover.pos);
+                }
+            }, 2);
+        }
+    </script>
+</body>
+```
 
