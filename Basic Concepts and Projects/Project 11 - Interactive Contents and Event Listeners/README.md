@@ -335,3 +335,56 @@ The preceding HTML creates styles for an element that will be used for dropping,
 
 Output:
 ![practice exercise 9](./assets/pe9.png)
+
+## Practice exercise 10
+This will be about creating a form validator. In this exercise, you will be checking to ensure that the desired values are entered into the input fields. The code will check the input values that are entered by the user to match predetermined conditions for those field values.
+
+```html
+<body>
+    <form action="anotherpage.html" method="get">
+        First:
+        <input type="text" id="firstName" name="firstName" placeholder="First name" /> <br>
+        Last:
+        <input type="text" id="lastName" name="lastName" placeholder="Last name" /> <br>
+        Age:
+        <input type="text" name="age" id="age" placeholder="Age" /> <br>
+        <input type="submit" value="submit" />
+    </form>
+    <!-- JS -->
+    <script>
+        const form = document.querySelector("form");
+
+        form.addEventListener("submit", (e) => {
+            let error = false;
+            if (checker(form.firstName.value)) {
+                console.log("First Name needed");
+                error = true;
+            }
+            if (checker(form.lastName.value)) {
+                console.log("Last Name needed");
+                error = true;
+            }
+            if (form.age.value < 19) {
+                console.log("You must be 19 or over");
+                error = true;
+            }
+            if (error) {
+                e.preventDefault();
+                console.log("pls review the form");
+            }
+        });
+
+        function checker(str) {
+            let len = str.length;
+            console.log(len);
+            if (len < 6) {
+                return true;
+            }
+            return false;
+        }
+    </script>
+</body>
+```
+
+![practice exercise 10](./assets/pe10.png)
+
