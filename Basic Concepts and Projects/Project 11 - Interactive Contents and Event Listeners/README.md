@@ -394,16 +394,24 @@ This exercise will demonstrate creating the events for a simple interactive elem
 
 ```html
 <style>
-    div {
+    #block {
         background-color: purple;
         width: 100px;
         height: 100px;
         position: absolute;
     }
+
+    #main {
+        border: 2px solid red;
+        width: 829px;
+        height: 100px;
+    }
 </style>
 
-<body>
-    <div id="block"></div>
+<body style="margin-left:0;">
+    <div id="main">
+        <div id="block"></div>
+    </div>
     <!-- JS -->
     <script>
         const block = document.querySelector("#block");
@@ -422,11 +430,13 @@ This exercise will demonstrate creating the events for a simple interactive elem
                     intervalCounter--;
                     mover.pos += intervalCounter * mover.dir;
                     block.style.left = mover.pos + "px";
-                    console.log(mover.pos);
+                    console.log("Dir: " + mover.dir + " \nIC: " + intervalCounter + "\nPos: " + mover.pos);
                 }
             }, 2);
         }
     </script>
 </body>
+
+</html>
 ```
 
