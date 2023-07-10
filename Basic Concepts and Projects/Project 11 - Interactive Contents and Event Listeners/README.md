@@ -446,3 +446,4 @@ This exercise will demonstrate creating the events for a simple interactive elem
 </body>
 ```
 
+![practice exercise 11](./assets/pe11.png)
