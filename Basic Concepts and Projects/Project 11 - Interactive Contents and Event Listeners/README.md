@@ -403,13 +403,21 @@ This exercise will demonstrate creating the events for a simple interactive elem
 
     #main {
         border: 2px solid red;
-        width: 829px;
+        width: 900px;
         height: 100px;
+    }
+
+    #box {
+        border: 2px solid blue;
+        height: 97px;
+        padding-left: 835px;
+        position: fixed;
     }
 </style>
 
 <body style="margin-left:0;">
     <div id="main">
+        <div id="box"></div>
         <div id="block"></div>
     </div>
     <!-- JS -->
@@ -436,7 +444,5 @@ This exercise will demonstrate creating the events for a simple interactive elem
         }
     </script>
 </body>
-
-</html>
 ```
 
