@@ -502,6 +502,7 @@ Figure out which elements are clicked on in a page and record their IDs, tags, a
 ```
 
 Output:
+
 ![analytics](./assets/analytics.png)
 
 ### Star rating system
@@ -563,5 +564,120 @@ Create a star rating component that is fully interactive and dynamic using JavaS
 ```
 
 Output: 
+
 ![star rating](./assets/star%20rating.png)
+
+### Mouse position tracker
+Track your mouse's x and y position within an element. As you move the mouse within the element, the x position and y position values will update.
+```html
+<style>
+    .holder {
+        display: inline-block;
+        width: 300px;
+        height: 300px;
+        border: 1px solid;
+        padding: 10px;
+    }
+
+    .active {
+        background-color: red;
+    }
+</style>
+
+<body>
+    <div class="holder">
+        <div id="output"></div>
+    </div>
+    <!-- JS -->
+    <script>
+        const main = document.querySelector(".holder");
+        main.addEventListener("mouseover", (e) => {
+            e.target.classList.add("active");
+        });
+        main.addEventListener("mouseout", (e) => {
+            e.target.classList.remove("active");
+        });
+        main.addEventListener("mousemove", coordin);
+        function coordin() {
+            let html = "X: " + event.clientX + " | Y: " + event.clientY;
+            document.getElementById("output").innerHTML = html;
+        }
+    </script>
+</body>
+```
+
+### Box clicker speed test game
+The objective here is to click on the red box as quickly as possible once it appears. The box will be randomly placed within a container and positioned with random values. The box will have an event listener that will track the start and click times to calculate the duration of the click events. 
+```html
+    <style>
+        .output {
+            width: 500px;
+            height: 500px;
+            border: 1px solid black;
+            margin: auto;
+            text-align: center;
+        }
+
+        .box {
+            width: 50px;
+            height: 50px;
+            position: relative;
+            top: 50px;
+            left: 20%;
+            background-color: red;
+        }
+
+        .message {
+            text-align: center;
+            padding: 10px;
+            font-size: 1.3em;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="output"></div>
+    <div class="message"></div>
+    <script>
+        const output = document.querySelector(".output");
+        const message = document.querySelector(".message");
+        message.textContent = "Click on red box to Start";
+        const box = document.createElement('div');
+        box.classList.add("box");
+        const game = {
+            timer: 0,
+            start: null
+        }
+        output.append(box);
+
+        box.addEventListener("click", (e) => {
+            const el = e.target;
+            box.textContent = "";
+            box.style.display = "none";
+            game.timer = setTimeout(addBox, ranNum(3000));
+            if (!game.start) {
+                message.textContent = "Loading...";
+            } else {
+                const cur = new Date().getTime();
+                const dur = (cur - game.start) / 1000;
+                message.textContent = `It took ${dur} seconds to click`;
+            }
+        });
+        function addBox() {
+            message.textContent = "Click it...";
+            game.start = new Date().getTime();
+            box.style.display = 'block';
+            box.style.left = ranNum(450) + 'px';
+            box.style.top = ranNum(450) + 'px';
+        }
+        function ranNum(max) {
+            return Math.floor(Math.random() * max);
+        }
+    </script>
+</body>
+```
+
+Output:
+
+![box clicker speed test game](./assets/box%20clicker%20speed%20test.png)
 
