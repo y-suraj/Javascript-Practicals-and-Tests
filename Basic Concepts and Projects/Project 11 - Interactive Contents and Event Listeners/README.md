@@ -448,3 +448,120 @@ This exercise will demonstrate creating the events for a simple interactive elem
 
 Output:
 ![practice exercise 11](./assets/pe11.png)
+
+## Chapter projects
+### Analytics
+Figure out which elements are clicked on in a page and record their IDs, tags, and class name.
+```html
+<style>
+    #main {
+        display: flex;
+        border: 1px solid;
+        max-width: fit-content;
+    }
+
+    .box {
+        height: 100px;
+        width: 100px;
+        border: 1px solid;
+        margin: 5px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+</style>
+
+<body>
+    <div id="main">
+        <div class="box" id="box1">Box 1</div>
+        <div class="box" id="box2">Box 2</div>
+        <div class="box" id="box3">Box 3</div>
+        <div class="box" id="box4">Box 4</div>
+    </div>
+    <!-- JS -->
+    <script>
+        const trackerArr = [];
+        const main = document.querySelector("#main");
+        main.addEventListener("click", track);
+
+        function track(e) {
+            const el = e.target;
+            if (el.id) {
+                const temp = {};
+                temp.content = el.textContent;
+                temp.id = el.id;
+                temp.tagName = el.tagName;
+                temp.class = el.className;
+                // console.dir(el);
+                trackerArr.push(temp);
+                console.log(trackerArr);
+            }
+        }
+    </script>
+</body>
+```
+
+Output:
+![analytics](./assets/analytics.png)
+
+### Star rating system
+Create a star rating component that is fully interactive and dynamic using JavaScript.
+```html
+<style>
+    .stars ul {
+        list-style-type: none;
+        padding: 0;
+    }
+
+    .star {
+        font-size: 2em;
+        color: #ddd;
+        display: inline-block;
+    }
+
+    .orange {
+        color: orange;
+    }
+
+    .output {
+        background-color: #ddd;
+    }
+</style>
+
+<body>
+    <ul class="stars">
+        <li class="star">&#10029;</li>
+        <li class="star">&#10029;</li>
+        <li class="star">&#10029;</li>
+        <li class="star">&#10029;</li>
+        <li class="star">&#10029;</li>
+    </ul>
+    <div class="output"></div>
+    <!-- JS -->
+    <script>
+        const starsUL = document.querySelector(".stars");
+        const output = document.querySelector(".output");
+        const stars = document.querySelectorAll(".star");
+
+        stars.forEach((star, index) => {
+            star.starVal = index + 1;
+            star.addEventListener("click", starRate);
+        });
+        function starRate(e) {
+            const el = e.target;
+            output.innerHTML = `You Rated this ${el.starVal} stars`;
+            stars.forEach((star, index) => {
+                if (index < el.starVal) {
+                    star.classList.add("orange");
+                } else {
+                    star.classList.remove("orange");
+                }
+            });
+        }
+    </script>
+</body>
+```
+
+Output: 
+![star rating](./assets/star%20rating.png)
+
