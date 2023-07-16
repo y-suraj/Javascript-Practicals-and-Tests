@@ -638,6 +638,7 @@ The objective here is to click on the red box as quickly as possible once it app
 <body>
     <div class="output"></div>
     <div class="message"></div>
+    <!-- JS -->
     <script>
         const output = document.querySelector(".output");
         const message = document.querySelector(".message");
