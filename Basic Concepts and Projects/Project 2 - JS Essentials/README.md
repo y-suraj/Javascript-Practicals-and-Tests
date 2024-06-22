@@ -17,7 +17,7 @@ let str4 = "A backslash: \\!";
 console.log(str3);
 console.log(str4);
 ```
-Output:
+Output:<br>
 ![String output](./assets/image.png)
 
 ### **BigInt**
