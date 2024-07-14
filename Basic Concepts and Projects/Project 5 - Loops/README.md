@@ -35,7 +35,7 @@ do {
     console.log(counter);
     counter += step;
 } while (counter <= 100)
-// prints 0 to 100
+// prints 0 to 101
 ```
 
 ## `for` loop
