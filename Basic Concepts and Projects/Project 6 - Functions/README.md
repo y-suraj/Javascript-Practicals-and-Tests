@@ -451,7 +451,7 @@ This has to do with where functions and variables are accessible from. If you ha
 ```
 The function itself is surrounded by parentheses, which makes it create a function instance. Without these parentheses around it, it would throw an error because our function does not have a name (this is worked around by assigning the function to a variable, though, where the output can be returned to the variable).
 
-`();` executes the unnamed function—this must be done immediately following a function declaration. If your function were to require a parameter, you would pass it in within these final brackets.
+`();` executes the unnamed function—this must be done immediately following a function declaration. **If your function were to require a parameter, you would pass it in within these final brackets**.
 
 You could also combine IIFE with other function patterns. For example, you could use an arrow function here to make the function even more concise:
 ```js
