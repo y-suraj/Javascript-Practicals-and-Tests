@@ -92,6 +92,65 @@ Build a collapsing and expanding accordion component that will open page element
 </html>
 ```
 
+Alternative:
+
+```html
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Collapsible accordion component</title>
+    <style>
+        /* .active {
+            display: block !important;
+        } */
+
+        .myText {
+            display: none;
+        }
+
+        .title {
+            font-size: 1.5em;
+            background-color: #ddd;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="container">
+        <div class="title">Title #1</div>
+        <div class="myText">Just some text #1</div>
+        <div class="title">Title #2</div>
+        <div class="myText">Just some text #2</div>
+        <div class="title">Title #3</div>
+        <div class="myText">Just some text #3</div>
+    </div>
+    <script>
+        let titles = document.querySelectorAll(".title");
+        let texts = document.querySelectorAll(".myText");
+
+        titles.forEach((el) => {
+            el.addEventListener("click", (e) => {
+                console.log(el.nextElementSibling);
+                remover();
+                el.nextElementSibling.style.display = 'block';
+            });
+        });
+        function remover() {
+            texts.forEach((ele) => {
+                ele.style.display = "none";
+            })
+        }
+    </script>
+</body>
+
+</html>
+```
+
 ### Interactive voting system
 The below code will create a dynamic list of people that can be clicked, and it will update the corresponding value with the number of times that name was clicked. It also includes an input field that will allow you to add more users to the list, each of which will create another item in the list that can be interacted with the same as the default list items.
 ![Interactive voting system](./assets/Interactive%20voting%20system.png)
