@@ -114,7 +114,7 @@ console.log(text.match(/[a-d]/));
 Console:
 
 ```
-[ "d" ]
+['d', index: 0, input: 'd', groups: undefined]
 ```
 
 And if we wanted **any letter, lowercase or uppercase**, we would write this:
@@ -126,7 +126,7 @@ console.log(text.match(/[a-zA-Z]/));
 Console:
 
 ```
-[ "d" ]
+['t', index: 0, input: 't', groups: undefined]
 ```
 
 We could actually also use the **case-insensitive modifier to achieve the same thing**, but this would apply to the regex pattern as a whole, and you might only need it to apply for the specific character:
@@ -137,7 +137,7 @@ console.log(text.match(/[a-z]/i));
 Console:
 
 ```
-[ "d" ]
+['t', index: 0, input: 't', groups: undefined]
 ```
 
 We would get a match on both of the preceding options. 
@@ -150,7 +150,7 @@ console.log(text.match(/[a-zA-Z0-9]/));
 Console:
 
 ```
-[ "d" ]
+['t', index: 0, input: 't', groups: undefined]
 ```
 
 However, these **special characters** won't match:
@@ -162,7 +162,7 @@ console.log(text.match(/[a-zA-Z0-9]/));
 Console:
 
 ```
-[ null ]
+null
 ```
 
 To address the difficulty of complex characters not matching an expression, the **dot functions** as a special **wildcard character in regex that can match any character**. 
@@ -236,7 +236,7 @@ Console:
 ]
 ```
 
-`\b`, which matches text only when it's at the beginning of a word.
+`\b`, which **matches text only when it's at the beginning of a word**.
 
 So, in the following example, it is not going to match the instances of in `in beginning`:
 ```js
@@ -260,3 +260,24 @@ console.log(nr.match(/3/g));
 You should receive a `TypeError` saying that `nr.match()` is not a function.
 
 ### Groups
+If you want to **match a group of characters**, you can surround them with parentheses.
+
+Example:
+```js
+let text = "I love JavaScript!";
+console.log(text.match(/(love|dislike)\s(javascript|spiders)/gi));
+```
+Here it is going to look for either `love` or `dislike`, followed by whitespace character, followed by `javascript` or `spiders`, and it will do so for all occurences while ignoring whether they are in uppercase of lowercase. This is the log:
+
+Console:
+
+```
+['love JavaScript']
+```
+
+Let's just say we can match on roughly four combinations here. Two of them seem to make more sense:
+- Love spiders
+- Dislike spiders
+- Love JavaScript
+- Dislike JavaScript
+
