@@ -281,3 +281,86 @@ Let's just say we can match on roughly four combinations here. Two of them seem 
 - Love JavaScript
 - Dislike JavaScript
 
+
+**Match any four alphanumeric characters in a sequence**:
+
+```js
+let text = "I love JavaScript!";
+console.log(text.match(/[a-zA-Z0-9][a-zA-Z0-9][a-zA-Z0-9][a-zA-Z0-9]/g));
+```
+
+Console:
+
+```
+(3) ['love', 'java', 'scri']
+```
+
+This is a terrible way to go about repeating a block: let's look for **better options**. If we only want it to be present 0 or 1 times, we can use the question mark. So this is for optional characters, for example:
+
+```js
+let text = "You are doing great!";
+console.log(text.match(/n?g/gi));
+```
+
+This looks for a `g` character that may or not may be preceded by an `n`.
+
+Console:
+```
+(2) ['ng', 'g']
+```
+
+If you want something at **least once, but optionally more often**, you can use the plus sign: `+`.
+
+This is going to **match for the group 123 one or more times**. And since this string is present, it will find a match. 
+
+Console:
+
+```
+(2) ['123123123', '123', index: 0, input: '123123123', groups: undefined]
+```
+
+It matches the whole string in this case, since it is just `123` repeated. 
+
+There are also situations where you want to have a certain piece of regex **match any number of times**, which can be indicated with the asterisk: `*`.
+
+```js
+/(123)*a/
+```
+
+It will match with any a preceded by `123` any number of times. So it will match on the following, for example:
+- 123123123a
+- 123a
+- a
+- ba
+
+We can be more specific as well. We do this using this syntax `{min, max}`.
+
+```js
+let text = "abcabcabc";
+console.log(text.match(/(abc){1,2}/));
+```
+
+Console:
+```
+(2) ['abcabc', 'abc', index: 0, input: 'abcabcabc', groups: undefined]
+```
+
+It does this because it will match on `abc` both once and twice. 
+
+`groups` is still `undefined` in the output. In order to specify groups, we'll have to name them. 
+
+```js
+let text = "I love JavaScript!";
+console.log(text.match(/(?<language>javascript)/i));
+```
+
+Console:
+```
+(2) ['JavaScript', 'JavaScript', index: 7, input: 'I love JavaScript!', groups: {…}
+```
+
+![groups defined](./assets/group%20defined.png)
+
+### Practical regex
+
+#### Searching and replacing strings
