@@ -364,3 +364,213 @@ Console:
 ### Practical regex
 
 #### Searching and replacing strings
+
+```js
+let text = "That's not the case.";
+console.log(text.search(/Case/i));
+```
+
+Console:
+
+```
+15
+```
+
+Adding the **`i` modifier here ignores the distinction between uppercase and lowercase**.
+
+This code *returns `15`, which is the starting index position of the match*. 
+
+This cannot be done using the normal string input.
+
+**Use the global modifier(`g`) for replacing all instances rather than the first instance of a string.**
+
+Look at this expression **without `g`**:
+```js
+let text = "Coding is fun. Coding opens up a lot of opportunities.";
+console.log(text.replace("Coding", "JavaScript"));
+```
+
+Console:
+```
+JavaScript is fun. Coding opens up a lot of opportunities.
+```
+
+Without regex, it only replaces the first encounter.
+
+With the `g` global modifier:
+```js
+let text = "Coding is fun. Coding opens up a lot of opportunities.";
+console.log(text.replace(/Coding/g, "JavaScript"));
+```
+
+Console:
+```
+JavaScript is fun. JavaScript opens up a lot of opportunities.
+```
+
+Using both `g` and `i`:
+```js
+console.log(text.replace(/coding/ig, "Javascript"));
+```
+
+Console:
+```
+Javascript is fun. Javascript opens up a lot of opportunities.
+```
+
+##### Practice exercise 12.1
+
+Find and replace strings. The following exercise involves replacing characters in a specified string value. The first input field will indicate which character string will be replaced, and the second input field will indicate which characters will replace them once the button is clicked.
+
+```html
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Js course</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div id="output">Complete JavaScript Course</div>
+    Search for:
+    <input id="sText" type="text">
+    <br> Replace with:
+    <input id="rText" type="text">
+    <br>
+    <button>Replace</button>
+    <!-- JS -->
+    <script>
+        const output = document.getElementById("output");
+        const searchTxt = document.getElementById("sText");
+        const replaceTxt = document.getElementById("rText");
+        document.querySelector("button").addEventListener("click", lookUp);
+
+        function lookUp() {
+            const s = output.textContent;
+            const rt = replaceTxt.value;
+            const re = new RegExp(searchTxt.value, "gi");
+
+            if (s.match(re)) {
+                let newValue = s.replace(re, rt);
+                output.textContent = newValue;
+            }
+        }
+    </script>
+</body>
+</html>
+```
+
+#### Email validation
+
+Email addresses consist of five parts, in the form of:
+
+`[name]@[domain].[extension]`
+
+Here are the five parts explained:
+
+1. `name`: 
+    - One or more alphanumerical characters,
+    - underscores,
+    - dashes, or
+    - dots.
+
+2. `@`:
+    - Literal character
+
+3. `domain`:
+    - One or more alphanumerical characters,
+    - underscores,
+    - dashes, or
+    - dots.
+
+4. `.`: 
+    - Literal dot
+
+5. `extension`:
+    - One or more alphanumerical characters,
+    - underscores,
+    - dashes, or
+    - dots.
+
+Putting it all together:
+```js
+/([a-zA-Z0-9._-]+@[a-zA-Z0-9._-]+\.[a-zA-Z0-9._-]+)/g
+```
+
+Let's look at this regex in action:
+
+```js
+let emailPattern = /([a-zA-Z0-9._-]+@[a-zA-Z0-9._-]+\.[a-zA-Z0-9._-]+)/g;
+let validEmail = "abc_123@abcmail.com";
+let invalidEmail = "abc_1@cba@.com";
+console.log(validEmail.match(emailPattern));
+console.log(invalidEmail.match(emailPattern));
+```
+
+Console:
+![email regex output](./assets/email%20regex%20output.png)
+
+More tests:
+![more email regex tests](./assets/more%20email%20regex%20tests.png)
+
+
+##### Practice exercise 12.2
+
+Create an application that uses JavaScript to check whether the string value of an input is a validly formatted email using regex.
+
+```html
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Js course</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+    <div class="output"></div>
+    <input type="text" placeholder="Enter Email">
+    <button>Check</button>
+    <!-- JS -->
+    <script>
+        const input = document.querySelector("input");
+        const output = document.querySelector(".output");
+        const rEx = /([a-zA-Z0-9._-]+@[a-zA-Z0-9._-]+\.[a-zA-Z0-9._-]+)\w+/;
+
+        document.querySelector("button").addEventListener("click", (e) => {
+            const curValue = input.value;
+            const result = rEx.test(curValue);
+            let response = "";
+
+            if (!result) {
+                response = "Invalid Email!";
+                output.style.color = "red";
+            } else {
+                response = "Valid Email!";
+                output.style.color = "green";
+            }
+            input.value = "";
+            output.textContent = response;
+        });
+    </script>
+</body>
+
+</html>
+```
+
+Outputs:<br><br>
+INPUT 1<br><br>
+![input 1](./assets/input%201.jpeg)<br>
+Output<br>
+![output 1](./assets/output%201.jpeg)<br><br>
+INPUT 2<br><br>
+![input 2](./assets/input%202.jpeg)<br>
+Output<br>
+![output 2](./assets/output%202.jpeg)<br>
+
+## Functions and the arguments object
+
