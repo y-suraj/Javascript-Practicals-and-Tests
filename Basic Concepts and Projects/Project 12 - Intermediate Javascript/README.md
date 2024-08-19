@@ -574,3 +574,148 @@ Output<br>
 
 ## Functions and the arguments object
 
+Javascript deals with arguments in functions by adding them to a custom object called **`arguments`. This object works a lot like an array, and we can use it instead using the name of the parameter**. Consider the following code:
+
+```js
+function test(a, b, c) {
+console.log("first:", a, arguments[0]);
+console.log("second:", b, arguments[1]);
+console.log("third:", c, arguments[2]);
+}
+test("fun", "js", "secrets");
+```
+
+Console: <br>
+```
+first: fun fun
+second: js js
+third: secrets secrets
+```
+
+When you update one of the parameters, the argument gets changed accordingly.
+The same goes for the other way around;<br>
+
+```js
+function test(a, b, c) {
+a = "nice";
+arguments[1] = "JavaScript";
+console.log("first:", a, arguments[0]);
+console.log("second:", b, arguments[1]);
+console.log("third:", c, arguments[2]);
+}
+test("fun", "js", "secrets");
+```
+
+This is going to change both `arguments[0]` and `b`, as they are related to `a` and `arguments[1]`, respectively, as you can see in the output:
+
+```
+first: nice nice
+second: JavaScript JavaScript
+third: secrets secrets
+```
+
+If the function is called with more arguments than were declared in the function signature, this is the way to access them. However, **the modern way is to use the rest parameter `(…param)` instead of the arguments object**.
+
+### Practice exercise 12.3
+This exercise will demonstrate using the array-like `arguments` object and extracting values from it.<br>
+Using the `arguments` length property, we will iterate through the items in the arguments and return the last item in the list.
+
+```js
+function showNames() {
+    let lastOne = "";
+    for (let i = 0; i < arguments.length; i++) {
+        lastOne = arguments[i];
+        // console.log("Cur val: ", lastOne);
+    }
+    // console.log("Final val: ", lastOne);
+    return lastOne;
+}
+
+console.log(showNames("God", "is", "with", "me,", "i", "am", "with", "GOD"));
+```
+
+Output in console:<br>
+```
+GOD
+```
+
+## JavaScript hoisting
+
+We have three different variables, `const`, `let`, and `var`, and **it is highly recommended that you use `let` instead of `var` because of their different scopes**. JavaScript **hoisting** is why.<br><br>
+**Hoisting** is the principle of moving declarations of variables to the top of the scope in which they are defined.<br><br>
+This allows you to do things that you cannot do in many other languages, and for
+good reason by the way. 
+
+This should look normal:<br>
+```js
+var x;
+x = 5;
+console.log(x);
+```
+
+It just logs `5`. But thanks to hoisting, so does this:<br>
+```js
+x = 5;
+console.log(x);
+var x;
+```
+
+If you try to do this with let, you'll get a `ReferenceError`. This is why it is better to use `let`. Because clearly, this behavior is very hard to read, unpredictable, and you don't really need it.
+
+The reason this happens is that the JavaScript interpreter moves all the `var` declarations to the top of the file before processing the file.<br><br>
+Only the declarations, not the initializations.<br><br>
+This is why you get a result of `undefined` if you use it before having initialized it. <br><br>
+And this is why it should be initialized before it has been declared. <br><br>
+It was designed this way for memory allocation, but the side effects are undesirable.<br>
+
+However, there is a way to turn this behavior off. Let's see how we can do so in the next section!
+
+## Using strict mode
+
+We can change the understanding and forgiving behavior of JavaScript to some
+extent using strict mode. You can switch on strict mode with the following command
+in your code. This needs to be the first command of your code:<br>
+```js
+"use strict";
+```
+
+Here is something that works when we don't use strict mode:<br>
+```js
+function sayHi() {
+    greeting = "Hello!";
+    console.log(greeting);
+}
+sayHi();
+```
+
+We forgot to declare `greeting`, so JavaScript did it for us by adding a `greeting`
+variable to the top level and it will log `Hello!`. If we enable strict mode, however,
+this will give an error:<br>
+```js
+"use strict";
+function sayHi() {
+    greeting = "Hello!";
+    console.log(greeting);
+}
+sayHi();
+```
+
+The error:<br>
+```
+ReferenceError: greeting is not defined
+```
+
+**You can also use strict mode only in a particular function: simply add it to the top of the function and it gets enabled for that function only.** 
+
+Strict mode alters a few other things too; for example, **when using strict mode, there are fewer words that can be used as names for your variables and functions because they are likely to become reserved keywords in the future that JavaScript will need for its own language**.
+
+Using strict mode is a great way of getting used to using JavaScript in the setting of frameworks or even for writing TypeScript later. 
+
+It is typically **considered a good practice nowadays, so we would encourage you to use this in your own code when you have the chance**. 
+
+This is often **not an (easy) option when working with existing older code though**.
+
+Now we have seen strict mode, it's time to dive into a whole different mode: debug mode! Debug mode is for when you are not busy writing or running your application, but are running it in a special way to spot the locations of any errors.
+
+## Debugging
+
