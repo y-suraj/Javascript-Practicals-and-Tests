@@ -724,8 +724,81 @@ Debugging is a delicate art. In the beginning, it usually is very hard to spot w
 If that doesn't solve it, you can log to the console in every step of your code, and also log the variables. This will give you some insight as to what is going on. It might just be that you are relying on a certain variable that happens to be undefined. Or perhaps you are expecting a certain value from a mathematical computation, but you've made an error and the result is something completely different from what you thought. Using `console.log()` during development to see what's happening is rather common.
 
 ### Breakpoints
+A more professional way to go about debugging is to use breakpoints. This can be done from most browsers and IDEs. You click on the line before your code (in the **Sources** panel in Chrome, but this may be different for different browsers), and a dot or arrow will appear. When your application is running, it will pause at this point to give you the opportunity to inspect the values of variables and walk through the
+code line by line from there
+
+This way, you will get a good clue of what is going on and how to fix it. Here is how to use breakpoints in Chrome, and most other browsers have something like this. In Chrome, go to the **Sources** tab of the **Inspect** panel. Select the file you want to set a breakpoint in. Then you just click on the line number and it sets the breakpoint:<br>
+
+![break points in the browser](./assets/Breakpoints%20in%20the%20browser.png)
+
+Then try to trigger the line of code, and when it gets triggered, it pauses. On the very right of the screen I can inspect all the variables and values:<br>
+
+![inspecting breakpoint variables](./assets/inspecting%20breakpont%20variables.png)
+
+You can now go through your code with a fine-toothed comb: with the play icon on top, you can resume script execution (until it hits the next breakpoint or runs in to the same breakpoint again). With the round arrow icon at the top, I can go to the next line and inspect the values on the next line again.
+
+> Recommended documentation: [Google Chrome documentation](https://developer.chrome.com/docs/devtools/javascript/breakpoints/), [Firefox](https://firefox-source-docs.mozilla.org/devtools-user/debugger/how_to/set_a_breakpoint/index.html)
 
 
 ### Error handling
+When we are dealing with code that depends on some sort of outside input, such as an API, user input, or a file we will need to deal with the errors that this input can cause.
+
+If we expect a certain piece of code to throw an error, we can surround this code with a **catch** block. The error it might throw will be caught in this block.
+
+> You have to be careful not to use this too much, and you usually don't want to do this when you can just write better code to avoid the error in the first place.
 
 
+Here is an example of a piece of code that throws an error, and is surrounded with a `try` and `catch` block. Let's assume the `somethingVeryDangerous()` function might throw errors:
+
+```js
+try {
+    somethingVeryDangerous();
+} catch (e) {
+    if (e instanceof TypeError) {
+        // deal with TypeError exceptions
+    } else if (e instanceof RangeError) {
+        // deal with RangeError exceptions
+    } else if (e instanceof EvalError) {
+        // deal with EvalError exceptions
+    } else {
+        //deal with all other exceptions
+        throw e; //rethrow
+    }
+}
+```
+
+If it throws an error, it will end up in the `catch` block.
+
+Since `Error` could mean many different errors, we are going to check for the exact error we are dealing with and write a specific handling of this error. We check the exact error class with the `instanceof` operator. After the error handling, the rest of the code will continue to execute normally.
+
+
+You can do one more thing with a `try` `catch` block, and that is add a `finally` block.
+
+This `finally` block gets executed irrespective ofwhether errors are thrown. This is reat for cleanup purposes. 
+
+Here is a simple example:
+
+```js
+try {
+    trySomething();
+} catch (e) {
+    console.log("Oh oh");
+} finally {
+    console.log("Error or no error, I will be logged!");
+}
+```
+
+We don't know the output of this code, since `trySomething()` is not defined. If it were to throw an error, it would log `Oh oh` to the console and then `Error or no error, I will be logged!`. If `trySomething()` didn't throw an error, it would only log the last
+part.
+
+Lastly, if, for whatever reason, you need to throw an error, you can do so with the `throw` keyword, like this:
+
+```js
+function somethingVeryDangerous() {
+    throw RangeError();
+}
+```
+
+This can be of great use whenever you need to deal with things out of your control, such as an API response, user input, or input from reading a file. If unexpected things happen, sometimes you'll have to throw an error to deal with it appropriately
+
+#### Practive exercise 12.5
