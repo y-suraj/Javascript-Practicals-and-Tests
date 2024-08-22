@@ -802,3 +802,108 @@ function somethingVeryDangerous() {
 This can be of great use whenever you need to deal with things out of your control, such as an API response, user input, or input from reading a file. If unexpected things happen, sometimes you'll have to throw an error to deal with it appropriately
 
 #### Practive exercise 12.5
+
+Using throw, try, and catch, check if the value is a number, and if it's not, then create a custom error.
+
+```js
+function test(val) {
+    try {
+        if (isNaN(val)) {
+            throw "Not a number";
+        } else {
+            console.log("Got number");
+        }
+    } catch (e) {
+        console.error(e);
+    } finally {
+        console.log("Done" + val);
+    }
+}
+```
+
+Output:<br>
+![output](./assets/error%20handling.png)
+
+## Using cookies
+
+**Cookies** are small data files that are stored on your own computer and used by websites.
+
+Cookies were **invented to store things about the user of the website**.
+
+Cookies are strings with a special pattern.
+
+The contain key-value pairs, and these key-value pairs are separated by semi-colons.
+
+You can create a cookie and use it again later. Here is how you can create a cookie:<br>
+```js
+document.cookie = "name=resilient;favouriteColor=green";
+```
+
+This does not work in all browsers when you run it on the client side (such as in `<script>` tag).
+
+In Chrome, for example, you cannot set the cookies from the client side. You have to run the code from a server. An alternative is the web storage API.
+
+This is how you can read from the cookie:
+```js
+let cookie = decodeURIComponent(document.cookie);
+let cookieList = cookie.split(";");
+for (let i = 0; i < cookieList.length; i++) {
+    let c = cookieList[i];
+    if (c.charAt(0) == " ") {
+        c = c.trim();
+    }
+    if (c.startsWith("name")) {
+        alert(c.substring(5, c.length));
+    }
+}
+```
+
+Output:
+![cookie output](./assets/cookie1.png)
+
+
+This example gets all the cookies using `decodeURIComponent()`, and then splits them on the `;`. This leaves us with an array, `cookieList`, with key-value pairs as strings.
+
+Next, we loop over all the key-value pairs. Trim them (remove the whitespace in front and at the back), and see whether they start with `name`. This was the name of
+our cookie key.
+
+
+If we want to get the value, we have to start reading after the key, so at least the length of the key, which is 4 (name) in this case. This brings us to index 3 already.
+We also want to skip the equal sign on index 4, so we start at index 5. In this case, we are adding an alert to the name. Here is an example of a simple website that uses a cookie to greet the user:
+
+```html
+<body>
+    <input onchange="setCookie(this)" />
+    <button onclick="sayHi('name')">Let's talk, cookie!</button>
+    <p id="hi"></p>
+    <script>
+        function setCookie(e) {
+            document.cookie = "name=" + e.value + ";";
+        }
+        function sayHi(key) {
+            let name = getCookie(key);
+            document.getElementById("hi").innerHTML = "Hi " + name;
+        }
+        function getCookie(key) {
+            let cookie = decodeURIComponent(document.cookie);
+            let cookieList = cookie.split(";");
+            for (let i = 0; i < cookieList.length; i++) {
+                let c = cookieList[i];
+                if (c.charAt(0) == " ") {
+                    c = c.trim();
+                }
+                if (c.startsWith(key)) {
+                    console.log("hi" + c);
+                    return c.substring(key.length + 1, c.length);
+                }
+            }
+        }
+    </script>
+</body>
+```
+
+If you are writing a new website, you probably should not be using this. However, whenever you need to work with older code, chances are you'll come across this.
+
+
+### Practice exercise 12.6
+
