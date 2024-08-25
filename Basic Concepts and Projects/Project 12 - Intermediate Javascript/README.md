@@ -826,7 +826,7 @@ Output:<br>
 
 ## Using cookies
 
-**Cookies** are small data files that are stored on your own computer and used by websites.
+**Cookies** are **small data files** that are *stored on your own computer* and *used by websites*.
 
 Cookies were **invented to store things about the user of the website**.
 
@@ -902,8 +902,112 @@ We also want to skip the equal sign on index 4, so we start at index 5. In this 
 </body>
 ```
 
+Output:
+![output](./assets/cookie%202.png)
+
 If you are writing a new website, you probably should not be using this. However, whenever you need to work with older code, chances are you'll come across this.
 
 
 ### Practice exercise 12.6
+
+Let's make a cookie builder. Create several functions that will allow you to interact with page cookies, including reading a cookie value by name, creating a new cookie using a name and setting it for a set number of days, and deleting a cookie. 
+
+```js
+<script>
+    console.log(document.cookie);
+    console.log(readCookie("test1"));
+    console.log(readCookie("test"));
+    setCookie("test1", "new Cookie", 20);
+    deleteCookie("test2");
+
+    function setCookie(cName, value, days) {
+        if (days) {
+            const d = new Date();
+            d.setTime(d.getTime() + (days * 24 * 60 * 60 * 1000));
+            let e = "; expires=" + d.toUTCString();
+            document.cookie = cName + "=" + value + e + "; path=/";
+        }
+    }
+    function readCookie(cName) {
+        let cookieValue = false;
+        let arr = document.cookie.split("; ");
+        arr.forEach(str => {
+            const cookie = str.split("=");
+            if (cookie[0] == cName) {
+                cookieValue = cookie[1];
+            }
+        });
+        return cookieValue;
+    }
+    function deleteCookie(cName) {
+        setCookie(cName, "", -1);
+    }
+</script>
+```
+
+Output:
+![output](./assets/cookie%20practice%2012.6.png)
+
+### Extra practice
+Set, read, delete cookies
+
+**Reference video**: [Learn how JavaScript COOKIES work! 🍪](https://www.youtube.com/watch?v=i7oL_K_FmM8)
+
+HTML:
+```html
+<label for="firstText">first name:</label>
+<input id="firstText"><br>
+<label for="lastText">last name:</label>
+<input id="lastText"><br>
+<button id="submitBtn">submit</button>
+<button id="cookieBtn">get cookies</button>
+```
+
+JAVASCRIPT:
+```js
+const firstText = document.querySelector("#firstText");
+const lastText = document.querySelector("#lastText");
+const submitBtn = document.querySelector("#submitBtn");
+const cookieBtn = document.querySelector("#cookieBtn");
+// event listener to set the cookie
+submitBtn.addEventListener("click", () => {
+    setCookie("firstName", firstText.value, 365);
+    setCookie("lastName", lastText.value, 365);
+});
+// event listener to get the cookie
+cookieBtn.addEventListener("click", () => {
+    firstText.value = getCookie("firstName");
+    lastText.value = getCookie("lastName");
+});
+// create a cookie
+function setCookie(name, value, daysToLive) {
+    const date = new Date();
+    date.setTime(date.getTime() + (daysToLive * 24 * 60 * 60 * 1000));
+    let expires = "expires=" + date.toUTCString();
+    document.cookie = `${name}=${value}; ${expires}; path=/`
+}
+// delete a cookie
+function deleteCookie(name) {
+    setCookie(name, null, null);
+}
+// read or get a cookie
+function getCookie(name) {
+    const cDecoded = decodeURIComponent(document.cookie);
+    const cArray = cDecoded.split("; ");
+    let result = null;
+
+    cArray.forEach(element => {
+        if (element.indexOf(name) == 0) {
+            result = element.substring(name.length + 1)
+        }
+    })
+    return result;
+}
+```
+
+Output:
+
+![bro code output](./assets/bro%20code.mp4)
+
+## Local storage
 
