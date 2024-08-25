@@ -1007,7 +1007,7 @@ function getCookie(name) {
 
 Output:
 
-![bro code output](./assets/bro%20code.mp4)
+https://github.com/user-attachments/assets/0dd55723-5817-47db-ac51-6e628e5dd095
 
 ## Local storage
 
