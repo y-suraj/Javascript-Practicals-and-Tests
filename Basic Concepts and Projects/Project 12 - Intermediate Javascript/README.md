@@ -1011,3 +1011,181 @@ https://github.com/user-attachments/assets/0dd55723-5817-47db-ac51-6e628e5dd095
 
 ## Local storage
 
+With **local storage, we can save key-value pairs in our web browser and use them again in a new session (when the browser is opened again later)**.
+
+The **information is typcally stored in a folder on the computer of the user, but ths differs a bit by browser**.
+
+This **allows the website to store some information** and **retrieve it later**, even after refereshing the page or closing the browser. 
+
+The *advantage of local storage over cookies is that they don't need to be passed around with every HTTP request, which is the case with cookies*.
+
+The `localStorage` object is a property of the window object.
+
+There are a few methods on the `localStorage` object that we need to know to use it effectively. First of all, we need to be able to get and set key-value pairs on local storage. 
+
+We use `setItem()` whenever we want to save something and `getItem()` whenever we want to retrieve the value later. Here is how to do it:
+
+```html
+<body>
+    <div id="stored"></div>
+    <script>
+        let message = "Hello storage!";
+        localStorage.setItem("example", message);
+        if (localStorage.getItem("example")) {
+            document.getElementById("stored").innerHTML =
+            localStorage.getItem("example");
+        }
+    </script>
+</body>
+```
+
+This code snippet outputs `Hello storage!` on the page. 
+
+You can add items to storage by specifying a key and a value with the `setItem` method. 
+
+You can access `localStorage` directly or via the window object. 
+
+Here we specify `example` as the key and `Hello storage!` as the value and save it to local storage. 
+
+Then we check whether the `example` key is set in local storage and output the data by writing it to the `innerHTML` of the div with the ID `stored`.
+
+*If you go back to your code and turn off the `setItem()` line before loading the page a second time, it still will output that value, since the information was stored when running the script the first time and never got deleted. Local storage doesn't expire, though it can be manually deleted.*
+
+We can also retrieve a key using the index. This is useful whenever we need to loop through the key-value pairs and we don't know the names of the keys. This is how to retrieve a key by index:
+
+```js
+window.localStorage.key(0);
+```
+In this case, the key is name. In order to get the associated value, we can do this:<br>
+```js
+window.localStorage.getItem(window.localStorage.key(0));
+```
+
+We can also remove key-value pairs like this:<br>
+```js
+window.localStorage.removeItem("name");
+```
+
+And we can remove all the key-value pairs from the local storage in one call:
+```js
+window.localStorage.clear();
+```
+
+So, with local storage you can save values even after closing the browser. This allows for a lot of "smart" behavior, since your app is now able to remember things, such as what you've entered in a form, which settings you've toggled on a website, and what you've looked at previously.
+
+Please don't see this as an alternative that you can use to bypass the problems with cookies and privacy. Local storage raises the exact same issues as cookies, it's just less known. You will still have to mention on your website that you are tracking users and storing information, just like you need to do for cookies.
+
+### Practice exercise 12.7 (to-do list)
+Let's create a local storage shopping list that will store values in the browser's local storage. This is an example of using JavaScript to convert from strings to useable JavaScript objects and back to strings that can be stored in local storage.
+
+```html
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Js course</title>
+    <style>
+        .ready {
+            background-color: #ddd;
+            color: red;
+            text-decoration: line-through;
+        }
+    </style>
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+    <div class="main">
+        <input placeholder="New Item" value="test item" maxlength="30">
+        <button>Add</button>
+    </div>
+    <ul class="output">
+    </ul>
+    <script>
+        const userTask = document.querySelector(".main input");
+        const addBtn = document.querySelector(".main button");
+        const output = document.querySelector(".output");
+        const tasks = JSON.parse(localStorage.getItem("tasklist")) || [];
+
+        addBtn.addEventListener("click", createListItem);
+
+        if (tasks.length > 0) {
+            tasks.forEach((task) => {
+                genItem(task.val, task.checked);
+            })
+        }
+        // Save the current list of tasks to local storage.
+        function saveTasks() {
+            localStorage.setItem("tasklist", JSON.stringify(tasks));
+        }
+        // Rebuild the task list based on what's currently displayed, including whether tasks are marked as complete, and then saves it.
+        function buildTasks() {
+            tasks.length = 0;
+            const curList = output.querySelectorAll("li");
+            curList.forEach((el) => {
+                const tempTask = {
+                    val: el.textContent,
+                    checked: false
+                };
+                if (el.classList.contains("ready")) {
+                    tempTask.checked = true;
+                }
+                tasks.push(tempTask);
+            });
+            saveTasks();
+        }
+        // Create a new list item (task) and adds it to the page. It also sets up a click event to toggle the task as complete or incomplete.
+        function genItem(val, complete) {
+            const li = document.createElement("li");
+            const temp = document.createTextNode(val);
+            li.appendChild(temp);
+            output.append(li);
+            userTask.value = "";
+            if (complete) {
+                li.classList.add("ready");
+            }
+            li.addEventListener("click", (e) => {
+                li.classList.toggle("ready");
+                buildTasks();
+            });
+            return val;
+        }
+        // Handle adding a new task when the "Add" button is clicked. It creates the task, adds it to the list, and saves the updated list.
+        function createListItem() {
+            const val = userTask.value;
+            if (val.length > 0) {
+                const myObj = {
+                    val: genItem(val, false),
+                    checked: false
+                };
+                tasks.push(myObj);
+                saveTasks();
+            }
+        }
+        // My own code to delete it all from local storage (in progress)
+        createDelete();
+        function createDelete() {
+            const delBtn = document.createElement("button");
+            const main = document.querySelector(".main");
+            if (output.childElementCount > 0) {
+                delBtn.innerHTML = "Delete";
+                main.appendChild(delBtn);
+            }
+            delBtn.addEventListener("click", () => {
+                window.localStorage.clear();
+                console.log(localStorage);
+            })
+        }
+    </script>
+</body>
+
+</html>
+```
+
+Output:<br>
+![to-do list](./assets/to%20do%20list.png)
+
+
+## JSON
