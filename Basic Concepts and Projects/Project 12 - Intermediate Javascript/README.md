@@ -945,7 +945,7 @@ Let's make a cookie builder. Create several functions that will allow you to int
 </script>
 ```
 
-Output:
+Output:<br>
 ![output](./assets/cookie%20practice%2012.6.png)
 
 ### Extra practice
@@ -1188,4 +1188,197 @@ Output:<br>
 ![to-do list](./assets/to%20do%20list.png)
 
 
-## JSON
+## JSON (JavaScript Object Notation)
+
+JSON is a data format.
+
+JSON doesn't mean JavaScript objects, **it's just a way to representing data using a similar formats as JavaScript objects**. It can also be easily converted to a JavaScript object.
+
+JSON is a standard used to communicate with APIs, including APIs that aren't written in JavaScript! 
+
+APIs can accept data, for example, the data from a form on a website, in JSON format. And nowadays, APIs almost always send data back in JSON. 
+
+Sending data from an API happens, for example, when you enter a web shop—the products typically come from a call to an API that is connected to a database. This data gets converted to JSON and is sent back to the website. 
+
+Here is an example of JSON:
+
+```json
+{
+    "name" : "Bruce",
+    "age" : 23,
+    "profession" : "programmer",
+    "languages" : ["Javascript", "c++", "Python"],
+    "address" : {
+        "street" : "Some street",
+        "number" : 123,
+        "zipcode" : "3850AA",
+        "city" : "Utrecht",
+        "country" : "The Netherlands"
+    }
+}
+```
+
+This is an object that seems to describe a person. It has key-value pairs. The keys always have to be between quotes, but the values only have to be between quotes when they are strings. So, the first key is `name` and the first value is `Bruce`.
+
+Lists of values (or JavaScript arrays) are indicated with `[]`. The JSON object contains a list of `languages`, which has the square brackets, and another object, `address`. You can tell this by the curly brackets.
+
+There are actually only a few flavours in JSON:<br>
++ Key-value pairs with values of the following types: string, number, Boolean, and null
+
++ Key-value pairs with lists, which have `[` and `]` that contain the items in the list
+
++ Key-value pairs with other objects, which have `{` and `}` that contain other JSON elements
+
+These three options can be combined, so an object can contain other objects and a list can contain other lists.
+
+Our object contained a nested address object.
+
+This can be nested even further.
+
+A list can also contain objects, which can contain lists with objects, with lists, and so on. 
+
+```json
+{
+    "companies": [
+        {
+            "name":"JavaScript Code Dojo"
+            "adresses": [
+                {
+                    "street": "123 Main street"
+                    "zipcode": 12345,
+                    "city": "Scott"
+                },
+                {
+                    "street": "123 Side st",
+                    "zipcode": 54321,
+                    "city": "Tuscaloosa"
+                }
+            ]
+        },
+        {
+            "name": "C++ Code Dojo",
+            "addresses": [
+                {
+                    "street": "123 Party st.",
+                    "zipcode": 394839,
+                    "city": "Nebraska"
+                },
+                {
+                    "street": "123 Mnoty street",
+                    "zipcode" : 453424,
+                    "city": "Florida"
+                }
+            ]
+        }
+    ]
+}
+```
+
+This is a list of companies, with two company objects on it. The companies have two key-value pairs: a name and an address list. Each of the address lists contains two addresses, and each address consists of three key-value pairs: `street`, `zipcode` and `city`.
+
+
+### Practice exercise 12.8
+This exercise will demonstrate how you can create a valid JSON object that can be used as a JavaScript object. You will create a simple list of names and statuses that can be looped through and output the results to the console. You will load JSON data to JavaScript and output the results of the object's contents
+
+```js
+/* ANSWER 1*/
+console.log("ANSWER 1");
+// Define an array of todo items
+// Each item is an object with a name (string) and status (boolean)
+let myList = [
+    {
+        "name": "Learn JavaScript",
+        "status": true
+    },
+    {
+        "name": "Try JSON",
+        "status": false
+    }
+];
+
+// Call the reloader function immediately
+reloader();
+
+// Define the reloader function
+function reloader() {
+    // Use forEach to iterate over each element in myList
+    myList.forEach((el) => {
+        // For each element, log a string to the console
+        // The string includes the name and status of the todo item
+        // We use a template literal (backticks) for easy string interpolation
+        console.log(`${el.name} = ${el.status}`);
+    });
+}
+
+/* ANSWER 2*/
+console.log("ANSWER 2");
+// 1. Create a JavaScript object with JSON-formatted data
+const jsonData = {
+    person1: {
+        name: "John Doe",
+        age: 30
+    },
+    person2: {
+        name: "Jane Smith",
+        age: 25
+    }
+};
+
+// 2. Create a function to loop through and log the data
+function logJsonData(data) {
+    for (let key in data) {
+        console.log(`Item: ${key}`);
+        for (let prop in data[key]) {
+            console.log(`  ${prop}: ${data[key][prop]}`);
+        }
+        console.log('---');
+    }
+}
+
+// 3. Invoke the function
+logJsonData(jsonData);
+```
+
+Output:<br>
+![json practice exercise output](./assets/json%20practice.png)
+
+
+### Parsing JSON
+
+There are many libraries and tools available for parsing a JSON string into an object. 
+
+**A JavaScript string can be converted to a JSON object using the `JSON.parse()` function**. Data that is received from another place is always of value `string`, so in order to treat it as an object, it needs to be converted. 
+
+This is how to do it:
+```js
+let str = "{\"name\": \"Bruce\", \"age\": 23}";
+let obj = JSON.parse(str);
+console.log(obj.name, "is", obj.age);
+```
+
+After parsing, it can be treated as an object. Therefore it will log `Bruce is 23` to the console.
+
+**Objects can be converted to a
+JSON string using the `JSON.stringify()` method.** It converts the object or value from JavaScript to a JSON string. You can see it in action here:
+
+```js
+let dog = {
+    "name": "wiesje",
+    "breed": "dachshund"
+};
+let strdog = JSON.stringify(dog);
+console.log(typeof strdog);
+console.log(strdog);
+```
+
+The type of strdog becomes a string because it is being stringified. And it no longer has the properties `name` and `breed`. These will be undefined. This code snippet will log the following to the console:
+
+```
+string
+{"name":"wiesje","breed":"dachshund"}
+```
+
+This can be useful for storing JSON data directly in a database, for example.
+
+### Practice exercise 12.9
+
