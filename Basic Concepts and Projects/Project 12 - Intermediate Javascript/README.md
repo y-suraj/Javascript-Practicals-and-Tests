@@ -1382,3 +1382,30 @@ This can be useful for storing JSON data directly in a database, for example.
 
 ### Practice exercise 12.9
 
+This exercise will demonstrate the use of JSON methods to parse JSON and convert string values to JSON. Using JSON methods with JavaScript, convert a JSON formatted string value to a JavaScript object and convert a JavaScript object into a string representation of the JSON object:
+
+```js
+let myList = [
+    {
+        "name": "Learn JavaScript",
+        "status": true
+    },
+    {
+        "name": "Try JSON",
+        "status": false
+    }
+];
+const newStr = JSON.stringify(myList);
+const newObj = JSON.parse(newStr);
+newObj.forEach((el) => {
+    console.log(el);
+});
+console.log(newStr);
+console.log(newObj);
+```
+
+Output:
+
+![output](./assets/practice%2012.9.png)
+
+
