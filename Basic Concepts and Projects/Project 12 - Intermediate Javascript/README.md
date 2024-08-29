@@ -1408,4 +1408,38 @@ Output:
 
 ![output](./assets/practice%2012.9.png)
 
+## Chapter projects
 
+### Email extractor
+```html
+<body>
+    <textarea name="txtarea" rows=2 cols=50></textarea> <button>Get
+        Emails</button>
+    <textarea name="txtarea2" rows=2 cols=50></textarea>
+    <script>
+        const firstArea = document.querySelector("textarea[name='txtarea']");
+        const secArea = document.querySelector("textarea[name='txtarea2']");
+        const btn = document.querySelector("button");
+
+        btn.addEventListener("click", checkEmail);
+
+        function checkEmail() {
+            const rawTxt = firstArea.value;
+            const eData = rawTxt.match(/([a-zA-Z0-9._-]+@[a-zA-Z0-9._-]+\.[a-zA-Z0-9._-]+)/gi);
+            const holder = [];
+            for (let x = 0; x < eData.length; x++) {
+                if (holder.indexOf(eData[x] == -1)) {
+                    holder.push(eData[x]);
+                }
+            }
+            secArea.value = holder.join(', ');
+        }
+    </script>
+</body>
+```
+
+Output:<br>
+![email extractor](./assets/email%20extractor.png)
+
+
+### Form validator
