@@ -64,7 +64,7 @@ Output:<br>
 
 ## Promises
 
-**----- BY ChatGPT (better answer than claude) -----**
+**----- BY ChatGPT (better answer than claude) -----** [LINK](https://chatgpt.com/share/3a881406-cfb0-4ca4-9bed-462c7e782879)
 
 > **PROMPT**: <br>
 Explain me about Promises in javascript and everything about it, in an easy to understand manner with realistic examples and applications.
