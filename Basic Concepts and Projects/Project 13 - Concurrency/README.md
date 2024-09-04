@@ -544,4 +544,44 @@ Output:<br>
 
 ## async and await
 
+With the `async` keyword, we can make a function return a Promise. This makes the Promises nicer to read and look a lot like synchronous (non-concurrent) code.
+
+We can use this Promise just like we learned in the previous section, or we can use the more powerful `await` keyword to wait until the promise is done.
+
+`await` only works in an asynchnonous function.
+
+In an asynchronous context, we can await other Promises as well, as can be seen this example:
+```js
+function saySomething(x) {
+    return new Promise(resolve => {
+        setTimeout(() => {
+            resolve("something" + x);
+        }, 2000);
+    });
+}
+async function talk(x) {
+    const words = await saySomething(x);
+    console.log(words);
+}
+talk(2);
+talk(4);
+talk(8);
+```
+
+Output:
+![async await example](./assets/async%20await%20example.png)
+
+We call the asynchronous function `talk()` three times in a row with no break. Each of these function calls is awaiting the `saySomething()` function.
+
+The `saySomething()` function contains a new Promise that is being resolved with a `setTimeout()` function that waits two seconds before resolving with the value of `something` plus `x`. 
+
+So after two seconds, the three functions are done at the same time.
+
+
+If the `talk()` function were not asynchronous, it would throw a `SyntaxError` because of the await keyword. `await` is only valid in asynchronous functions, so `talk()` must be asynchronous. Without the `async` and the `await` in this example, it would store the result of the function `saySomething()`, a pending `Promise`, in words and log that once for every function call:
+
+![async await img2](./assets/async%20await%202.png)
+
+
+### Practice exercise 13.3
 
