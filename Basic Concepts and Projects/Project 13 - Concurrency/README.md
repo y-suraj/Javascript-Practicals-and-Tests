@@ -585,3 +585,81 @@ If the `talk()` function were not asynchronous, it would throw a `SyntaxError` b
 
 ### Practice exercise 13.3
 
+This exercise will demonstrate how to use await to wait on a Promise inside an async function. Using await and async, create a counter with timeOut(), and increment a global counter value.
+
+```js
+<script>
+    let cnt = 0;
+    function outputTime(val) {
+        return new Promise(resolve => {
+            setTimeout(() => {
+                cnt++;
+                resolve(`x value ${val} counter:${cnt}`);
+            }, 1000);
+        })
+    }
+    async function aCall(val) {
+        console.log(`ready ${val} counter: ${cnt}`);
+        const res = await outputTime(val);
+        console.log(res);
+        console.log("val: ", val);
+    }
+    for (let x = 1; x < 5; x++) {
+        aCall(x);
+    }
+</script>
+```
+
+Output:<br>
+![practice exercise 13.3](./assets/async%20practice.png)
+
+
+## Chapter project
+
+### Password checker
+
+Using an array of allowed passwords, this exercise will create an application to check if one of these password string values exists in an array that lists all the accepted passwords. Set a Promise to ckeck if the password is valid, and upon the result either resolve with the status of true or reject with the status of false. Return the check results.
+
+```js
+<script>
+    const allowedPasswords = ["abcdef", "qwerty", "asdfghjkl", "zxcvbnm"];
+
+    function passwordIncluded(pass) {
+        return allowedPasswords.includes(pass);
+    }
+
+    function login(password) {
+        return new Promise((resolve, reject) => {
+            if (passwordIncluded(password)) {
+                resolve({
+                    status: true
+                });
+            } else {
+                reject({
+                    status: false
+                });
+            }
+        })
+    }
+
+    function checkPassword(pass) {
+        login(pass)
+            .then(token => {
+                console.log("Approve:");
+                console.log(token);
+            })
+            .catch(value => {
+                console.log("Reject:");
+                console.log(value);
+            })
+    }
+
+
+</script>
+```
+
+Output:<br>
+![password check](./assets/password%20check.png)
+
+
+
