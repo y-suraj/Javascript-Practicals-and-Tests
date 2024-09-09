@@ -395,4 +395,163 @@ Output: <br>
 
 ## Dynamic canvas
 
+### Adding lines and circles to the canvas
+
+Here we will see how to draw a line and a circle.
+
+```html
+<head>
+    <style>
+        #canvas1 {
+            border: 1px solid black;
+        }
+
+        #canvas2 {
+            border: 1px solid black;
+        }
+
+        #canvas-circle {
+            border: 1px solid black;
+        }
+    </style>
+</head>
+
+<body>
+    <canvas id="canvas1"></canvas>
+    <canvas id="canvas2"></canvas>
+    <canvas id="canvas-circle"></canvas>
+    <script>
+        // canvas 1
+        let canvas = document.getElementById("canvas1");
+        let ctx = canvas.getContext("2d");
+        canvas.width = 100;
+        canvas.height = 100;
+        ctx.lineWidth = 2;
+        ctx.moveTo(0, 20);
+        ctx.lineTo(50, 100);
+        ctx.stroke();
+
+        // canvas 2
+        let canvas2 = document.getElementById("canvas2");
+        let ctx2 = canvas2.getContext("2d");
+        canvas2.width = 100;
+        canvas2.height = 100;
+        ctx2.lineWidth = 2;
+        ctx2.moveTo(0, 20);
+        ctx2.lineTo(50, 10);
+        ctx2.stroke();
+
+        // for more understandingN
+        let ctx3 = canvas2.getContext("2d");
+        ctx3.lineWidth = 2;
+        ctx3.moveTo(50, 300);
+        ctx3.lineTo(50, 20);
+        ctx3.stroke();
+
+        // canvas circle
+        let canvasCircle = document.getElementById("canvas-circle");
+        let ctxCrcl = canvasCircle.getContext("2d");
+        canvasCircle.width = 150;
+        canvasCircle.height = 200;
+        ctxCrcl.beginPath();
+        ctxCrcl.arc(75, 100, 50, 0, Math.PI * 2);
+        ctxCrcl.stroke();
+    </script>
+</body>
+```
+
+Output:<br>
+
+![dynamic canvas output](./assets/dynamic%20canvas%20output.png)
+
+In the **first canvas**, the line width is set to `2` pixels. 
+
+This puts the focus to `0` (*x*) and `20` (*y*). 
+
+This means it is at the very left edge of the canvas, `20` pixels from the top. 
+
+This canvas is smaller; it is `100` by `100` pixels. 
+
+The second point is at `50` (*x*) and `100` (*y*). 
+
+
+For the **third canvas (circle)**, we use the `arc()` method to create a curve or a circle. It takes five parameters:
+
+- start position *x* on canvas
+- start position *y* on canvas
+- radius of the circle
+- starting angle in radians
+- ending angle in radians
+
+So, if we don't want a circle, but a semicircle, for example, we'll have to specify a different starting and end angle in radians. This time we used the `stroke()` method to do the actual drawing instead of the `fill()` method.
+
+`stroke()` is only drawing the line, whereas `fill()` colors the full shape.
+
+In the canvas, the shapes and lines will be added on top of each other, based on the order in which they're drawn. 
+
+The first one you draw is underneath the latter ones. Exactly what happens when you paint on a real canvas.
+
+#### Practice exercise 14.3
+
+In this exercise, you will be drawing a stick person using canvas.
+
+```html
+<head>
+    <style>
+        #canvas1 {
+            border: 1px solid black;
+        }
+    </style>
+</head>
+
+<body>
+    <canvas id="canvas1"></canvas>
+    <script>
+        const canvas = document.getElementById("canvas1");
+        const ctx = canvas.getContext("2d");
+        canvas.width = 640;
+        canvas.height = 640;
+        ctx.beginPath();
+        ctx.fillStyle = "#FFCC33";
+        ctx.arc(300, 130, 100, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.beginPath();
+        ctx.fillStyle = "black";
+        ctx.arc(250, 120, 20, 0, Math.PI * 2);
+        ctx.moveTo(370, 120);
+        ctx.arc(350, 120, 20, 0, Math.PI * 2);
+        ctx.moveTo(240, 160);
+        ctx.arc(300, 160, 60, 0, Math.PI);
+        ctx.fill();
+        ctx.moveTo(300, 130);
+        ctx.lineTo(300, 150);
+        ctx.stroke();
+        ctx.beginPath();
+        ctx.moveTo(300, 230);
+        ctx.lineTo(300, 270);
+        ctx.lineTo(400, 270);
+        ctx.lineTo(200, 270);
+        ctx.lineTo(300, 270);
+        ctx.lineTo(300, 350);
+        ctx.lineTo(400, 500);
+        ctx.moveTo(300, 350);
+        ctx.lineTo(200, 500);
+        ctx.stroke();
+        ctx.beginPath();
+        ctx.fillStyle = "brown";
+        ctx.moveTo(200, 50);
+        ctx.lineTo(400, 50);
+        ctx.lineTo(300, 20);
+        ctx.lineTo(200, 50);
+        ctx.fill();
+        ctx.stroke();
+    </script>
+</body>
+```
+
+Output: <br>
+![practice ex 3](./assets/practice%20ex%203.png)
+
+
+### Adding text to the canvas
 
