@@ -555,3 +555,39 @@ Output: <br>
 
 ### Adding text to the canvas
 
+```html
+<head>
+    <style>
+        #canvas1 {
+            border: 1px solid black;
+        }
+    </style>
+</head>
+
+<body>
+    <canvas id="canvas1"></canvas>
+    <script>
+        let canvas = document.getElementById("canvas1");
+        let ctx = canvas.getContext("2d");
+        canvas.width = 200;
+        canvas.height = 200;
+        ctx.font = "24px Arial";
+        let txt = "Hi canvas!";
+        ctx.fillText(txt, 10, 35);
+    </script>
+</body>
+```
+
+Output: <br>
+![adding text](./assets/adding%20text.png)
+
+
+We have specified `35` px from the top for the text to start. We can specify other aspects of the text, for example, like this:
+
+```
+ctx.textAlign = "center";
+```
+
+Here, we used the `textAlign` property on the canvas to specify how the text should be aligned.
+
+
