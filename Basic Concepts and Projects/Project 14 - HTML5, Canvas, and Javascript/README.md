@@ -591,3 +591,115 @@ ctx.textAlign = "center";
 Here, we used the `textAlign` property on the canvas to specify how the text should be aligned.
 
 
+#### Practice exercise 14.4
+
+We will work with text and add text to your canvas element. The following exercise will demonstrate how to dynamically add text and position it within your canvas element.
+
+```html
+<head>
+    <style>
+        #canvas1 {
+            border: 1px solid black;
+        }
+    </style>
+</head>
+
+<body>
+    <canvas id="canvas1"></canvas>
+    <script>
+        let canvas = document.getElementById("canvas1");
+        let ctx = canvas.getContext("2d");
+        canvas.width = 640;
+        canvas.height = 640;
+        ctx.font = "italic 50px Times New Roman";
+        ctx.fillStyle = "Blue";
+        ctx.fillText("Hello world", 150, 80);
+
+        for (let counter = 1; counter <= 10; counter++) {
+            ctx.font = "bold 15px Arial";
+            ctx.fillStyle = "red";
+            ctx.fillText("counter:" + counter, 100, 130 + counter * 23);
+        }
+    </script>
+</body>
+```
+
+Output: <br>
+![practice exercise 14.4](./assets/practice%20exercise%2014.4.png)
+
+
+### Adding and uploading images to the canvas
+
+
+We can add an image to the canvas. We can simply get an image from out page, and add it to out canvas.
+
+```html
+<head>
+    <style>
+        #c1 {
+            border: 1px solid black;
+        }
+    </style>
+</head>
+
+<body>
+    <canvas id="c1"></canvas>
+    <img id="rice" src="mu cang chai rice field.jpg" alt="rice field">
+    <script>
+        window.onload = function () {
+            let canvas = document.getElementById("c1");
+            canvas.height = 300;
+            canvas.width = 300;
+            let ctx = canvas.getContext("2d");
+            let myImage = document.getElementById("rice");
+            ctx.drawImage(myImage, 10, 10);
+        }
+    </script>
+</body>
+```
+
+Output: <br>
+![rice field output](./assets/rice%20field%20output.png)
+
+
+We wrap it all in an onload event listener here because we want to be sure that the image is loaded before getting it from the DOM, else the canvas will remain empty. We use the `drawImage()` method to add an image to the canvas. It takes three arguments: the *image*, the *x* position, and the *y* position.
+
+
+We can use one canvas inside another canvas as well. We do this exactly like we did when we were using the image. This is a very powerful feature, because it enables us to use a part of the drawing from the user input, for example. 
+
+
+```html
+<head>
+    <style>
+        canvas {
+            border: 1px solid black;
+        }
+    </style>
+</head>
+
+<body>
+    <canvas id="canvas1"></canvas>
+    <canvas id="canvas2"></canvas>
+    <canvas id="canvas3"></canvas>
+    <script>
+        let canvas1 = document.getElementById("canvas1");
+        let ctx1 = canvas1.getContext("2d");
+        ctx1.strokeRect(5, 5, 150, 100);
+
+        let canvas2 = document.getElementById("canvas2");
+        let ctx2 = canvas2.getContext("2d");
+        ctx2.beginPath();
+        ctx2.arc(60, 60, 20, 0, 2 * Math.PI);
+        ctx2.stroke();
+
+        let canvas3 = document.getElementById("canvas3");
+        let ctx3 = canvas3.getContext("2d");
+        ctx3.drawImage(canvas1, 10, 10);
+        ctx3.drawImage(canvas2, 10, 10);
+    </script>
+```
+
+Output: <br>
+![adding images](./assets/adding%20images.png)
+
+
