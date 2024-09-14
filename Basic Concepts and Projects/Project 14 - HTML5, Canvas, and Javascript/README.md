@@ -703,3 +703,167 @@ Output: <br>
 ![adding images](./assets/adding%20images.png)
 
 
+We also can **upload images to the canvas**.
+
+This can be of greate use when you want to show a preview to your user of something that was just uploaded, for example, a profile picture. 
+
+This is very similar to grabbing the `<img>` element from the webpage and using that element, but this time we need to read our data from the uploaded file, create a new image element, and then draaw that image to the canvas.
+
+```html
+<head>
+    <style>
+        canvas {
+            border: 1px solid black;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- File input for selecting an image -->
+    <input type="file" id="imgLoader">
+    <br>
+    <!-- Canvas element where the image will be displayed -->
+    <canvas id="canvas"></canvas>
+    <script>
+        // Get references to the canvas and file input elements
+        let canvas = document.getElementById("canvas");
+        let ctx = canvas.getContext("2d");
+        let imgLoader = document.getElementById("imgLoader");
+
+        // Add an event listener to the file input
+        imgLoader.addEventListener("change", upImage, false);
+
+        function upImage() {
+            // Create a FileReader object to read the selected file
+            let fr = new FileReader();
+
+            // Read the selected file as a data URL
+            fr.readAsDataURL(event.target.files[0]);
+
+            // When the file is loaded...
+            fr.onload = function (e) {
+                // Create a new Image object
+                let img = new Image();
+
+                // Set the source of the image to the loaded file
+                img.src = event.target.result;
+
+                // When the image is loaded...
+                img.onload = function () {
+                    // Set the canvas dimensions to match the image
+                    canvas.width = img.width;
+                    canvas.height = img.height;
+                    // Draw the image on the canvas
+                    ctx.drawImage(img, 0, 0);
+                };
+                // lot the FileReader object to the console (for debugging)
+                console.log(fr);
+            };
+        }
+    </script>
+</body>
+```
+
+Output: <br>
+![canvas images](./assets/canvas%20images.png)
+
+
+Every time the input of the input field changes, the `upImage()` method gets executed.
+
+This method does a few things, so let's break them down. 
+
+First of all, we create a new `FileReader` and add the uploaded file. 
+
+There is only one in this case, so we use index `0`. 
+
+Instead of `readAsText()` that we have already seen, we are now using `readAsDataURL()`, which we can use to read images.
+
+This will trigger the onload event. And in our case, this creates a new image that can be added to the canvas later. 
+
+As a source, we add the result of our read action and when the image is loaded, we change the size of our canvas to the size of our picture and then add the picture in there.
+
+
+**-----code explanation by Claude-----**
+Let's break down the `upImage()` function in detail:
+
+Here's a detailed explanation of what's happening in this function:
+
+1. `let fr = new FileReader();`
+   - This creates a new FileReader object. FileReader is a built-in JavaScript object that allows web applications to asynchronously read the contents of files stored on the user's computer.
+
+2. `fr.readAsDataURL(event.target.files[0]);`
+   - This line tells the FileReader to read the first file (`files[0]`) from the file input element.
+   - `readAsDataURL()` is a method that reads the file and converts it into a base64 encoded string. This string represents the file's data and can be used as the source for an image.
+
+3. `fr.onload = function (e) { ... };`
+   - This sets up an event handler for when the FileReader finishes loading the file.
+   - The function inside will be called once the file is fully loaded.
+
+4. Inside the `onload` function:
+   - `let img = new Image();` creates a new Image object. This is used to hold the loaded image data.
+   
+   - `img.src = event.target.result;` sets the source of the Image object to the loaded file data. At this point, `event.target` refers to the FileReader, and `result` contains the base64 encoded string of the image data.
+
+   - Another `onload` event handler is set up for the Image object: `img.onload = function () { ... };`
+     This ensures we only try to draw the image once it's fully loaded.
+
+5. Inside the image's `onload` function:
+   - `canvas.width = img.width;` and `canvas.height = img.height;` set the canvas dimensions to match the loaded image. This ensures the entire image fits on the canvas.
+
+   - `ctx.drawImage(img, 0, 0);` draws the loaded image onto the canvas. The `0, 0` parameters mean it starts drawing from the top-left corner of the canvas.
+
+6. Finally, `console.log(fr);` logs the FileReader object to the console, which can be useful for debugging.
+
+This function effectively creates a pipeline: file selection → file reading → image creation → canvas resizing → image drawing. Each step waits for the previous one to complete before proceeding, ensuring that the image is fully loaded and processed before it's displayed on the canvas.
+**-----End of explanation-----**
+
+#### Practice exercise 14.5
+
+We will practice uploading a local image to the canvas. The following exercise will demonstrate how to upload images from your local computer and have them displayed within the canvas element within your browser.
+
+
+```html
+<head>
+    <style>
+        canvas {
+            border: 1px solid black;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- File input for selecting an image -->
+    <input type="file" id="imgLoader">
+    <br>
+    <!-- Canvas element where the image will be displayed -->
+    <canvas id="canvas"></canvas>
+    <script>
+        let canvas = document.getElementById("canvas");
+        let ctx = canvas.getContext("2d");
+        let imgLoader = document.getElementById("imgLoader");
+
+        imgLoader.addEventListener("change", upImage, false);
+
+        function upImage(e) {
+            console.log(e);
+            const reader = new FileReader();
+            reader.onload = function (e) {
+                console.log(e);
+                const img = new Image();
+                img.onload = function () {
+                    canvas.width = img.width / 2
+                    canvas.height = img.height / 2
+                    ctx.drawImage(img, 0, 0, img.width / 2, img.height / 2);
+                }
+                img.src = e.target.result;
+            }
+            reader.readAsDataURL(e.target.files[0]);
+        }
+    </script>
+</body>
+```
+
+Output: <br>
+![canvas images 1](./assets/canvas%20img%202.png)
+
+
