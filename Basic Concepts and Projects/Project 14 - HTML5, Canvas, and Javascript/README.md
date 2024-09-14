@@ -867,3 +867,143 @@ Output: <br>
 ![canvas images 1](./assets/canvas%20img%202.png)
 
 
+### Adding animations to the canvas
+
+With the methods we have seen so far, we can already start creating animations. We do this by using loops and recursion, conbined with `timeout()`.
+
+These drawings with (short) time interval result in an animation.
+
+```html
+<head>
+    <style>
+        canvas {
+            border: 1px solid black;
+        }
+    </style>
+</head>
+
+<body>
+    <canvas id="canvas"></canvas>
+    <script>
+        window.onload = init;
+        var canvas = document.getElementById("canvas");
+        var ctx = canvas.getContext("2d");
+        canvas.height = 500;
+        canvas.width = 500;
+
+        var pos = {
+            x: 0,
+            y: 50
+        };
+
+        function init() {
+            draw();
+        }
+
+        function draw() {
+            pos.x = pos.x + 5;
+            if (pos.x > canvas.width) {
+                pos.x = 0;
+            }
+            if (pos.y > canvas.height) {
+                pos.y = 0;
+            }
+
+            ctx.fillRect(pos.x, pos.y, 100, 100);
+            window.setTimeout(draw, 50);
+        }
+    </script>
+</body>
+```
+
+Output:<br>
+<video controls src="./assets/canvas animation 1.mp4" title="canvas animation 1" ></video>
+
+This will start drawing a square at position `5`, `50`. And after `50` ms, it will draw *another square* at position `10`, `50`, and after that at `15`, `50`. And it will keep on changing this *x* value by `5` up to the point that *x* gets bigger than the width of the canvas, when it is then set to zero. This way, the last bit of white canvas on that line gets colored black too.
+
+Right now, *it is more creating a line, and not a moving square*. This is because we keep on adding the colored part to the canvas, but not resetting it to the previous color. We can do this with the `clearRect()` method. This method takes four parameters. The first two are the starting point to draw the rectangle to be cleared (so *x*, *y*). The third one is the `width` of the rectangle to be cleared and the last one is the `height`. In order to clear the full canvas, we'll have to write:
+
+```
+ctx.clearRect(0, 0, canvas.width, canvas.height);
+```
+
+```js
+function draw() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height); // this clears the full canvas
+    pos.x = pos.x + 1;
+    if (pos.x > canvas.width) {
+        pos.x = 0;
+    }
+    if (pos.y > canvas.height) {
+        pos.y = 0;
+    }
+
+    ctx.fillRect(pos.x, pos.y, 100, 100);
+    window.setTimeout(draw, 1);
+}
+```
+
+Adding this to the beginning of the draw function in our previous example results in a moving square instead of a fat line being drawn because the previous square is not kept, but the canvas resets every time and the square gets drawn from scratch.
+
+Output: <br>
+<video controls src="./assets/canvas animation 2.mp4" title="canvas animation 2"></video>
+
+
+#### Practice exercise 14.6
+
+We will practice animating shapes and moving objects on the page. This exercise will demonstrate how to move an object on the page using HTML5 canvas element and JS.
+
+```html
+<head>
+    <style>
+        canvas {
+            border: 1px solid black;
+        }
+    </style>
+</head>
+
+<body>
+    <canvas id="canvas"></canvas>
+    <script>
+        var canvas = document.getElementById("canvas");
+        var ctx = canvas.getContext("2d");
+        const ballSize = 10;
+
+        let x = canvas.width / 2;
+        let y = canvas.height / 2;
+
+        let dirX = 1;
+        let dirY = 1;
+
+        function drawBall() {
+            ctx.beginPath();
+            ctx.arc(x, y, ballSize, 0, Math.PI * 2);
+            ctx.fillStyle = "red";
+            ctx.fill();
+            ctx.closePath();
+        }
+
+        function move() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            drawBall();
+            if (x > canvas.width - ballSize || x < ballSize) {
+                dirX *= -1;
+            }
+            if (y > canvas.height - ballSize || y < ballSize) {
+                dirY *= -1;
+            }
+            x += dirX;
+            y += dirY;
+        }
+        setInterval(move, 10);
+    </script>
+</body>
+```
+
+Output: <br>
+
+<video controls src="./assets/practice 5.mp4" title="practice 5"></video>
+
+
+
+
