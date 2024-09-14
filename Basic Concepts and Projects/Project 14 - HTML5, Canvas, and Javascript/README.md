@@ -1012,6 +1012,178 @@ Output: <br>
 
 https://github.com/user-attachments/assets/1eedf8a9-9451-45e4-970a-55cb8955ac2a
 
+### Drawing on canvas with a mouse
+
+```html
+<head>
+    <style>
+        canvas {
+            border: 1px solid black;
+        }
+    </style>
+</head>
+
+<body>
+    <canvas id="canvas"></canvas>
+    <input type="color" id="bgColor" />
+    <script>
+        window.onload = init;
+
+        let canvas = document.getElementById("canvas");
+        let ctx = canvas.getContext("2d");
+        canvas.width = 700;
+        canvas.height = 700;
+
+        let bgColor = "pink";
+        let bgC = document.getElementById("bgColor");
+        bgC.addEventListener("change", function () {
+            bgColor = event.target.value;
+        });
+
+        let pos = {
+            x: 0,
+            y: 0
+        };
+
+        // to set the current position of the mouse
+        function setPosition(e) {
+            pos.x = e.pageX;
+            pos.y = e.pageY;
+            // get the cordinates
+            mousePos.innerHTML = `<p>PageX = ${pos.x}</p><p>PageY = ${pos.y}</p>`;
+        }
+
+        // to get the cordinates of the mouse position
+        let mousePos = document.createElement("div");
+        document.body.appendChild(mousePos);
+
+        // function to draw
+        function draw(e) {
+            if (e.buttons != 1) return; // this checks checks 
+            // if the left mouse button is not pressed. 
+            // This prevents drawing to occur when mouse not clicked.
+            ctx.beginPath();
+            ctx.moveTo(pos.x, pos.y);
+            setPosition(e);
+            ctx.lineTo(pos.x, pos.y);
+            ctx.lineWidth = 5;
+            ctx.lineCap = "round";
+            ctx.strokeStyle = bgColor;
+            ctx.stroke();
+        }
+
+        function init() {
+            // draw on canvas when the mouse is moving
+            canvas.addEventListener("mousemove", draw);
+            // change the current position on the canvas when the mouse enters the canvas and is moving
+            canvas.addEventListener("mousemove", setPosition);
+            canvas.addEventListener("mouseenter", setPosition);
+        }
+    </script>
+</body>
+```
+
+Output: <br>
+
+[Watch this](https://x.com/ResilientCoder/status/1834921069649522770)
+
+
+#### Practice exercise 14.7
+
+We will create an online drawing board, and include a dynamic value for width, color, and ability to erase the current drawing. 
+
+```html
+<head>
+    <style>
+        body {
+            margin: 100px;
+        }
+
+        canvas {
+            border: 1px solid black;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="controls">
+        <button class="clear">Clear</button> <span>Color
+            <input type="color" value="#ff0000" id="penColor"></span>
+        <span>Width
+            <input type="range" min="1" max="20" value="10" id="penWidth">
+        </span>
+    </div>
+    <canvas id="canvas"></canvas>
+    <script>
+        window.onload = init;
+
+        // select the page elements as variable objects
+        // input fields
+        let clearBtn = document.querySelector(".clear");
+        let penColor = document.querySelector("#penColor");
+        let penWidth = document.querySelector("#penWidth");
+        // canvas
+        let canvas = document.getElementById("canvas");
+        let ctx = canvas.getContext("2d");
+        canvas.width = 500;
+        canvas.height = 500;
+
+        // initialize init() to add event listeners 
+        // for mouse move and enter
+        function init() {
+            canvas.addEventListener("mousemove", draw);
+            canvas.addEventListener("mousemove", setPosition);
+            canvas.addEventListener("mouseenter", setPosition);
+        }
+
+        // define the coordinates of mouse
+        let pos = {
+            x: 0,
+            y: 0
+        }
+
+        // function to get the coordinates of mouse for drawing
+        function setPosition(e) {
+            pos.x = e.pageX - 100; // 100 px reduced due to body margin
+            pos.y = e.pageY - 100; // 100 px reduced due to body margin
+        }
+
+        let drawStart = false;
+        // function to draw on canvas
+        function draw(e) {
+            if (e.buttons !== 1) return;
+            drawStart = true;
+            ctx.beginPath();
+            ctx.moveTo(pos.x, pos.y);
+            setPosition(e);
+            ctx.lineTo(pos.x, pos.y);
+            ctx.strokeStyle = penColor.value;
+            ctx.lineWidth = penWidth.value;
+            ctx.lineCap = "round";
+            ctx.stroke();
+        }
+
+        // clear the drawing
+        clearBtn.addEventListener("click", clearImg);
+        function clearImg() {
+            if (!drawStart) {
+                alert("draw something first!");
+            } else {
+                drawStart = false;
+                const temp = confirm("Clear confirm?");
+                if (temp) {
+                    ctx.clearRect(0, 0, canvas.offsetWidth, canvas.offsetHeight);
+                }
+            }
+        }
+    </script>
+</body>
+```
+
+Output: <br>
+
+[Watch this](https://x.com/ResilientCoder/status/1834970786903286089)
+
 
 
 
