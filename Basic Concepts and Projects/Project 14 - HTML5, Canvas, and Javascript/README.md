@@ -917,7 +917,8 @@ These drawings with (short) time interval result in an animation.
 ```
 
 Output:<br>
-<video controls src="./assets/canvas animation 1.mp4" title="canvas animation 1" ></video>
+https://github.com/user-attachments/assets/8c7c030c-2147-4245-beb7-53f3f48204f2
+
 
 This will start drawing a square at position `5`, `50`. And after `50` ms, it will draw *another square* at position `10`, `50`, and after that at `15`, `50`. And it will keep on changing this *x* value by `5` up to the point that *x* gets bigger than the width of the canvas, when it is then set to zero. This way, the last bit of white canvas on that line gets colored black too.
 
@@ -946,7 +947,7 @@ function draw() {
 Adding this to the beginning of the draw function in our previous example results in a moving square instead of a fat line being drawn because the previous square is not kept, but the canvas resets every time and the square gets drawn from scratch.
 
 Output: <br>
-<video controls src="./assets/canvas animation 2.mp4" title="canvas animation 2"></video>
+https://github.com/user-attachments/assets/c2631425-39a2-46fa-9efe-fdd830db1575
 
 
 #### Practice exercise 14.6
@@ -1001,8 +1002,8 @@ We will practice animating shapes and moving objects on the page. This exercise 
 ```
 
 Output: <br>
+https://github.com/user-attachments/assets/1eedf8a9-9451-45e4-970a-55cb8955ac2a
 
-<video controls src="./assets/practice 5.mp4" title="practice 5"></video>
 
 
 
