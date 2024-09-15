@@ -1434,7 +1434,204 @@ Output: <br>
 
 [Watch output video](https://x.com/ResilientCoder/status/1835188878480744523)
 
+#### Countdown clock
 
+This exercise will produce a real-time countdown clock that will display the amount of time in days, hours, minutes, and seconds left until the date value within the input date field. Adjusting the input date field will update the countdown clock. It will also use local storage to capture and save the value in the input field, so if the page is refreshed, the input field will still retain the date value and the countdown clock can continue to count down to that date value from the input field. 
+
+
+```html
+<head>
+    <style>
+        .clock {
+            background-color: blue;
+            width: 400px;
+            text-align: center;
+            color: white;
+            font-size: 1em;
+        }
+
+        .clock>span {
+            padding: 10px;
+            border-radius: 10px;
+            background-color: black;
+        }
+
+        .clock>span>span {
+            padding: 5px;
+            border-radius: 10px;
+            background-color: red;
+        }
+
+        input {
+            padding: 15px;
+            margin: 20px;
+            font-size: 1.5em;
+        }
+    </style>
+</head>
+
+<body>
+    <div>
+        <input type="date" name="endDate">
+        <div class="clock">
+            <span><span class="days">0</span> Days</span>
+            <span><span class="hours">0</span> Hours</span>
+            <span><span class="minutes">0</span> Minutes</span>
+            <span><span class="seconds">0 </span> Seconds</span>
+        </div>
+    </div>
+    <script>
+        const endDate = document.querySelector("input[name='endDate']");
+        const clock = document.querySelector(".clock");
+        let timeInterval;
+        let timeStop = true;
+        const savedValue = localStorage.getItem("countdown") || false;
+        if (savedValue) {
+            startClock(savedValue);
+            let inputValue = new Date(savedValue);
+            endDate.valueAsDate = inputValue;
+        }
+        endDate.addEventListener("change", function (e) {
+            e.preventDefault();
+            clearInterval(timeInterval);
+            const temp = new Date(endDate.value);
+            localStorage.setItem("countdown", temp);
+            startClock(temp);
+            timeStop = true;
+        });
+        function startClock(d) {
+            function updateCounter() {
+                let tl = (timeLeft(d));
+                if (tl.total <= 0) {
+                    timeStop = false;
+                }
+                for (let pro in tl) {
+                    let el = clock.querySelector("." + pro);
+                    if (el) {
+                        el.innerHTML = tl[pro];
+                    }
+                }
+            }
+            updateCounter();
+            if (timeStop) {
+                timeInterval = setInterval(updateCounter, 1000);
+            } else {
+                clearInterval(timeInterval);
+            }
+        }
+
+        function timeLeft(d) {
+            let currentDate = new Date();
+            let t = Date.parse(d) - Date.parse(currentDate);
+            let seconds = Math.floor((t / 1000) % 60);
+            let minutes = Math.floor((t / 1000 / 60) % 60);
+            let hours = Math.floor((t / (1000 * 60 * 60)) % 24);
+            let days = Math.floor(t / (1000 * 60 * 60 * 24));
+            return {
+                "total": t,
+                "days": days,
+                "hours": hours,
+                "minutes": minutes,
+                "seconds": seconds
+            };
+        }
+    </script>
+</body>
+```
+
+Output: <br>
+![countdown clock](./assets/countdown%20clock.png)
+
+
+
+#### Online paint app
+
+Create a drawing application where the user can draw using their mouse in the canvas element. When the user is within the canvas element and clicks down on the mouse button, holding the button down will add lines, producing a drawing effect within the canvas element. The color and width of the drawing pencil can be changed dynamically for more functionality. In addition, this app will include a button to save and download the image from the canvas element, as well as clearing the current canvas content.
+
+```html
+<body>
+    <canvas id="canvas" width="600" height="400"></canvas>
+    <div>
+        <button class="save">Save</button>
+        <button class="clear">Clear</button>
+        <span>Color: <input type="color" name="penColor" id="penColor" value="#ffff00"></span>
+        <span>Width: <input type="range" min="1" max="20" value="10" name="penWidth" id="penWidth"></span>
+    </div>
+    <div class="output"></div>
+    <script>
+        const canvas = document.querySelector("#canvas");
+        const ctx = canvas.getContext("2d");
+        const penColor = document.querySelector("#penColor");
+        const penWidth = document.querySelector("#penWidth");
+        const btnSave = document.querySelector(".save");
+        const btnClear = document.querySelector(".clear");
+        const output = document.querySelector(".output");
+        const mLoc = {
+            draw: false,
+            x: 0,
+            y: 0,
+            lastX: 0,
+            lastY: 0
+        };
+        canvas.style.border = "1px solid black";
+        btnSave.addEventListener("click", saveImg);
+        btnClear.addEventListener("click", clearCanvas);
+        canvas.addEventListener("mousemove", (e) => {
+            mLoc.lastX = mLoc.x;
+            mLoc.lastY = mLoc.y;
+            // console.log(e);
+            mLoc.x = e.clientX;
+            mLoc.y = e.clientY
+            draw();
+        });
+        canvas.addEventListener("mousedown", (e) => {
+            mLoc.draw = true;
+        });
+        canvas.addEventListener("mouseup", (e) => {
+            mLoc.draw = false;
+        });
+        canvas.addEventListener("mouseout", (e) => {
+            mLoc.draw = false;
+        });
+        function saveImg() {
+            const dataURL = canvas.toDataURL();
+            console.log(dataURL);
+            const img = document.createElement("img");
+            output.prepend(img);
+            img.setAttribute("src", dataURL);
+            const link = document.createElement("a");
+            output.append(link);
+            let fileName = Math.random().toString(16).substr(-8) + ".png";
+            link.setAttribute("download", fileName);
+            link.href = dataURL;
+            link.click();
+            output.removeChild(link);
+        }
+        function clearCanvas() {
+            let temp = confirm("clear canvas?");
+            if (temp) {
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+            }
+        }
+        function draw() {
+            if (mLoc.draw) {
+                ctx.beginPath();
+                ctx.moveTo(mLoc.lastX, mLoc.lastY);
+                ctx.lineTo(mLoc.x, mLoc.y);
+                ctx.strokeStyle = penColor.value;
+                ctx.lineWidth = penWidth.value;
+                ctx.lineCap = "round";
+                ctx.stroke();
+                ctx.closePath();
+            }
+        }
+    </script>
+</body>
+```
+
+Output: <br>
+
+![online paint app](./assets/online%20paint%20app.png)
 
 
 
