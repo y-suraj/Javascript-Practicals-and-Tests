@@ -1184,6 +1184,259 @@ Output: <br>
 
 [Watch this](https://x.com/ResilientCoder/status/1834970786903286089)
 
+### Saving dynamic images
+
+We can convert the canvas to an image, and this image can then be saved as a next step.
+
+In orderto convert it to an image, we need to add the following to our script element.
+
+```js
+let dataURL = canvas.toDataURL();
+document.getElementById("imageId").src = dataURL;
+```
+
+We are changing our canvas to a data URL, which then becomes the source of our image.
+
+We want this to happend whenever a save button gets clicked. 
+
+Here is the button:
+
+```html
+<input type="button" id="save" value="save" />
+```
+
+And the event listener:
+
+```js
+document.getElementById("save").addEventListener("click", function () {
+    // convert the content within the canvas into 
+    // base64 data image value
+    let dataURL = canvas.toDataURL();
+    // update the image with generated data URL 
+    // from the canvas
+    document.getElementById("holder").src = dataURL;
+});
+```
+
+Now whenever the save button gets clicked, it is going to update the image with the generated data URL from the canvas. 
+
+Whatever content is within the canvas element will be turned into a base64 data image value and added to the page within an img tag.
+
+In the following example, there is a canvas of 200 by 200 pixels and an empty image of the same size. When a color gets selected, a square of 100 by 100 pixels in that color is drawn on the canvas. When the save button gets clicked, this canvas gets converted to an image. This image can then be saved. Here is the code for the example:
+
+```html
+<head>
+    <style>
+        canvas {
+            border: 1px solid black;
+        }
+    </style>
+</head>
+
+<body>
+    <canvas id="canvas"></canvas>
+    <input type="color" name="" id="squareColor">
+    <br>
+    <img src="" id="holder" width="200" , height="200" alt="img">
+    <input type="button" value="save" id="save">
+    <script>
+        // create the canvas and define variable objects
+        const canvas = document.getElementById("canvas");
+        const ctx = canvas.getContext("2d");
+        canvas.width = 200;
+        canvas.height = 200;
+        const penColor = document.getElementById("squareColor");
+        // select the color of square
+        penColor.addEventListener("change", function () {
+            color = event.target.value;
+            draw(color);
+        });
+
+        document.getElementById("save").addEventListener("click", function () {
+            // convert the content within the canvas into 
+            // base64 data image value
+            let dataURL = canvas.toDataURL();
+            // update the image with generated data URL 
+            // from the canvas
+            document.getElementById("holder").src = dataURL;
+        });
+
+        function draw(color) {
+            ctx.fillStyle = color;
+            ctx.fillRect(70, 70, 100, 100);
+        }
+    </script>
+</body>
+```
+
+Output: <br>
+
+https://github.com/user-attachments/assets/334418f8-eb69-406f-b33b-7c0964c2f1c1
+
+
+### Media on the page
+
+There are special elements for media on the page. 
+
+Adding an audio player to a page is very simple:
+
+```html
+<body>
+    <audio>
+        <source src="sound.ogg" type="audio/ogg">
+        <source src="sound.mp3" type="audio/mpeg">
+    </audio>
+</body>
+```
+
+- You specify the `controls` attribute if you want the user to be able to control pause and play and the volume.
+
+- If you want it to start automatically, you'll have to add the attribute `autoplay`.
+
+With the source element, you specify the audio files that can be played. The browser will choose only one and will choose the first one (from top to bottom) that it supports.
+
+Adding a video to a webpage is very similar to adding audio. Here's how to do it:
+
+```html
+<video width="1024" height="576" controls>
+    <source src="movie.mp4" type="video/mp4">
+    <source src="movie.ogg" type="video/ogg">
+</video>
+```
+
+Often you would want to link to YouTube instead. Here's how to do that:
+
+```html
+<iframe
+    width="1024"
+    height="576"
+    src="https://youtu.be/KWX8lzzzrzA?si=GjwEr3BhlxkSemcN"
+>
+</iframe>
+```
+
+You will have to use the `iframe` element. This is a special element that allows another webpage inside the current webpage. And you can then add the YouTube embed link as a source. The last code after `embed` comes from the video URL.
+
+The height and width attributes of the video can be changed to make the video bigger or smaller.
+
+If you want to show it fullscreen, you can change the width and height like this:
+
+```html
+<iframe
+    width="100%"
+    height="100%"
+    src="https://youtu.be/kDinWUQ2NkA"
+>
+</iframe>
+```
+
+If you want it to be only a part of the screen, you can adjust the width and height attributes accordingly.
+
+You can autoplay these as well with the autoplay attribute. If you use autoplay on more than one, none of them will autoplay to protect the visitor from getting all that noise from the webpage. It is typically considered annoying if your video starts making noise in the browser. Adding the attribute muted will avoid this.
+
+### Digital accessibility in HTML
+
+**Digital accessibility is of huge importance for visually impaired people or those unable to use a mouse.** In order to use the internet with little or no vision, screen readers are in place. This is a special piece of software that reads what is on the screen or converts it to braille using special devices connected to the computer. People that cannot use a mouse will often rely on speech to give the computer instructions.
+
+Dynamic parts can be recognized if implemented correctly, and by adding semantics and metadata to the HTML, it's better useable for external tooling.
+
+Semantics might be one of the most important parts here. This comes down to using the right HTML element for the right purpose. If something should be clicked, it is best to make it a `<button>` element and not a `<span>`, for example. If it is a button, it is possible to navigate to it with the *Tab* key and click it using *Enter*.
+
+The same goes for headers. You can create something that looks like a header using a special class and give it a layout, but the screen readers are looking for `h1`, `h2`, and `h3`. 
+
+**You should always use the header elements for headers. This helps the screen readers and improves the accessibility of your website. And as a bonus, it helps you rank higher in Google as well because bots also check out the headers to see what is
+important on your site.**
+
+It is also important to use labels and link text that is descriptive. If the link part is only **Click here**, that is not helpful. Something like **Click here to sign up for the summer event** is much better.
+
+Throughout this book, we have also done something wrong with our input boxes.
+
+In order to make input fields accessible, you'll have to add a label element. This will make it easier for screen readers to pick up on what the input box is about. So this is generally bad practice:
+
+```html
+<input type="text" id="address" />
+```
+
+And this is much better, because now screen readers can read it too (and therefore visually impaired people can understand it):
+
+```html
+<label for="address">Address:</label>
+<input type="text" id="address" />
+```
+
+One last one that you may know already is the `alt` attribute for images. If the screen reader encounters an image, it will read the `alt` description. So make sure that these are descriptive, even if the image is not important. Since there is clearly no way to know it's not important if you cannot see the image, all you'll know is that you cannot see some picture. Here is how to add `alt` text:
+
+```html
+<img src="umbrella.jpg" width="200" height="200" alt="rainbow colored umbrella" />
+```
+
+### Chapter Projects
+
+#### Create a Matrix effect
+
+This exercise will create a continuous animation of text moving from top to bottom. The final effect produced will show characters moving down the screen within the canvas element and appearing to disappear and fade as they approach the bottom of the screen as more new characters will be added to the canvas in their place. The random character can be either a 0 or 1, and will be in place in the position according to the number, which will represent the vertical position of where the character is drawn.
+
+The canvas will be filled with a black background, which is going to use opacity to create the fading effect once it's redrawn:
+
+```html
+<head>
+    <style>
+        canvas {
+            border: 1px solid black;
+        }
+    </style>
+</head>
+
+<body>
+    <canvas id="canvas"></canvas>
+    <script>
+        let canvas = document.getElementById("canvas");
+        let ctx = canvas.getContext("2d");
+        canvas.height = 800;
+        canvas.width = 700;
+
+        let colVal = [];
+
+        for (let i = 0; i < canvas.width / 10; i++) {
+            colVal.push(0);
+        }
+        // let count = 0;
+
+        function matrix() {
+            ctx.fillStyle = "rgba(0,0,0, 0.05)";
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+            ctx.fillStyle = "#66ff33";
+            colVal.forEach((posY, index) => {
+                let output = Math.random() < 0.5 ? 0 : 1;
+                // console.log(output); count++;
+                let posX = (index * 10);
+                ctx.fillText(output, posX, posY);
+                if (posY > 100 + Math.random() * 800) {
+                    colVal[index] = 0;
+                } else {
+                    colVal[index] = posY + 10;
+                }
+            })
+        }
+
+        setInterval(matrix, 50);
+        // matrix();
+        // console.log(count);
+    </script>
+</body>
+```
+
+[CLICK HERE TO READ FULL EXPLANATION OF THE CODE BY CHATGPT](https://chatgpt.com/share/66e687a9-71f0-8000-a3f6-1cf57ec8011d)
+
+Output: <br>
+
+![matrix img](./assets/matrix.png)
+
+[Watch output video](https://x.com/ResilientCoder/status/1835188878480744523)
+
+
+
+
 
 
 
