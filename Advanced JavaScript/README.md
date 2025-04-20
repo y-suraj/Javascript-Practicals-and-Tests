@@ -53,5 +53,78 @@ We have a conundrum - a tension between wanting to <b>delay some code execution<
 
 The **problem** with this model is it's fundamentally untenable - blocks our single javascript theread from running any further code while the task completes.
 
-**Benefits** - it's easy to reason about.
+**Benefits** - it's easy to reason about.<hr>
+
+<i>Promises, Web APIs, the Callback & Microtask Queues and Event loop allow us to defer our actions until the 'work' (an API request, timer etc) is completed and continue running our code line by line in the meantime</i>
+
+<b>Asynchronous JavaScript is the backbone of the modern web - letting us build fast 'non-blocking' applications.</b>
+
+## Return Next ELement with a Function (function within a function)
+
+```js
+function createNewFunction() {
+    function add2(num) {
+        return num+2;
+    }
+    return add2;
+}
+const newFunction = createNewFunction();
+const result = newFunction(3); // 5
+```
+<br>
+<b> We want to crate a function that holds both our array, the position we are currently at in our 'stream' of elements and has the ability to return the next element.</b>
+
+```js
+function createFunction(array) {
+    let i = 0;
+    function inner() {
+        const element = array[i];
+        i++;
+        return element;
+    }
+    return inner;
+}
+
+const returnNextElement = createFunction([4,5,6]); // function inner()
+```
+
+<b>By calling the `returnNextElement`</b>
+
+```js
+function createFunction(array) {
+    let i = 0;
+    function inner() {
+        const element = array[i];
+        i++;
+        return element;
+    }
+    return inner;
+}
+
+const returnNextElement = createFunction([4,5,6]); // function inner()
+const element1 = returnNextElement(); // 4
+const element2 = returnNextElement(); // 5
+```
+
+<b>The bond</b>
+- When the function `inner` is defined, it gets a bond to the surrounding Local Memory in which it has been defined.
+- When we return out `inner`, the surrounding live data is returned out too - attached on the 'back' of the function definition itself (which we now give a new global label `returnNextElement`).
+- When we call `returnNextElement` and don't find  `array` or `i` in the immediate execution context, we look into the function definition's 'backpack' of persistent live data.
+- The 'backpack' is officially known as C.O.V.E(closure, outer function, variables, execution context) or 'closure'.
+
+<b>`returnNextElement` has everything we need all bundled up in it</b>
+
+1. Our underlying array itself
+2. The position we are currently at in our 'stream' of elements
+3. The ability to return the next element
+
+This relies completely on the special property of functions in javascript that when they are born inside other functions and returned - they get a backpack (closure).
+
+<b>So iterators turn our data into 'streams' of actual values we can access one after another.</b>
+
+Now we have functions that hold our underlying array, the position we're currently at in the array, *and* return out the next item in the 'stream' of elements from our array when run.
+
+This lets us have for loops that show us the element itself in the body on each loop *and more deeply* allows us to rething arrays as flows of elements themselves which we can interact with by calling a function that switches that flow on to give us our next element.
+
+We have truly 'decoupled' the process of accessing each element from what we want to do to each element.
 
