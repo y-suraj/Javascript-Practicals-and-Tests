@@ -6,13 +6,13 @@ const newQuoteBtn = document.getElementById('new-quote');
 const loader = document.getElementById('loader');
 
 // Show loading spinner
-function loading() {
+function showLoadingSpinner() {
     loader.hidden = false; // Show the loader
     quoteContainer.hidden = true; // Hide the quote container
 }
 
 // Hide loading spinner
-function complete() {
+function removeLoadingSpinner() {
     if (!loader.hidden) {
         quoteContainer.hidden = false; // Show the quote container
         loader.hidden = true; // Hide the loader
@@ -22,7 +22,7 @@ function complete() {
 // get quote from API
 async function getQuote() {
     // Show loading spinner
-    loading();
+    showLoadingSpinner();
     // Fetch a random quote from the Forismatic API
     // Use a proxy server to avoid CORS issues
     const proxyUrl = 'https://cors-anywhere.herokuapp.com/';
@@ -42,7 +42,7 @@ async function getQuote() {
             quoteText.classList.remove('long-quote');
         }
         // Hide the loading spinner
-        complete();
+        removeLoadingSpinner();
     } catch (error) {
         getQuote(); // Try again if there is an error
     }
