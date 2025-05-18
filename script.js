@@ -3,9 +3,26 @@ const quoteText = document.getElementById('quote');
 const authorText = document.getElementById('author');
 const twitterBtn = document.getElementById('twitter');
 const newQuoteBtn = document.getElementById('new-quote');
+const loader = document.getElementById('loader');
+
+// Show loading spinner
+function loading() {
+    loader.hidden = false; // Show the loader
+    quoteContainer.hidden = true; // Hide the quote container
+}
+
+// Hide loading spinner
+function complete() {
+    if (!loader.hidden) {
+        quoteContainer.hidden = false; // Show the quote container
+        loader.hidden = true; // Hide the loader
+    }
+}
 
 // get quote from API
 async function getQuote() {
+    // Show loading spinner
+    loading();
     // Fetch a random quote from the Forismatic API
     // Use a proxy server to avoid CORS issues
     const proxyUrl = 'https://cors-anywhere.herokuapp.com/';
@@ -24,6 +41,8 @@ async function getQuote() {
         } else {
             quoteText.classList.remove('long-quote');
         }
+        // Hide the loading spinner
+        complete();
     } catch (error) {
         getQuote(); // Try again if there is an error
     }
