@@ -23,7 +23,6 @@ function imageLoaded() {
         initialLoad = false;
         count = 5;
         apiUrl = `https://api.unsplash.com/photos/random/?client_id=${apiKey}&count=${count}&orientation=portrait`;
-
     }
 }
 
